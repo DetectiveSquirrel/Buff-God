@@ -19,6 +19,7 @@ namespace Buff_God
             Offensive_Aura = true;
             Defenseive_Aura = true;
             Charges = true;
+            Leeching = true;
             Others = true;
 
             #region Others
@@ -214,6 +215,19 @@ namespace Buff_God
             Endurance_Charges_Size = new RangeNode<int>(64, 1, 128);
             Endurance_Charges_ShowInactive = false;
             #endregion
+            #region Leeching
+            Leeching_Life = true;
+            Leeching_Life_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Leeching_Life_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Leeching_Life_Size = new RangeNode<int>(64, 1, 128);
+            Leeching_Life_ShowInactive = false;
+
+            Leeching_Mana = true;
+            Leeching_Mana_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Leeching_Mana_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Leeching_Mana_Size = new RangeNode<int>(64, 1, 128);
+            Leeching_Mana_ShowInactive = false;
+            #endregion
 
         }
 
@@ -238,6 +252,9 @@ namespace Buff_God
 
         [Menu("Charges", 8)]
         public ToggleNode Charges { get; set; }
+
+        [Menu("Leeching", 9)]
+        public ToggleNode Leeching { get; set; }
 
         [Menu("Others", 7)]
         public ToggleNode Others { get; set; }
@@ -597,6 +614,30 @@ namespace Buff_God
         public RangeNode<int> Endurance_Charges_Size { get; set; }
         [Menu("Show Inactive", 5304, 530)]
         public ToggleNode Endurance_Charges_ShowInactive { get; set; }
+        #endregion
+        #region Leeching
+        // Leeching
+        [Menu("Leeching Life", 610, 9)]
+        public ToggleNode Leeching_Life { get; set; }
+        [Menu("X", 6101, 610)]
+        public RangeNode<float> Leeching_Life_X { get; set; }
+        [Menu("Y", 6102, 610)]
+        public RangeNode<float> Leeching_Life_Y { get; set; }
+        [Menu("Size", 6103, 610)]
+        public RangeNode<int> Leeching_Life_Size { get; set; }
+        [Menu("Show Inactive", 6104, 610)]
+        public ToggleNode Leeching_Life_ShowInactive { get; set; }
+
+        [Menu("Leeching Mana", 620, 9)]
+        public ToggleNode Leeching_Mana { get; set; }
+        [Menu("X", 6201, 620)]
+        public RangeNode<float> Leeching_Mana_X { get; set; }
+        [Menu("Y", 6202, 620)]
+        public RangeNode<float> Leeching_Mana_Y { get; set; }
+        [Menu("Size", 6203, 620)]
+        public RangeNode<int> Leeching_Mana_Size { get; set; }
+        [Menu("Show Inactive", 6204, 620)]
+        public ToggleNode Leeching_Mana_ShowInactive { get; set; }
         #endregion
 
     }

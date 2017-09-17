@@ -29,10 +29,10 @@ namespace Buff_God
         {
             base.Render();
 
-            BuffUi();
+            DrawBuffIcons();
         }
 
-        public void BuffUi()
+        public void DrawBuffIcons()
         {
             var Panels = GameController.Game.IngameState.IngameUi;
 
@@ -110,6 +110,12 @@ namespace Buff_God
             object[] Power_Charges = { false, "", "power_charge", "\\Charges\\Power Charges", "\\Charges\\Power Charges Inactive", "" };
             object[] Frenzy_Charges = { false, "", "frenzy_charge", "\\Charges\\Frenzy Charges", "\\Charges\\Frenzy Charges Inactive", "" };
             object[] Endurance_Charges = { false, "", "endurance_charge", "\\Charges\\Endurance Charges", "\\Charges\\Endurance Charges Inactive", "" };
+
+
+            object[] Leeching_Life = { false, "", "life_leech", "Life Leech Active", "Leech Inactive", };
+            object[] Leeching_Mana = { false, "", "mana_leech", "Mana Leech Active", "Leech Inactive", };
+            List<float> Leeching_Life_Buff_Durations = new List<float>();
+            List<float> Leeching_Mana_Buff_Durations = new List<float>();
 
 
             // Loop through all buffs on me
@@ -302,7 +308,18 @@ namespace Buff_God
                     Endurance_Charges[5] = Charges;
                 }
                 #endregion
-
+                #region Leeching
+                else if (ThisBuff.Equals((string)Leeching_Life[2]))
+                {
+                    Leeching_Life[0] = true;
+                    Leeching_Life_Buff_Durations.Add(buff.Timer);
+                }
+                else if (ThisBuff.Equals((string)Leeching_Mana[2]))
+                {
+                    Leeching_Mana[0] = true;
+                    Leeching_Mana_Buff_Durations.Add(buff.Timer);
+                }
+                #endregion
             }
             #region Others
             if (Settings.Others)
@@ -895,6 +912,61 @@ namespace Buff_God
                             DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[3] + " " + (string)Endurance_Charges[5]);
                         else if (Settings.Endurance_Charges_ShowInactive)
                             DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[4]);
+                    }
+                }
+                #endregion
+            }
+            #endregion
+            #region Leeching
+            if (Settings.Leeching)
+            {
+                #region Leeching_Life
+                if (Settings.Leeching_Life)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Leeching_Life_X, Settings.Leeching_Life_Y, Settings.Leeching_Life_Size, 30, "99", (string)Leeching_Life[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Leeching_Life[0])
+                        {
+                            // Sort life leech buff timers Highest -> Lowest
+                            Leeching_Life_Buff_Durations.Sort();
+                            Leeching_Life_Buff_Durations.Reverse();
+                            Leeching_Life[1] = Math.Ceiling(Leeching_Life_Buff_Durations.First()).ToString();
+
+                            DrawBuff(Settings.Leeching_Life_X, Settings.Leeching_Life_Y, Settings.Leeching_Life_Size, 30, (string)Leeching_Life[1], (string)Leeching_Life[3]);
+                        }
+                        else if (Settings.Leeching_Life_ShowInactive)
+                            DrawBuff(Settings.Leeching_Life_X, Settings.Leeching_Life_Y, Settings.Leeching_Life_Size, 30, (string)Leeching_Life[1], (string)Leeching_Life[4]);
+                    }
+                }
+                #endregion
+                #region Leeching_Mana
+                if (Settings.Leeching_Mana)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Leeching_Mana_X, Settings.Leeching_Mana_Y, Settings.Leeching_Mana_Size, 30, "99", (string)Leeching_Mana[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Leeching_Mana[0])
+                        {
+                            // Sort mana leech buff timers Highest -> Lowest
+                            Leeching_Mana_Buff_Durations.Sort();
+                            Leeching_Mana_Buff_Durations.Reverse();
+                            Leeching_Mana[1] = Math.Ceiling(Leeching_Mana_Buff_Durations.First()).ToString();
+
+                            DrawBuff(Settings.Leeching_Mana_X, Settings.Leeching_Mana_Y, Settings.Leeching_Mana_Size, 30, (string)Leeching_Mana[1], (string)Leeching_Mana[3]);
+                        }
+                        else if (Settings.Leeching_Mana_ShowInactive)
+                            DrawBuff(Settings.Leeching_Mana_X, Settings.Leeching_Mana_Y, Settings.Leeching_Mana_Size, 30, (string)Leeching_Mana[1], (string)Leeching_Mana[4]);
                     }
                 }
                 #endregion
