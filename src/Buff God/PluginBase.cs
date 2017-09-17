@@ -48,7 +48,7 @@ namespace Buff_God
             /* Buff Array[]
              * 
              * Enable Buff,
-             * Buff Timer Text,
+             * Text over Icon,
              * Buff Name,
              * Active Icon,
              * Inactive Icon
@@ -97,12 +97,28 @@ namespace Buff_God
             object[] Clarity = { false, "", "player_aura_mana_regen", "Clarity Active", "Clarity Inactive" };
 
 
+            /* Buff Array[]
+             * 
+             * Enable Buff,
+             * Text over Icon,
+             * Buff Name,
+             * Active Icon,
+             * Inactive Icon
+             * Charges
+            */
+            // Charges
+            object[] Power_Charges = { false, "", "power_charge", "\\Charges\\Power Charges", "\\Charges\\Power Charges Inactive", "" };
+            object[] Frenzy_Charges = { false, "", "frenzy_charge", "\\Charges\\Frenzy Charges", "\\Charges\\Frenzy Charges Inactive", "" };
+            object[] Endurance_Charges = { false, "", "endurance_charge", "\\Charges\\Endurance Charges", "\\Charges\\Endurance Charges Inactive", "" };
+
+
             // Loop through all buffs on me
             foreach (var buff in GameController.Game.IngameState.Data.LocalPlayer.GetComponent<Life>().Buffs)
             {
                 var isInfinity = float.IsInfinity(buff.Timer);
                 var BuffText = isInfinity ? "" : Math.Ceiling(buff.Timer).ToString();
                 var ThisBuff = buff.Name.ToLower();
+                var Charges = buff.Charges < 0 ? "" : buff.Charges.ToString();
 
                 #region Others
                 if (ThisBuff.Equals((string)Arcane_Surge[2]))
@@ -264,6 +280,26 @@ namespace Buff_God
                 {
                     Clarity[0] = true;
                     Clarity[1] = BuffText;
+                }
+                #endregion
+                #region Charges
+                else if (ThisBuff.Equals((string)Power_Charges[2]))
+                {
+                    Power_Charges[0] = true;
+                    Power_Charges[1] = BuffText;
+                    Power_Charges[5] = Charges;
+                }
+                else if (ThisBuff.Equals((string)Frenzy_Charges[2]))
+                {
+                    Frenzy_Charges[0] = true;
+                    Frenzy_Charges[1] = BuffText;
+                    Frenzy_Charges[5] = Charges;
+                }
+                else if (ThisBuff.Equals((string)Endurance_Charges[2]))
+                {
+                    Endurance_Charges[0] = true;
+                    Endurance_Charges[1] = BuffText;
+                    Endurance_Charges[5] = Charges;
                 }
                 #endregion
 
@@ -800,6 +836,65 @@ namespace Buff_God
                             DrawBuff(Settings.Clarity_X, Settings.Clarity_Y, Settings.Clarity_Size, 30, (string)Clarity[1], (string)Clarity[3]);
                         else if (Settings.Clarity_ShowInactive)
                             DrawBuff(Settings.Clarity_X, Settings.Clarity_Y, Settings.Clarity_Size, 30, (string)Clarity[1], (string)Clarity[4]);
+                    }
+                }
+                #endregion
+            }
+            #endregion
+            #region Charges
+            if (Settings.Others)
+            {
+                #region Power_Charges
+                if (Settings.Power_Charges)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, (string)Power_Charges[1], (string)Power_Charges[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Power_Charges[0])
+                            DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, (string)Power_Charges[1], (string)Power_Charges[3] + " " + (string)Power_Charges[5]);
+                        else if (Settings.Power_Charges_ShowInactive)
+                            DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, (string)Power_Charges[1], (string)Power_Charges[4]);
+                    }
+                }
+                #endregion
+                #region Frenzy_Charges
+                if (Settings.Frenzy_Charges)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, (string)Frenzy_Charges[1], (string)Frenzy_Charges[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Frenzy_Charges[0])
+                            DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, (string)Frenzy_Charges[1], (string)Frenzy_Charges[3] + " " + (string)Frenzy_Charges[5]);
+                        else if (Settings.Frenzy_Charges_ShowInactive)
+                            DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, (string)Frenzy_Charges[1], (string)Frenzy_Charges[4]);
+                    }
+                }
+                #endregion
+                #region Endurance_Charges
+                if (Settings.Endurance_Charges)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Endurance_Charges[0])
+                            DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[3] + " " + (string)Endurance_Charges[5]);
+                        else if (Settings.Endurance_Charges_ShowInactive)
+                            DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[4]);
                     }
                 }
                 #endregion

@@ -18,6 +18,7 @@ namespace Buff_God
             Vaal_Skills = true;
             Offensive_Aura = true;
             Defenseive_Aura = true;
+            Charges = true;
             Others = true;
 
             #region Others
@@ -194,6 +195,25 @@ namespace Buff_God
             Clarity_Size = new RangeNode<int>(64, 1, 128);
             Clarity_ShowInactive = false;
             #endregion
+            #region Charges
+            Power_Charges = true;
+            Power_Charges_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Power_Charges_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Power_Charges_Size = new RangeNode<int>(64, 1, 128);
+            Power_Charges_ShowInactive = false;
+
+            Frenzy_Charges = true;
+            Frenzy_Charges_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Frenzy_Charges_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Frenzy_Charges_Size = new RangeNode<int>(64, 1, 128);
+            Frenzy_Charges_ShowInactive = false;
+
+            Endurance_Charges = true;
+            Endurance_Charges_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Endurance_Charges_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Endurance_Charges_Size = new RangeNode<int>(64, 1, 128);
+            Endurance_Charges_ShowInactive = false;
+            #endregion
 
         }
 
@@ -215,6 +235,9 @@ namespace Buff_God
 
         [Menu("Defensive Auras", 6)]
         public ToggleNode Defenseive_Aura { get; set; }
+
+        [Menu("Charges", 8)]
+        public ToggleNode Charges { get; set; }
 
         [Menu("Others", 7)]
         public ToggleNode Others { get; set; }
@@ -539,6 +562,41 @@ namespace Buff_God
         public RangeNode<int> Clarity_Size { get; set; }
         [Menu("Show Inactive", 3904, 390)]
         public ToggleNode Clarity_ShowInactive { get; set; }
+        #endregion
+        #region Charges
+        // Charges
+        [Menu("Power Charges", 510, 8)]
+        public ToggleNode Power_Charges { get; set; }
+        [Menu("X", 5101, 510)]
+        public RangeNode<float> Power_Charges_X { get; set; }
+        [Menu("Y", 5102, 510)]
+        public RangeNode<float> Power_Charges_Y { get; set; }
+        [Menu("Size", 5103, 510)]
+        public RangeNode<int> Power_Charges_Size { get; set; }
+        [Menu("Show Inactive", 5104, 510)]
+        public ToggleNode Power_Charges_ShowInactive { get; set; }
+
+        [Menu("Frenzy Charges", 520, 8)]
+        public ToggleNode Frenzy_Charges { get; set; }
+        [Menu("X", 5201, 520)]
+        public RangeNode<float> Frenzy_Charges_X { get; set; }
+        [Menu("Y", 5202, 520)]
+        public RangeNode<float> Frenzy_Charges_Y { get; set; }
+        [Menu("Size", 5203, 520)]
+        public RangeNode<int> Frenzy_Charges_Size { get; set; }
+        [Menu("Show Inactive", 5204, 520)]
+        public ToggleNode Frenzy_Charges_ShowInactive { get; set; }
+
+        [Menu("Endurance Charges", 530, 8)]
+        public ToggleNode Endurance_Charges { get; set; }
+        [Menu("X", 5301, 530)]
+        public RangeNode<float> Endurance_Charges_X { get; set; }
+        [Menu("Y", 5302, 530)]
+        public RangeNode<float> Endurance_Charges_Y { get; set; }
+        [Menu("Size", 5303, 530)]
+        public RangeNode<int> Endurance_Charges_Size { get; set; }
+        [Menu("Show Inactive", 5304, 530)]
+        public ToggleNode Endurance_Charges_ShowInactive { get; set; }
         #endregion
 
     }
