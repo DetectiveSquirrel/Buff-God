@@ -209,6 +209,12 @@ namespace Buff_God
             Endurance_Charges_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
             Endurance_Charges_Size = new RangeNode<int>(64, 1, 128);
             Endurance_Charges_ShowInactive = false;
+
+            Blade_Vortex_Charges = true;
+            Blade_Vortex_Charges_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Blade_Vortex_Charges_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Blade_Vortex_Charges_Size = new RangeNode<int>(64, 1, 128);
+            Blade_Vortex_Charges_ShowInactive = false;
             #endregion
             #region Leeching
             Leeching_Life = true;
@@ -609,6 +615,17 @@ namespace Buff_God
         public RangeNode<int> Endurance_Charges_Size { get; set; }
         [Menu("Show Inactive", 5304, 530)]
         public ToggleNode Endurance_Charges_ShowInactive { get; set; }
+
+        [Menu("Blade Vortex Charges", 540, 8)]
+        public ToggleNode Blade_Vortex_Charges { get; set; }
+        [Menu("X", 5401, 540)]
+        public RangeNode<float> Blade_Vortex_Charges_X { get; set; }
+        [Menu("Y", 5402, 540)]
+        public RangeNode<float> Blade_Vortex_Charges_Y { get; set; }
+        [Menu("Size", 5403, 540)]
+        public RangeNode<int> Blade_Vortex_Charges_Size { get; set; }
+        [Menu("Show Inactive", 5404, 540)]
+        public ToggleNode Blade_Vortex_Charges_ShowInactive { get; set; }
         #endregion
         #region Leeching
         // Leeching

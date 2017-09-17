@@ -107,6 +107,7 @@ namespace Buff_God
             object[] Power_Charges = { false, "", "power_charge", "\\Charges\\Power Charges", "\\Charges\\Power Charges Inactive", "" };
             object[] Frenzy_Charges = { false, "", "frenzy_charge", "\\Charges\\Frenzy Charges", "\\Charges\\Frenzy Charges Inactive", "" };
             object[] Endurance_Charges = { false, "", "endurance_charge", "\\Charges\\Endurance Charges", "\\Charges\\Endurance Charges Inactive", "" };
+            object[] Blade_Vortex_Charges = { false, "", "blade_vortex_counter", "\\Blade Vortex\\Blade Vortex", "\\Blade Vortex\\Blade Vortex Inactive", "" };
 
 
             object[] Leeching_Life = { false, "", "life_leech", "Life Leech Active", "Leech Inactive", };
@@ -303,6 +304,12 @@ namespace Buff_God
                     Endurance_Charges[0] = true;
                     Endurance_Charges[1] = BuffText;
                     Endurance_Charges[5] = Charges;
+                }
+                else if (ThisBuff.Equals((string)Blade_Vortex_Charges[2]))
+                {
+                    Blade_Vortex_Charges[0] = true;
+                    Blade_Vortex_Charges[1] = BuffText;
+                    Blade_Vortex_Charges[5] = Charges;
                 }
                 #endregion
                 #region Leeching
@@ -909,6 +916,24 @@ namespace Buff_God
                             DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[3] + " " + (string)Endurance_Charges[5]);
                         else if (Settings.Endurance_Charges_ShowInactive)
                             DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[4]);
+                    }
+                }
+                #endregion
+                #region Blade_Vortex_Charges
+                if (Settings.Blade_Vortex_Charges)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, "99", (string)Blade_Vortex_Charges[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Blade_Vortex_Charges[0])
+                            DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[1], (string)Blade_Vortex_Charges[3] + " " + (string)Blade_Vortex_Charges[5]);
+                        else if (Settings.Blade_Vortex_Charges_ShowInactive)
+                            DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[1], (string)Blade_Vortex_Charges[4]);
                     }
                 }
                 #endregion
