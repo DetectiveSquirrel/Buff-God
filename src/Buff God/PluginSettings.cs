@@ -215,6 +215,7 @@ namespace Buff_God
             Blade_Vortex_Charges_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
             Blade_Vortex_Charges_Size = new RangeNode<int>(64, 1, 128);
             Blade_Vortex_Charges_ShowInactive = false;
+            Blade_Vortex_Charges_BurnedCharges = false;
             #endregion
             #region Leeching
             Leeching_Life = true;
@@ -626,6 +627,8 @@ namespace Buff_God
         public RangeNode<int> Blade_Vortex_Charges_Size { get; set; }
         [Menu("Show Inactive", 5404, 540)]
         public ToggleNode Blade_Vortex_Charges_ShowInactive { get; set; }
+        [Menu("Charges Above Icon", 5405, 540)]
+        public ToggleNode Blade_Vortex_Charges_BurnedCharges { get; set; }
         #endregion
         #region Leeching
         // Leeching

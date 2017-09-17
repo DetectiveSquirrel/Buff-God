@@ -931,7 +931,12 @@ namespace Buff_God
                     else
                     {
                         if ((bool)Blade_Vortex_Charges[0])
-                            DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[1], (string)Blade_Vortex_Charges[3] + " " + (string)Blade_Vortex_Charges[5]);
+                        {
+                            if (Settings.Blade_Vortex_Charges_BurnedCharges)
+                                DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[1], (string)Blade_Vortex_Charges[3] + " " + (string)Blade_Vortex_Charges[5]);
+                            else
+                                DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[5], (string)Blade_Vortex_Charges[3]);
+                        }
                         else if (Settings.Blade_Vortex_Charges_ShowInactive)
                             DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[1], (string)Blade_Vortex_Charges[4]);
                     }
