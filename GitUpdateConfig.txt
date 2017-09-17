@@ -10,3 +10,4 @@ LICENSE
 config.ini
 .config
 .pdb
+ErrorLog.txt
