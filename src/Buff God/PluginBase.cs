@@ -1,13 +1,10 @@
 ﻿using PoeHUD.Controllers;
-using PoeHUD.Hud.Menu;
 using PoeHUD.Plugins;
 using PoeHUD.Poe.Components;
 using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Buff_God
 {
