@@ -19,7 +19,6 @@ namespace Buff_God
         }
 
         private bool _isTown;
-        private object submenu;
 
         public override void Initialise()
         {
@@ -35,18 +34,14 @@ namespace Buff_God
 
         public void BuffUi()
         {
-            if (_isTown) return;
+            var Panels = GameController.Game.IngameState.IngameUi;
+
+            if (_isTown || (Panels.AtlasPanel.IsVisible || Panels.OpenLeftPanel.IsVisible || Panels.TreePanel.IsVisible)) return;
             var x = GameController.Window.GetWindowRectangle().Width * 50 * .01f;
             var y = GameController.Window.GetWindowRectangle().Height * 50 * .01f;
             var position = new Vector2(x, y);
 
             /* TO-DO
-             * Hatred, heralds etc
-             * 
-             * 
-             * vaal auras
-             * Vaal Grace - vaal_aura_dodge
-             * 
              * charges ? 
             */
 
