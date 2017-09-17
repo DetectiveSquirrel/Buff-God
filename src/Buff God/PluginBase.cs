@@ -973,6 +973,11 @@ namespace Buff_God
 
         private void DrawBuff(float BuffX, float BuffY, int BuffSize, int TextSize, string BuffTimerText, string BuffFile)
         {
+            // Hardcoding the text size to flow with buffSize for now, can be undone by removing the 3 lines underneath
+            double buffTextPercent = BuffSize / 100.00;
+            double HardTextSize = 47.00 * buffTextPercent;
+            TextSize = (int)Math.Floor(HardTextSize);
+
             RectangleF rect = GameController.Window.GetWindowRectangle();
             var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
             Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
