@@ -1037,33 +1037,51 @@ namespace Buff_God
         {
             // Hardcoding the text size to flow with buffSize for now, can be undone by removing the 3 lines underneath
             double buffTextPercent = BuffSize / 100.00;
-            double HardTextSize = 47.00 * buffTextPercent;
+            double HardTextSize = 32.00 * buffTextPercent;
             TextSize = (int)Math.Floor(HardTextSize);
 
             RectangleF rect = GameController.Window.GetWindowRectangle();
             var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
             Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
-            Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+            
+            if (BuffTimerText != "")
+            {
+                // Buff Timer Text
+                int textYOffset = 2;
+                //var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+                var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, TestBuffWindow.Top - TextSize + textYOffset), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+                var TimerBackground = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, TestBuffWindow.Width, -BuffTimer.Height + textYOffset + 1);
+                Graphics.DrawImage("lightBackground.png", TimerBackground);
+            }
         }
 
         private void DrawBuff(float BuffX, float BuffY, int BuffSize, int TextSize, string BuffTimerText, string BuffFile, string charges)
         {
             // Hardcoding the text size to flow with buffSize for now, can be undone by removing the 6 lines underneath
             double buffTextPercent = BuffSize / 100.00;
-            double HardTextSize = 47.00 * buffTextPercent;
+            double HardTextSize = 32.00 * buffTextPercent;
             TextSize = (int)Math.Floor(HardTextSize);
 
             double buffTextPercent2 = BuffSize / 100.00;
-            double HardTextSize2 = 32.00 * buffTextPercent2;
+            double HardTextSize2 = 28.00 * buffTextPercent2;
             int TextSize2 = (int)Math.Floor(HardTextSize2);
 
             RectangleF rect = GameController.Window.GetWindowRectangle();
             var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
             Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
-            Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+            
+            if (BuffTimerText != "")
+            {
+                // Buff Timer Text
+                int textYOffset = 2;
+                //var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+                var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, TestBuffWindow.Top - TextSize + textYOffset), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+                var TimerBackground = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, TestBuffWindow.Width, -BuffTimer.Height + textYOffset + 1);
+                Graphics.DrawImage("lightBackground.png", TimerBackground);
+            }
 
+            // Charge Text
             var ChargeText = Graphics.DrawText(charges, TextSize2, new Vector2(TestBuffWindow.Left + 3, TestBuffWindow.Top + 1), Color.White, SharpDX.Direct3D9.FontDrawFlags.Left);
-
             var background = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, ChargeText.Width + 6, ChargeText.Height + 2);
             Graphics.DrawImage("lightBackground.png", background);
         }
