@@ -39,7 +39,8 @@ namespace Buff_God
             var position = new Vector2(x, y);
 
             /* TO-DO
-             * charges ? 
+             * Phase run - new_phase_run (new_phase_run_damage is presetn a fraction of a second before showing new_phase_run?)
+             * Smoke Mine - smoke_mine_movement_speed
             */
 
             /* Buff Array[]
@@ -104,10 +105,11 @@ namespace Buff_God
              * Charges
             */
             // Charges
-            object[] Power_Charges = { false, "", "power_charge", "\\Charges\\Power Charges", "\\Charges\\Power Charges Inactive", "" };
-            object[] Frenzy_Charges = { false, "", "frenzy_charge", "\\Charges\\Frenzy Charges", "\\Charges\\Frenzy Charges Inactive", "" };
-            object[] Endurance_Charges = { false, "", "endurance_charge", "\\Charges\\Endurance Charges", "\\Charges\\Endurance Charges Inactive", "" };
-            object[] Blade_Vortex_Charges = { false, "", "blade_vortex_counter", "\\Blade Vortex\\Blade Vortex", "\\Blade Vortex\\Blade Vortex Inactive", "" };
+            object[] Power_Charges = { false, "", "power_charge", "Power Charges Active", "Power Charges Inactive", "" };
+            object[] Frenzy_Charges = { false, "", "frenzy_charge", "Frenzy Charges Active", "Frenzy Charges Inactive", "" };
+            object[] Endurance_Charges = { false, "", "endurance_charge", "Endurance Charges Active", "Endurance Charges Inactive", "" };
+            object[] Blade_Vortex_Stacks = { false, "", "blade_vortex_counter", "Blade Vortex Active", "Blade Vortex Inactive", "" };
+            object[] Reave_Stacks = { false, "", "reave_counter", "Reave Active", "Reave Inactive", "" };
 
 
             object[] Leeching_Life = { false, "", "life_leech", "Life Leech Active", "Leech Inactive", };
@@ -305,11 +307,17 @@ namespace Buff_God
                     Endurance_Charges[1] = BuffText;
                     Endurance_Charges[5] = Charges;
                 }
-                else if (ThisBuff.Equals((string)Blade_Vortex_Charges[2]))
+                else if (ThisBuff.Equals((string)Blade_Vortex_Stacks[2]))
                 {
-                    Blade_Vortex_Charges[0] = true;
-                    Blade_Vortex_Charges[1] = BuffText;
-                    Blade_Vortex_Charges[5] = Charges;
+                    Blade_Vortex_Stacks[0] = true;
+                    Blade_Vortex_Stacks[1] = BuffText;
+                    Blade_Vortex_Stacks[5] = Charges;
+                }
+                else if (ThisBuff.Equals((string)Reave_Stacks[2]))
+                {
+                    Reave_Stacks[0] = true;
+                    Reave_Stacks[1] = BuffText;
+                    Reave_Stacks[5] = Charges;
                 }
                 #endregion
                 #region Leeching
@@ -451,7 +459,7 @@ namespace Buff_God
                 {
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, 30, "99", (string)Flesh_Offering[3]);
+                        DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, 30, "", (string)Flesh_Offering[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -478,7 +486,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Fire_Golem_X, Settings.Fire_Golem_Y, Settings.Fire_Golem_Size, 30, "99", (string)Fire_Golem[3]);
+                        DrawBuff(Settings.Fire_Golem_X, Settings.Fire_Golem_Y, Settings.Fire_Golem_Size, 30, "", (string)Fire_Golem[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -496,7 +504,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Ice_Golem_X, Settings.Ice_Golem_Y, Settings.Ice_Golem_Size, 30, "99", (string)Ice_Golem[3]);
+                        DrawBuff(Settings.Ice_Golem_X, Settings.Ice_Golem_Y, Settings.Ice_Golem_Size, 30, "", (string)Ice_Golem[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -514,7 +522,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Lightning_Golem_X, Settings.Lightning_Golem_Y, Settings.Lightning_Golem_Size, 30, "99", (string)Lightning_Golem[3]);
+                        DrawBuff(Settings.Lightning_Golem_X, Settings.Lightning_Golem_Y, Settings.Lightning_Golem_Size, 30, "", (string)Lightning_Golem[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -532,7 +540,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Chaos_Golem_X, Settings.Chaos_Golem_Y, Settings.Chaos_Golem_Size, 30, "99", (string)Chaos_Golem[3]);
+                        DrawBuff(Settings.Chaos_Golem_X, Settings.Chaos_Golem_Y, Settings.Chaos_Golem_Size, 30, "", (string)Chaos_Golem[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -550,7 +558,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Stone_Golem_X, Settings.Stone_Golem_Y, Settings.Stone_Golem_Size, 30, "99", (string)Stone_Golem[3]);
+                        DrawBuff(Settings.Stone_Golem_X, Settings.Stone_Golem_Y, Settings.Stone_Golem_Size, 30, "", (string)Stone_Golem[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -573,7 +581,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Anger_X, Settings.Anger_Y, Settings.Anger_Size, 30, "99", (string)Anger[3]);
+                        DrawBuff(Settings.Anger_X, Settings.Anger_Y, Settings.Anger_Size, 30, "", (string)Anger[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -591,7 +599,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Hatred_X, Settings.Hatred_Y, Settings.Hatred_Size, 30, "99", (string)Hatred[3]);
+                        DrawBuff(Settings.Hatred_X, Settings.Hatred_Y, Settings.Hatred_Size, 30, "", (string)Hatred[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -609,7 +617,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Wrath_X, Settings.Wrath_Y, Settings.Wrath_Size, 30, "99", (string)Wrath[3]);
+                        DrawBuff(Settings.Wrath_X, Settings.Wrath_Y, Settings.Wrath_Size, 30, "", (string)Wrath[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -627,7 +635,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Herald_of_Ash_X, Settings.Herald_of_Ash_Y, Settings.Herald_of_Ash_Size, 30, "99", (string)Herald_of_Ash[3]);
+                        DrawBuff(Settings.Herald_of_Ash_X, Settings.Herald_of_Ash_Y, Settings.Herald_of_Ash_Size, 30, "", (string)Herald_of_Ash[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -645,7 +653,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Herald_of_Ice_X, Settings.Herald_of_Ice_Y, Settings.Herald_of_Ice_Size, 30, "99", (string)Herald_of_Ice[3]);
+                        DrawBuff(Settings.Herald_of_Ice_X, Settings.Herald_of_Ice_Y, Settings.Herald_of_Ice_Size, 30, "", (string)Herald_of_Ice[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -663,7 +671,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Herald_of_Thunder_X, Settings.Herald_of_Thunder_Y, Settings.Herald_of_Thunder_Size, 30, "99", (string)Herald_of_Thunder[3]);
+                        DrawBuff(Settings.Herald_of_Thunder_X, Settings.Herald_of_Thunder_Y, Settings.Herald_of_Thunder_Size, 30, "", (string)Herald_of_Thunder[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -681,7 +689,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Haste_X, Settings.Haste_Y, Settings.Haste_Size, 30, "99", (string)Haste[3]);
+                        DrawBuff(Settings.Haste_X, Settings.Haste_Y, Settings.Haste_Size, 30, "", (string)Haste[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -704,7 +712,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Purity_of_Fire_X, Settings.Purity_of_Fire_Y, Settings.Purity_of_Fire_Size, 30, "99", (string)Purity_of_Fire[3]);
+                        DrawBuff(Settings.Purity_of_Fire_X, Settings.Purity_of_Fire_Y, Settings.Purity_of_Fire_Size, 30, "", (string)Purity_of_Fire[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -722,7 +730,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Purity_of_Ice_X, Settings.Purity_of_Ice_Y, Settings.Purity_of_Ice_Size, 30, "99", (string)Purity_of_Ice[3]);
+                        DrawBuff(Settings.Purity_of_Ice_X, Settings.Purity_of_Ice_Y, Settings.Purity_of_Ice_Size, 30, "", (string)Purity_of_Ice[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -740,7 +748,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Purity_of_Lightning_X, Settings.Purity_of_Lightning_Y, Settings.Purity_of_Lightning_Size, 30, "99", (string)Purity_of_Lightning[3]);
+                        DrawBuff(Settings.Purity_of_Lightning_X, Settings.Purity_of_Lightning_Y, Settings.Purity_of_Lightning_Size, 30, "", (string)Purity_of_Lightning[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -758,7 +766,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Purity_of_Elements_X, Settings.Purity_of_Elements_Y, Settings.Purity_of_Elements_Size, 30, "99", (string)Purity_of_Elements[3]);
+                        DrawBuff(Settings.Purity_of_Elements_X, Settings.Purity_of_Elements_Y, Settings.Purity_of_Elements_Size, 30, "", (string)Purity_of_Elements[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -776,7 +784,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Vitality_X, Settings.Vitality_Y, Settings.Vitality_Size, 30, "99", (string)Vitality[3]);
+                        DrawBuff(Settings.Vitality_X, Settings.Vitality_Y, Settings.Vitality_Size, 30, "", (string)Vitality[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -794,7 +802,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Discipline_X, Settings.Discipline_Y, Settings.Discipline_Size, 30, "99", (string)Discipline[3]);
+                        DrawBuff(Settings.Discipline_X, Settings.Discipline_Y, Settings.Discipline_Size, 30, "", (string)Discipline[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -812,7 +820,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Determination_X, Settings.Determination_Y, Settings.Determination_Size, 30, "99", (string)Determination[3]);
+                        DrawBuff(Settings.Determination_X, Settings.Determination_Y, Settings.Determination_Size, 30, "", (string)Determination[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -830,7 +838,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Grace_X, Settings.Grace_Y, Settings.Grace_Size, 30, "99", (string)Grace[3]);
+                        DrawBuff(Settings.Grace_X, Settings.Grace_Y, Settings.Grace_Size, 30, "", (string)Grace[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -848,7 +856,7 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Clarity_X, Settings.Clarity_Y, Settings.Clarity_Size, 30, "99", (string)Clarity[3]);
+                        DrawBuff(Settings.Clarity_X, Settings.Clarity_Y, Settings.Clarity_Size, 30, "", (string)Clarity[3]);
                     }
                     // Icon Not Forced On
                     else
@@ -871,13 +879,13 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, "99", (string)Power_Charges[3]);
+                        DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, "99", (string)Power_Charges[3], "99");
                     }
                     // Icon Not Forced On
                     else
                     {
                         if ((bool)Power_Charges[0])
-                            DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, (string)Power_Charges[1], (string)Power_Charges[3] + " " + (string)Power_Charges[5]);
+                            DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, (string)Power_Charges[1], (string)Power_Charges[3], (string)Power_Charges[5]);
                         else if (Settings.Power_Charges_ShowInactive)
                             DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, (string)Power_Charges[1], (string)Power_Charges[4]);
                     }
@@ -889,13 +897,13 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, "99", (string)Frenzy_Charges[3]);
+                        DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, "99", (string)Frenzy_Charges[3], "99");
                     }
                     // Icon Not Forced On
                     else
                     {
                         if ((bool)Frenzy_Charges[0])
-                            DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, (string)Frenzy_Charges[1], (string)Frenzy_Charges[3] + " " + (string)Frenzy_Charges[5]);
+                            DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, (string)Frenzy_Charges[1], (string)Frenzy_Charges[3], (string)Frenzy_Charges[5]);
                         else if (Settings.Frenzy_Charges_ShowInactive)
                             DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, (string)Frenzy_Charges[1], (string)Frenzy_Charges[4]);
                     }
@@ -907,38 +915,62 @@ namespace Buff_God
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, "99", (string)Endurance_Charges[3]);
+                        DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, "99", (string)Endurance_Charges[3], "99");
                     }
                     // Icon Not Forced On
                     else
                     {
                         if ((bool)Endurance_Charges[0])
-                            DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[3] + " " + (string)Endurance_Charges[5]);
+                            DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[3], (string)Endurance_Charges[5]);
                         else if (Settings.Endurance_Charges_ShowInactive)
                             DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[4]);
                     }
                 }
                 #endregion
-                #region Blade_Vortex_Charges
-                if (Settings.Blade_Vortex_Charges)
+                #region Blade_Vortex_Stacks
+                if (Settings.Blade_Vortex_Stacks)
                 {
                     // Icon Forced On
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, "99", (string)Blade_Vortex_Charges[3]);
+                        DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, "99", (string)Blade_Vortex_Stacks[3], "99");
                     }
                     // Icon Not Forced On
                     else
                     {
-                        if ((bool)Blade_Vortex_Charges[0])
+                        if ((bool)Blade_Vortex_Stacks[0])
                         {
-                            if (Settings.Blade_Vortex_Charges_BurnedCharges)
-                                DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[1], (string)Blade_Vortex_Charges[3] + " " + (string)Blade_Vortex_Charges[5]);
+                            if (!Settings.Blade_Vortex_Stacks_BurnedCharges)
+                                //DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, (string)Blade_Vortex_Stacks[1], (string)Blade_Vortex_Stacks[3] + " " + (string)Blade_Vortex_Stacks[5]);
+                                DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, (string)Blade_Vortex_Stacks[1], (string)Blade_Vortex_Stacks[3], (string)Blade_Vortex_Stacks[5]);
                             else
-                                DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[5], (string)Blade_Vortex_Charges[3]);
+                                DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, (string)Blade_Vortex_Stacks[5], (string)Blade_Vortex_Stacks[3]);
                         }
-                        else if (Settings.Blade_Vortex_Charges_ShowInactive)
-                            DrawBuff(Settings.Blade_Vortex_Charges_X, Settings.Blade_Vortex_Charges_Y, Settings.Blade_Vortex_Charges_Size, 30, (string)Blade_Vortex_Charges[1], (string)Blade_Vortex_Charges[4]);
+                        else if (Settings.Blade_Vortex_Stacks_ShowInactive)
+                            DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, (string)Blade_Vortex_Stacks[1], (string)Blade_Vortex_Stacks[4]);
+                    }
+                }
+                #endregion
+                #region Reave_Stacks
+                if (Settings.Reave_Stacks)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Reave_Stacks_X, Settings.Reave_Stacks_Y, Settings.Reave_Stacks_Size, 30, "99", (string)Reave_Stacks[3], "99");
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Reave_Stacks[0])
+                        {
+                            if (!Settings.Reave_Stacks_BurnedCharges)
+                                DrawBuff(Settings.Reave_Stacks_X, Settings.Reave_Stacks_Y, Settings.Reave_Stacks_Size, 30, (string)Reave_Stacks[1], (string)Reave_Stacks[3], (string)Reave_Stacks[5]);
+                            else
+                                DrawBuff(Settings.Reave_Stacks_X, Settings.Reave_Stacks_Y, Settings.Reave_Stacks_Size, 30, (string)Reave_Stacks[5], (string)Reave_Stacks[3]);
+                        }
+                        else if (Settings.Reave_Stacks_ShowInactive)
+                            DrawBuff(Settings.Reave_Stacks_X, Settings.Reave_Stacks_Y, Settings.Reave_Stacks_Size, 30, (string)Reave_Stacks[1], (string)Reave_Stacks[4]);
                     }
                 }
                 #endregion
@@ -1012,6 +1044,28 @@ namespace Buff_God
             var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
             Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
             Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+        }
+
+        private void DrawBuff(float BuffX, float BuffY, int BuffSize, int TextSize, string BuffTimerText, string BuffFile, string charges)
+        {
+            // Hardcoding the text size to flow with buffSize for now, can be undone by removing the 6 lines underneath
+            double buffTextPercent = BuffSize / 100.00;
+            double HardTextSize = 47.00 * buffTextPercent;
+            TextSize = (int)Math.Floor(HardTextSize);
+
+            double buffTextPercent2 = BuffSize / 100.00;
+            double HardTextSize2 = 32.00 * buffTextPercent2;
+            int TextSize2 = (int)Math.Floor(HardTextSize2);
+
+            RectangleF rect = GameController.Window.GetWindowRectangle();
+            var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
+            Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
+            Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+
+            var ChargeText = Graphics.DrawText(charges, TextSize2, new Vector2(TestBuffWindow.Left + 3, TestBuffWindow.Top + 1), Color.White, SharpDX.Direct3D9.FontDrawFlags.Left);
+
+            var background = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, ChargeText.Width + 6, ChargeText.Height + 2);
+            Graphics.DrawImage("lightBackground.png", background);
         }
 
         private void OnAreaChange(AreaController area)

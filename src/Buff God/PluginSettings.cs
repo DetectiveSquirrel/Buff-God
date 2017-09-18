@@ -210,12 +210,19 @@ namespace Buff_God
             Endurance_Charges_Size = new RangeNode<int>(64, 1, 128);
             Endurance_Charges_ShowInactive = false;
 
-            Blade_Vortex_Charges = true;
-            Blade_Vortex_Charges_X = new RangeNode<float>(13f, 0.0f, 100.0f);
-            Blade_Vortex_Charges_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
-            Blade_Vortex_Charges_Size = new RangeNode<int>(64, 1, 128);
-            Blade_Vortex_Charges_ShowInactive = false;
-            Blade_Vortex_Charges_BurnedCharges = false;
+            Blade_Vortex_Stacks = true;
+            Blade_Vortex_Stacks_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Blade_Vortex_Stacks_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Blade_Vortex_Stacks_Size = new RangeNode<int>(64, 1, 128);
+            Blade_Vortex_Stacks_ShowInactive = false;
+            Blade_Vortex_Stacks_BurnedCharges = false;
+
+            Reave_Stacks = true;
+            Reave_Stacks_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Reave_Stacks_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Reave_Stacks_Size = new RangeNode<int>(64, 1, 128);
+            Reave_Stacks_ShowInactive = false;
+            Reave_Stacks_BurnedCharges = false;
             #endregion
             #region Leeching
             Leeching_Life = true;
@@ -617,18 +624,31 @@ namespace Buff_God
         [Menu("Show Inactive", 5304, 530)]
         public ToggleNode Endurance_Charges_ShowInactive { get; set; }
 
-        [Menu("Blade Vortex Charges", 540, 8)]
-        public ToggleNode Blade_Vortex_Charges { get; set; }
+        [Menu("Blade Vortex Stacks", 540, 8)]
+        public ToggleNode Blade_Vortex_Stacks { get; set; }
         [Menu("X", 5401, 540)]
-        public RangeNode<float> Blade_Vortex_Charges_X { get; set; }
+        public RangeNode<float> Blade_Vortex_Stacks_X { get; set; }
         [Menu("Y", 5402, 540)]
-        public RangeNode<float> Blade_Vortex_Charges_Y { get; set; }
+        public RangeNode<float> Blade_Vortex_Stacks_Y { get; set; }
         [Menu("Size", 5403, 540)]
-        public RangeNode<int> Blade_Vortex_Charges_Size { get; set; }
+        public RangeNode<int> Blade_Vortex_Stacks_Size { get; set; }
         [Menu("Show Inactive", 5404, 540)]
-        public ToggleNode Blade_Vortex_Charges_ShowInactive { get; set; }
+        public ToggleNode Blade_Vortex_Stacks_ShowInactive { get; set; }
         [Menu("Charges Above Icon", 5405, 540)]
-        public ToggleNode Blade_Vortex_Charges_BurnedCharges { get; set; }
+        public ToggleNode Blade_Vortex_Stacks_BurnedCharges { get; set; }
+        
+        [Menu("Reave Stacks", 550, 8)]
+        public ToggleNode Reave_Stacks { get; set; }
+        [Menu("X", 5501, 550)]
+        public RangeNode<float> Reave_Stacks_X { get; set; }
+        [Menu("Y", 5502, 550)]
+        public RangeNode<float> Reave_Stacks_Y { get; set; }
+        [Menu("Size", 5503, 550)]
+        public RangeNode<int> Reave_Stacks_Size { get; set; }
+        [Menu("Show Inactive", 5504, 550)]
+        public ToggleNode Reave_Stacks_ShowInactive { get; set; }
+        [Menu("Charges Above Icon", 5505, 550)]
+        public ToggleNode Reave_Stacks_BurnedCharges { get; set; }
         #endregion
         #region Leeching
         // Leeching
