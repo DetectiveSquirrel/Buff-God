@@ -783,7 +783,7 @@ namespace Buff_God
             if (Settings.Leeching)
             {
                 #region Leeching_Life
-                if (Settings.Leeching_Life_ShowInactive)
+                if ((bool)Leeching_Life[0])
                 {
                     // Sort life leech buff timers Highest -> Lowest
                     Leeching_Life_Buff_Durations.Sort();
@@ -798,7 +798,7 @@ namespace Buff_God
                     (string)Leeching_Life[1], (string)Leeching_Life[3], (string)Leeching_Life[4]);
                 #endregion
                 #region Leeching_Mana
-                if (Settings.Leeching_Mana_ShowInactive)
+                if ((bool)Leeching_Mana[0])
                 {
                     // Sort life leech buff timers Highest -> Lowest
                     Leeching_Mana_Buff_Durations.Sort();
