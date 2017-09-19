@@ -94,6 +94,20 @@ namespace Buff_God
             object[] Grace = { false, "", "player_aura_evasion", "Grace Active", "Grace Inactive" };
             object[] Clarity = { false, "", "player_aura_mana_regen", "Clarity Active", "Clarity Inactive" };
 
+            // Curses
+            object[] Curse_Poachers_Mark = { false, "", "curse_poachers_mark", "Poacher's Mark Active", "Poacher's Mark Inactive" };
+            object[] Curse_Frostbite = { false, "", "curse_cold_weakness", "Frostbite Active", "Frostbite Inactive" };
+            object[] Curse_Vulnerability = { false, "", "curse_vulnerability", "Vulnerability Active", "Vulnerability Inactive" };
+            object[] Curse_Warlords_Mark = { false, "", "curse_warlords_mark", "Warlord's Mark Active", "Warlord's Mark Inactive" };
+            object[] Curse_Flammability = { false, "", "curse_fire_weakness", "Flammability Active", "Flammability Inactive" };
+            object[] Curse_Assassins_Mark = { false, "", "curse_assassins_mark", "Assassin's Mark Active", "Assassin's Mark Inactive" };
+            object[] Curse_Elemental_Weakness = { false, "", "curse_elemental_weakness", "Elemental Weakness Active", "Elemental Weakness Inactive" };
+            object[] Curse_Conductivity = { false, "", "curse_lightning_weakness", "Conductivity Active", "Conductivity Inactive" };
+            object[] Curse_Enfeeble = { false, "", "curse_enfeeble", "Enfeeble Active", "Enfeeble Inactive" };
+            object[] Curse_Punishment = { false, "", "curse_newpunishment", "Punishment Active", "Punishment Inactive" };
+            object[] Curse_Projectile_Weakness = { false, "", "curse_projectile_weakness", "Projectile Weakness Active", "Projectile Weakness Inactive" };
+            object[] Curse_Temporal_Chains = { false, "", "curse_temporal_chains", "Temporal Chains Active", "Temporal Chains Inactive" };
+
 
             /* Buff Array[]
              * 
@@ -111,7 +125,7 @@ namespace Buff_God
             object[] Blade_Vortex_Stacks = { false, "", "blade_vortex_counter", "Blade Vortex Active", "Blade Vortex Inactive", "" };
             object[] Reave_Stacks = { false, "", "reave_counter", "Reave Active", "Reave Inactive", "" };
 
-
+            // Leeching
             object[] Leeching_Life = { false, "", "life_leech", "Life Leech Active", "Leech Inactive", };
             object[] Leeching_Mana = { false, "", "mana_leech", "Mana Leech Active", "Leech Inactive", };
             List<float> Leeching_Life_Buff_Durations = new List<float>();
@@ -318,6 +332,68 @@ namespace Buff_God
                     Reave_Stacks[0] = true;
                     Reave_Stacks[1] = BuffText;
                     Reave_Stacks[5] = Charges;
+                }
+                #endregion
+                #region Curses
+                else if (ThisBuff.Equals((string)Curse_Poachers_Mark[2]))
+                {
+                    Curse_Poachers_Mark[0] = true;
+                    Curse_Poachers_Mark[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Frostbite[2]))
+                {
+                    Curse_Frostbite[0] = true;
+                    Curse_Frostbite[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Vulnerability[2]))
+                {
+                    Curse_Vulnerability[0] = true;
+                    Curse_Vulnerability[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Warlords_Mark[2]))
+                {
+                    Curse_Warlords_Mark[0] = true;
+                    Curse_Warlords_Mark[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Flammability[2]))
+                {
+                    Curse_Flammability[0] = true;
+                    Curse_Flammability[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Assassins_Mark[2]))
+                {
+                    Curse_Assassins_Mark[0] = true;
+                    Curse_Assassins_Mark[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Elemental_Weakness[2]))
+                {
+                    Curse_Elemental_Weakness[0] = true;
+                    Curse_Elemental_Weakness[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Conductivity[2]))
+                {
+                    Curse_Conductivity[0] = true;
+                    Curse_Conductivity[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Enfeeble[2]))
+                {
+                    Curse_Enfeeble[0] = true;
+                    Curse_Enfeeble[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Punishment[2]))
+                {
+                    Curse_Punishment[0] = true;
+                    Curse_Punishment[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Projectile_Weakness[2]))
+                {
+                    Curse_Projectile_Weakness[0] = true;
+                    Curse_Projectile_Weakness[1] = BuffText;
+                }
+                else if (ThisBuff.Equals((string)Curse_Temporal_Chains[2]))
+                {
+                    Curse_Temporal_Chains[0] = true;
+                    Curse_Temporal_Chains[1] = BuffText;
                 }
                 #endregion
                 #region Leeching
@@ -976,6 +1052,227 @@ namespace Buff_God
                 #endregion
             }
             #endregion
+            #region Curses
+            if (Settings.Curses)
+            {
+                #region Curse_Poachers_Mark
+                if (Settings.Curse_Poachers_Mark)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Poachers_Mark_X, Settings.Curse_Poachers_Mark_Y, Settings.Curse_Poachers_Mark_Size, 30, "99", (string)Curse_Poachers_Mark[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Poachers_Mark[0])
+                            DrawBuff(Settings.Curse_Poachers_Mark_X, Settings.Curse_Poachers_Mark_Y, Settings.Curse_Poachers_Mark_Size, 30, (string)Curse_Poachers_Mark[1], (string)Curse_Poachers_Mark[3]);
+                        else if (Settings.Curse_Poachers_Mark_ShowInactive)
+                            DrawBuff(Settings.Curse_Poachers_Mark_X, Settings.Curse_Poachers_Mark_Y, Settings.Curse_Poachers_Mark_Size, 30, (string)Curse_Poachers_Mark[1], (string)Curse_Poachers_Mark[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Frostbite
+                if (Settings.Curse_Frostbite)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Frostbite_X, Settings.Curse_Frostbite_Y, Settings.Curse_Frostbite_Size, 30, "99", (string)Curse_Frostbite[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Frostbite[0])
+                            DrawBuff(Settings.Curse_Frostbite_X, Settings.Curse_Frostbite_Y, Settings.Curse_Frostbite_Size, 30, (string)Curse_Frostbite[1], (string)Curse_Frostbite[3]);
+                        else if (Settings.Curse_Frostbite_ShowInactive)
+                            DrawBuff(Settings.Curse_Frostbite_X, Settings.Curse_Frostbite_Y, Settings.Curse_Frostbite_Size, 30, (string)Curse_Frostbite[1], (string)Curse_Frostbite[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Vulnerability
+                if (Settings.Curse_Vulnerability)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Vulnerability_X, Settings.Curse_Vulnerability_Y, Settings.Curse_Vulnerability_Size, 30, "99", (string)Curse_Vulnerability[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Vulnerability[0])
+                            DrawBuff(Settings.Curse_Vulnerability_X, Settings.Curse_Vulnerability_Y, Settings.Curse_Vulnerability_Size, 30, (string)Curse_Vulnerability[1], (string)Curse_Vulnerability[3]);
+                        else if (Settings.Curse_Vulnerability_ShowInactive)
+                            DrawBuff(Settings.Curse_Vulnerability_X, Settings.Curse_Vulnerability_Y, Settings.Curse_Vulnerability_Size, 30, (string)Curse_Vulnerability[1], (string)Curse_Vulnerability[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Warlords_Mark
+                if (Settings.Curse_Warlords_Mark)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Warlords_Mark_X, Settings.Curse_Warlords_Mark_Y, Settings.Curse_Warlords_Mark_Size, 30, "99", (string)Curse_Warlords_Mark[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Warlords_Mark[0])
+                            DrawBuff(Settings.Curse_Warlords_Mark_X, Settings.Curse_Warlords_Mark_Y, Settings.Curse_Warlords_Mark_Size, 30, (string)Curse_Warlords_Mark[1], (string)Curse_Warlords_Mark[3]);
+                        else if (Settings.Curse_Warlords_Mark_ShowInactive)
+                            DrawBuff(Settings.Curse_Warlords_Mark_X, Settings.Curse_Warlords_Mark_Y, Settings.Curse_Warlords_Mark_Size, 30, (string)Curse_Warlords_Mark[1], (string)Curse_Warlords_Mark[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Flammability
+                if (Settings.Curse_Flammability)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Flammability_X, Settings.Curse_Flammability_Y, Settings.Curse_Flammability_Size, 30, "99", (string)Curse_Flammability[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Flammability[0])
+                            DrawBuff(Settings.Curse_Flammability_X, Settings.Curse_Flammability_Y, Settings.Curse_Flammability_Size, 30, (string)Curse_Flammability[1], (string)Curse_Flammability[3]);
+                        else if (Settings.Curse_Flammability_ShowInactive)
+                            DrawBuff(Settings.Curse_Flammability_X, Settings.Curse_Flammability_Y, Settings.Curse_Flammability_Size, 30, (string)Curse_Flammability[1], (string)Curse_Flammability[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Assassins_Mark
+                if (Settings.Curse_Assassins_Mark)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Assassins_Mark_X, Settings.Curse_Assassins_Mark_Y, Settings.Curse_Assassins_Mark_Size, 30, "99", (string)Curse_Assassins_Mark[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Assassins_Mark[0])
+                            DrawBuff(Settings.Curse_Assassins_Mark_X, Settings.Curse_Assassins_Mark_Y, Settings.Curse_Assassins_Mark_Size, 30, (string)Curse_Assassins_Mark[1], (string)Curse_Assassins_Mark[3]);
+                        else if (Settings.Curse_Assassins_Mark_ShowInactive)
+                            DrawBuff(Settings.Curse_Assassins_Mark_X, Settings.Curse_Assassins_Mark_Y, Settings.Curse_Assassins_Mark_Size, 30, (string)Curse_Assassins_Mark[1], (string)Curse_Assassins_Mark[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Elemental_Weakness
+                if (Settings.Curse_Elemental_Weakness)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Elemental_Weakness_X, Settings.Curse_Elemental_Weakness_Y, Settings.Curse_Elemental_Weakness_Size, 30, "99", (string)Curse_Elemental_Weakness[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Elemental_Weakness[0])
+                            DrawBuff(Settings.Curse_Elemental_Weakness_X, Settings.Curse_Elemental_Weakness_Y, Settings.Curse_Elemental_Weakness_Size, 30, (string)Curse_Elemental_Weakness[1], (string)Curse_Elemental_Weakness[3]);
+                        else if (Settings.Curse_Elemental_Weakness_ShowInactive)
+                            DrawBuff(Settings.Curse_Elemental_Weakness_X, Settings.Curse_Elemental_Weakness_Y, Settings.Curse_Elemental_Weakness_Size, 30, (string)Curse_Elemental_Weakness[1], (string)Curse_Elemental_Weakness[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Conductivity
+                if (Settings.Curse_Conductivity)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Conductivity_X, Settings.Curse_Conductivity_Y, Settings.Curse_Conductivity_Size, 30, "99", (string)Curse_Conductivity[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Conductivity[0])
+                            DrawBuff(Settings.Curse_Conductivity_X, Settings.Curse_Conductivity_Y, Settings.Curse_Conductivity_Size, 30, (string)Curse_Conductivity[1], (string)Curse_Conductivity[3]);
+                        else if (Settings.Curse_Conductivity_ShowInactive)
+                            DrawBuff(Settings.Curse_Conductivity_X, Settings.Curse_Conductivity_Y, Settings.Curse_Conductivity_Size, 30, (string)Curse_Conductivity[1], (string)Curse_Conductivity[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Enfeeble
+                if (Settings.Curse_Enfeeble)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Enfeeble_X, Settings.Curse_Enfeeble_Y, Settings.Curse_Enfeeble_Size, 30, "99", (string)Curse_Enfeeble[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Enfeeble[0])
+                            DrawBuff(Settings.Curse_Enfeeble_X, Settings.Curse_Enfeeble_Y, Settings.Curse_Enfeeble_Size, 30, (string)Curse_Enfeeble[1], (string)Curse_Enfeeble[3]);
+                        else if (Settings.Curse_Enfeeble_ShowInactive)
+                            DrawBuff(Settings.Curse_Enfeeble_X, Settings.Curse_Enfeeble_Y, Settings.Curse_Enfeeble_Size, 30, (string)Curse_Enfeeble[1], (string)Curse_Enfeeble[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Punishment
+                if (Settings.Curse_Punishment)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Punishment_X, Settings.Curse_Punishment_Y, Settings.Curse_Punishment_Size, 30, "99", (string)Curse_Punishment[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Punishment[0])
+                            DrawBuff(Settings.Curse_Punishment_X, Settings.Curse_Punishment_Y, Settings.Curse_Punishment_Size, 30, (string)Curse_Punishment[1], (string)Curse_Punishment[3]);
+                        else if (Settings.Curse_Punishment_ShowInactive)
+                            DrawBuff(Settings.Curse_Punishment_X, Settings.Curse_Punishment_Y, Settings.Curse_Punishment_Size, 30, (string)Curse_Punishment[1], (string)Curse_Punishment[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Projectile_Weakness
+                if (Settings.Curse_Projectile_Weakness)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Projectile_Weakness_X, Settings.Curse_Projectile_Weakness_Y, Settings.Curse_Projectile_Weakness_Size, 30, "99", (string)Curse_Projectile_Weakness[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Projectile_Weakness[0])
+                            DrawBuff(Settings.Curse_Projectile_Weakness_X, Settings.Curse_Projectile_Weakness_Y, Settings.Curse_Projectile_Weakness_Size, 30, (string)Curse_Projectile_Weakness[1], (string)Curse_Projectile_Weakness[3]);
+                        else if (Settings.Curse_Projectile_Weakness_ShowInactive)
+                            DrawBuff(Settings.Curse_Projectile_Weakness_X, Settings.Curse_Projectile_Weakness_Y, Settings.Curse_Projectile_Weakness_Size, 30, (string)Curse_Projectile_Weakness[1], (string)Curse_Projectile_Weakness[4]);
+                    }
+                }
+                #endregion
+                #region Curse_Temporal_Chains
+                if (Settings.Curse_Temporal_Chains)
+                {
+                    // Icon Forced On
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Curse_Temporal_Chains_X, Settings.Curse_Temporal_Chains_Y, Settings.Curse_Temporal_Chains_Size, 30, "99", (string)Curse_Temporal_Chains[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Curse_Temporal_Chains[0])
+                            DrawBuff(Settings.Curse_Temporal_Chains_X, Settings.Curse_Temporal_Chains_Y, Settings.Curse_Temporal_Chains_Size, 30, (string)Curse_Temporal_Chains[1], (string)Curse_Temporal_Chains[3]);
+                        else if (Settings.Curse_Temporal_Chains_ShowInactive)
+                            DrawBuff(Settings.Curse_Temporal_Chains_X, Settings.Curse_Temporal_Chains_Y, Settings.Curse_Temporal_Chains_Size, 30, (string)Curse_Temporal_Chains[1], (string)Curse_Temporal_Chains[4]);
+                    }
+                }
+                #endregion
+            }
+            #endregion
             #region Leeching
             if (Settings.Leeching)
             {
@@ -1043,14 +1340,14 @@ namespace Buff_God
             RectangleF rect = GameController.Window.GetWindowRectangle();
             var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
             Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
-            
+
             if (BuffTimerText != "")
             {
                 // Buff Timer Text
-                int textYOffset = 2;
+                int textYOffset = -1;
                 //var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
-                var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, TestBuffWindow.Top - TextSize + textYOffset), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
-                var TimerBackground = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, TestBuffWindow.Width, -BuffTimer.Height + textYOffset + 1);
+                var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, TestBuffWindow.Top - TextSize + textYOffset+1), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
+                var TimerBackground = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, TestBuffWindow.Width, -BuffTimer.Height + textYOffset);
                 Graphics.DrawImage("lightBackground.png", TimerBackground);
             }
         }
@@ -1069,11 +1366,11 @@ namespace Buff_God
             RectangleF rect = GameController.Window.GetWindowRectangle();
             var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
             Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
-            
+
             if (BuffTimerText != "")
             {
                 // Buff Timer Text
-                int textYOffset = 2;
+                int textYOffset =-1;
                 //var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
                 var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, TestBuffWindow.Top - TextSize + textYOffset), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
                 var TimerBackground = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, TestBuffWindow.Width, -BuffTimer.Height + textYOffset + 1);

@@ -15,6 +15,7 @@ namespace Buff_God
             Defenseive_Aura = true;
             Charges = true;
             Leeching = true;
+            Curses = true;
             Others = true;
 
             #region Others
@@ -224,6 +225,79 @@ namespace Buff_God
             Reave_Stacks_ShowInactive = false;
             Reave_Stacks_BurnedCharges = false;
             #endregion
+            #region Curses
+            Curse_Poachers_Mark = true;
+            Curse_Poachers_Mark_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Poachers_Mark_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Poachers_Mark_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Poachers_Mark_ShowInactive = false;
+
+            Curse_Frostbite = true;
+            Curse_Frostbite_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Frostbite_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Frostbite_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Frostbite_ShowInactive = false;
+
+            Curse_Vulnerability = true;
+            Curse_Vulnerability_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Vulnerability_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Vulnerability_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Vulnerability_ShowInactive = false;
+
+            Curse_Warlords_Mark = true;
+            Curse_Warlords_Mark_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Warlords_Mark_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Warlords_Mark_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Warlords_Mark_ShowInactive = false;
+
+            Curse_Flammability = true;
+            Curse_Flammability_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Flammability_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Flammability_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Flammability_ShowInactive = false;
+
+            Curse_Assassins_Mark = true;
+            Curse_Assassins_Mark_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Assassins_Mark_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Assassins_Mark_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Assassins_Mark_ShowInactive = false;
+
+            Curse_Elemental_Weakness = true;
+            Curse_Elemental_Weakness_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Elemental_Weakness_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Elemental_Weakness_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Elemental_Weakness_ShowInactive = false;
+
+            Curse_Conductivity = true;
+            Curse_Conductivity_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Conductivity_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Conductivity_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Conductivity_ShowInactive = false;
+
+            Curse_Enfeeble = true;
+            Curse_Enfeeble_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Enfeeble_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Enfeeble_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Enfeeble_ShowInactive = false;
+
+            Curse_Punishment = true;
+            Curse_Punishment_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Punishment_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Punishment_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Punishment_ShowInactive = false;
+
+            Curse_Projectile_Weakness = true;
+            Curse_Projectile_Weakness_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Projectile_Weakness_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Projectile_Weakness_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Projectile_Weakness_ShowInactive = false;
+
+            Curse_Temporal_Chains = true;
+            Curse_Temporal_Chains_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Curse_Temporal_Chains_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Curse_Temporal_Chains_Size = new RangeNode<int>(64, 1, 128);
+            Curse_Temporal_Chains_ShowInactive = false;
+            #endregion
             #region Leeching
             Leeching_Life = true;
             Leeching_Life_X = new RangeNode<float>(13f, 0.0f, 100.0f);
@@ -242,7 +316,6 @@ namespace Buff_God
 
         [Menu("Force Icons On", 1)]
         public ToggleNode Force_Icons_On { get; set; }
-
 
         [Menu("Golems", 2)]
         public ToggleNode Golems { get; set; }
@@ -264,6 +337,9 @@ namespace Buff_God
 
         [Menu("Leeching", 9)]
         public ToggleNode Leeching { get; set; }
+
+        [Menu("Curses", 1000)]
+        public ToggleNode Curses { get; set; }
 
         [Menu("Others", 7)]
         public ToggleNode Others { get; set; }
@@ -650,28 +726,161 @@ namespace Buff_God
         [Menu("Charges Above Icon", 5505, 550)]
         public ToggleNode Reave_Stacks_BurnedCharges { get; set; }
         #endregion
+        #region Curses
+        [Menu("Poacher's Mark", 610, 1000)]
+        public ToggleNode Curse_Poachers_Mark { get; set; }
+        [Menu("X", 6101, 610)]
+        public RangeNode<float> Curse_Poachers_Mark_X { get; set; }
+        [Menu("Y", 6102, 610)]
+        public RangeNode<float> Curse_Poachers_Mark_Y { get; set; }
+        [Menu("Size", 6103, 610)]
+        public RangeNode<int> Curse_Poachers_Mark_Size { get; set; }
+        [Menu("Show Inactive", 6104, 610)]
+        public ToggleNode Curse_Poachers_Mark_ShowInactive { get; set; }
+
+        [Menu("Frostbite", 620, 1000)]
+        public ToggleNode Curse_Frostbite { get; set; }
+        [Menu("X", 6201, 620)]
+        public RangeNode<float> Curse_Frostbite_X { get; set; }
+        [Menu("Y", 6202, 620)]
+        public RangeNode<float> Curse_Frostbite_Y { get; set; }
+        [Menu("Size", 6203, 620)]
+        public RangeNode<int> Curse_Frostbite_Size { get; set; }
+        [Menu("Show Inactive", 6204, 620)]
+        public ToggleNode Curse_Frostbite_ShowInactive { get; set; }
+
+        [Menu("Vulnerability", 630, 1000)]
+        public ToggleNode Curse_Vulnerability { get; set; }
+        [Menu("X", 6301, 630)]
+        public RangeNode<float> Curse_Vulnerability_X { get; set; }
+        [Menu("Y", 6302, 630)]
+        public RangeNode<float> Curse_Vulnerability_Y { get; set; }
+        [Menu("Size", 6303, 630)]
+        public RangeNode<int> Curse_Vulnerability_Size { get; set; }
+        [Menu("Show Inactive", 6304, 630)]
+        public ToggleNode Curse_Vulnerability_ShowInactive { get; set; }
+
+        [Menu("Warlord's Mark", 640, 1000)]
+        public ToggleNode Curse_Warlords_Mark { get; set; }
+        [Menu("X", 6401, 640)]
+        public RangeNode<float> Curse_Warlords_Mark_X { get; set; }
+        [Menu("Y", 6402, 640)]
+        public RangeNode<float> Curse_Warlords_Mark_Y { get; set; }
+        [Menu("Size", 6403, 640)]
+        public RangeNode<int> Curse_Warlords_Mark_Size { get; set; }
+        [Menu("Show Inactive", 6404, 640)]
+        public ToggleNode Curse_Warlords_Mark_ShowInactive { get; set; }
+
+        [Menu("Flammability", 650, 1000)]
+        public ToggleNode Curse_Flammability { get; set; }
+        [Menu("X", 6501, 650)]
+        public RangeNode<float> Curse_Flammability_X { get; set; }
+        [Menu("Y", 6502, 650)]
+        public RangeNode<float> Curse_Flammability_Y { get; set; }
+        [Menu("Size", 6503, 650)]
+        public RangeNode<int> Curse_Flammability_Size { get; set; }
+        [Menu("Show Inactive", 6504, 650)]
+        public ToggleNode Curse_Flammability_ShowInactive { get; set; }
+
+        [Menu("Assassin's Mark", 660, 1000)]
+        public ToggleNode Curse_Assassins_Mark { get; set; }
+        [Menu("X", 6601, 660)]
+        public RangeNode<float> Curse_Assassins_Mark_X { get; set; }
+        [Menu("Y", 6602, 660)]
+        public RangeNode<float> Curse_Assassins_Mark_Y { get; set; }
+        [Menu("Size", 6603, 660)]
+        public RangeNode<int> Curse_Assassins_Mark_Size { get; set; }
+        [Menu("Show Inactive", 6604, 660)]
+        public ToggleNode Curse_Assassins_Mark_ShowInactive { get; set; }
+
+        [Menu("Elemental Weakness", 670, 1000)]
+        public ToggleNode Curse_Elemental_Weakness { get; set; }
+        [Menu("X", 6701, 670)]
+        public RangeNode<float> Curse_Elemental_Weakness_X { get; set; }
+        [Menu("Y", 6702, 670)]
+        public RangeNode<float> Curse_Elemental_Weakness_Y { get; set; }
+        [Menu("Size", 6703, 670)]
+        public RangeNode<int> Curse_Elemental_Weakness_Size { get; set; }
+        [Menu("Show Inactive", 6704, 670)]
+        public ToggleNode Curse_Elemental_Weakness_ShowInactive { get; set; }
+
+        [Menu("Conductivity", 680, 1000)]
+        public ToggleNode Curse_Conductivity { get; set; }
+        [Menu("X", 6801, 680)]
+        public RangeNode<float> Curse_Conductivity_X { get; set; }
+        [Menu("Y", 6802, 680)]
+        public RangeNode<float> Curse_Conductivity_Y { get; set; }
+        [Menu("Size", 6803, 680)]
+        public RangeNode<int> Curse_Conductivity_Size { get; set; }
+        [Menu("Show Inactive", 6804, 680)]
+        public ToggleNode Curse_Conductivity_ShowInactive { get; set; }
+
+        [Menu("Enfeeble", 690, 1000)]
+        public ToggleNode Curse_Enfeeble { get; set; }
+        [Menu("X", 6901, 690)]
+        public RangeNode<float> Curse_Enfeeble_X { get; set; }
+        [Menu("Y", 6902, 690)]
+        public RangeNode<float> Curse_Enfeeble_Y { get; set; }
+        [Menu("Size", 6903, 690)]
+        public RangeNode<int> Curse_Enfeeble_Size { get; set; }
+        [Menu("Show Inactive", 6904, 690)]
+        public ToggleNode Curse_Enfeeble_ShowInactive { get; set; }
+
+        [Menu("Punishment", 6010, 1000)]
+        public ToggleNode Curse_Punishment { get; set; }
+        [Menu("X", 60101, 6010)]
+        public RangeNode<float> Curse_Punishment_X { get; set; }
+        [Menu("Y", 60102, 6010)]
+        public RangeNode<float> Curse_Punishment_Y { get; set; }
+        [Menu("Size", 60103, 6010)]
+        public RangeNode<int> Curse_Punishment_Size { get; set; }
+        [Menu("Show Inactive", 60104, 6010)]
+        public ToggleNode Curse_Punishment_ShowInactive { get; set; }
+
+        [Menu("Projectile Weakness", 6011, 1000)]
+        public ToggleNode Curse_Projectile_Weakness { get; set; }
+        [Menu("X", 60111, 6011)]
+        public RangeNode<float> Curse_Projectile_Weakness_X { get; set; }
+        [Menu("Y", 60112, 6011)]
+        public RangeNode<float> Curse_Projectile_Weakness_Y { get; set; }
+        [Menu("Size", 60113, 6011)]
+        public RangeNode<int> Curse_Projectile_Weakness_Size { get; set; }
+        [Menu("Show Inactive", 60114, 6011)]
+        public ToggleNode Curse_Projectile_Weakness_ShowInactive { get; set; }
+
+        [Menu("Temporal Chains", 6012, 1000)]
+        public ToggleNode Curse_Temporal_Chains { get; set; }
+        [Menu("X", 60121, 6012)]
+        public RangeNode<float> Curse_Temporal_Chains_X { get; set; }
+        [Menu("Y", 60122, 6012)]
+        public RangeNode<float> Curse_Temporal_Chains_Y { get; set; }
+        [Menu("Size", 60123, 6012)]
+        public RangeNode<int> Curse_Temporal_Chains_Size { get; set; }
+        [Menu("Show Inactive", 60124, 6012)]
+        public ToggleNode Curse_Temporal_Chains_ShowInactive { get; set; }
+        #endregion
         #region Leeching
         // Leeching
-        [Menu("Leeching Life", 610, 9)]
+        [Menu("Leeching Life", 710, 9)]
         public ToggleNode Leeching_Life { get; set; }
-        [Menu("X", 6101, 610)]
+        [Menu("X", 7101, 710)]
         public RangeNode<float> Leeching_Life_X { get; set; }
-        [Menu("Y", 6102, 610)]
+        [Menu("Y", 7102, 710)]
         public RangeNode<float> Leeching_Life_Y { get; set; }
-        [Menu("Size", 6103, 610)]
+        [Menu("Size", 7103, 710)]
         public RangeNode<int> Leeching_Life_Size { get; set; }
-        [Menu("Show Inactive", 6104, 610)]
+        [Menu("Show Inactive", 7104, 710)]
         public ToggleNode Leeching_Life_ShowInactive { get; set; }
 
-        [Menu("Leeching Mana", 620, 9)]
+        [Menu("Leeching Mana", 720, 9)]
         public ToggleNode Leeching_Mana { get; set; }
-        [Menu("X", 6201, 620)]
+        [Menu("X", 7201, 720)]
         public RangeNode<float> Leeching_Mana_X { get; set; }
-        [Menu("Y", 6202, 620)]
+        [Menu("Y", 7202, 720)]
         public RangeNode<float> Leeching_Mana_Y { get; set; }
-        [Menu("Size", 6203, 620)]
+        [Menu("Size", 7203, 720)]
         public RangeNode<int> Leeching_Mana_Size { get; set; }
-        [Menu("Show Inactive", 6204, 620)]
+        [Menu("Show Inactive", 7204, 720)]
         public ToggleNode Leeching_Mana_ShowInactive { get; set; }
         #endregion
 
