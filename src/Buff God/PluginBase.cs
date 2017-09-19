@@ -795,7 +795,7 @@ namespace Buff_God
                     Settings.Leeching_Life_X,
                     Settings.Leeching_Life_Y,
                     Settings.Leeching_Life_Size,
-                    (string)Leeching_Life[1], (string)Leeching_Life[3], (string)Leeching_Life[4]);
+                    (string)Leeching_Life[1], (string)Leeching_Life[3], (string)Leeching_Life[4], Leeching_Life_Buff_Durations.Count.ToString());
                 #endregion
                 #region Leeching_Mana
                 if ((bool)Leeching_Mana[0])
@@ -810,7 +810,7 @@ namespace Buff_God
                     Settings.Leeching_Mana_X,
                     Settings.Leeching_Mana_Y,
                     Settings.Leeching_Mana_Size,
-                    (string)Leeching_Mana[1], (string)Leeching_Mana[3], (string)Leeching_Mana[4]);
+                    (string)Leeching_Mana[1], (string)Leeching_Mana[3], (string)Leeching_Mana[4], Leeching_Mana_Buff_Durations.Count.ToString());
                 #endregion
             }
             #endregion
