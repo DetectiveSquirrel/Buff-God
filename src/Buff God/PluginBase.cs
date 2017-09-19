@@ -5,6 +5,7 @@ using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PoeHUD.Hud.Settings;
 
 namespace Buff_God
 {
@@ -413,40 +414,18 @@ namespace Buff_God
             if (Settings.Others)
             {
                 #region Arcane Surge
-                if (Settings.Arcane_Surge)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Arcane_Surge_X, Settings.Arcane_Surge_Y, Settings.Arcane_Surge_Size, 30, "99", (string)Arcane_Surge[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Arcane_Surge[0])
-                            DrawBuff(Settings.Arcane_Surge_X, Settings.Arcane_Surge_Y, Settings.Arcane_Surge_Size, 30, (string)Arcane_Surge[1], (string)Arcane_Surge[3]);
-                        else if (Settings.Arcane_Surge_ShowInactive)
-                            DrawBuff(Settings.Arcane_Surge_X, Settings.Arcane_Surge_Y, Settings.Arcane_Surge_Size, 30, (string)Arcane_Surge[1], (string)Arcane_Surge[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Arcane_Surge, (bool)Arcane_Surge[0], Settings.Arcane_Surge_ShowInactive, true,
+                    Settings.Arcane_Surge_X,
+                    Settings.Arcane_Surge_Y,
+                    Settings.Arcane_Surge_Size,
+                    (string)Arcane_Surge[1], (string)Arcane_Surge[3], (string)Arcane_Surge[4]);
                 #endregion
                 #region Blood_Rage
-                if (Settings.Blood_Rage)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Blood_Rage_X, Settings.Blood_Rage_Y, Settings.Blood_Rage_Size, 30, "99", (string)Blood_Rage[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Blood_Rage[0])
-                            DrawBuff(Settings.Blood_Rage_X, Settings.Blood_Rage_Y, Settings.Blood_Rage_Size, 30, (string)Blood_Rage[1], (string)Blood_Rage[3]);
-                        else if (Settings.Blood_Rage_ShowInactive)
-                            DrawBuff(Settings.Blood_Rage_X, Settings.Blood_Rage_Y, Settings.Blood_Rage_Size, 30, (string)Blood_Rage[1], (string)Blood_Rage[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Blood_Rage, (bool)Blood_Rage[0], Settings.Blood_Rage_ShowInactive, true,
+                    Settings.Blood_Rage_X,
+                    Settings.Blood_Rage_Y,
+                    Settings.Blood_Rage_Size,
+                    (string)Blood_Rage[1], (string)Blood_Rage[3], (string)Blood_Rage[4]);
                 #endregion
             }
             #endregion
@@ -454,76 +433,32 @@ namespace Buff_God
             if (Settings.Vaal_Skills)
             {
                 #region Vaal_Haste
-                if (Settings.Vaal_Haste)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Vaal_Haste_X, Settings.Vaal_Haste_Y, Settings.Vaal_Haste_Size, 30, "99", (string)Vaal_Haste[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Vaal_Haste[0])
-                            DrawBuff(Settings.Vaal_Haste_X, Settings.Vaal_Haste_Y, Settings.Vaal_Haste_Size, 30, (string)Vaal_Haste[1], (string)Vaal_Haste[3]);
-                        else if (Settings.Vaal_Haste_ShowInactive)
-                            DrawBuff(Settings.Vaal_Haste_X, Settings.Vaal_Haste_Y, Settings.Vaal_Haste_Size, 30, (string)Vaal_Haste[1], (string)Vaal_Haste[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Vaal_Haste, (bool)Vaal_Haste[0], Settings.Vaal_Haste_ShowInactive, true,
+                    Settings.Vaal_Haste_X,
+                    Settings.Vaal_Haste_Y,
+                    Settings.Vaal_Haste_Size,
+                    (string)Vaal_Haste[1], (string)Vaal_Haste[3], (string)Vaal_Haste[4]);
                 #endregion 
                 #region Vaal_Grace
-                if (Settings.Vaal_Grace)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Vaal_Grace_X, Settings.Vaal_Grace_Y, Settings.Vaal_Grace_Size, 30, "99", (string)Vaal_Grace[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Vaal_Grace[0])
-                            DrawBuff(Settings.Vaal_Grace_X, Settings.Vaal_Grace_Y, Settings.Vaal_Grace_Size, 30, (string)Vaal_Grace[1], (string)Vaal_Grace[3]);
-                        else if (Settings.Vaal_Grace_ShowInactive)
-                            DrawBuff(Settings.Vaal_Grace_X, Settings.Vaal_Grace_Y, Settings.Vaal_Grace_Size, 30, (string)Vaal_Grace[1], (string)Vaal_Grace[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Vaal_Grace, (bool)Vaal_Grace[0], Settings.Vaal_Grace_ShowInactive, true,
+                    Settings.Vaal_Grace_X,
+                    Settings.Vaal_Grace_Y,
+                    Settings.Vaal_Grace_Size,
+                    (string)Vaal_Grace[1], (string)Vaal_Grace[3], (string)Vaal_Grace[4]);
                 #endregion 
                 #region Vaal_Clarity
-                if (Settings.Vaal_Clarity)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Vaal_Clarity_X, Settings.Vaal_Clarity_Y, Settings.Vaal_Clarity_Size, 30, "99", (string)Vaal_Clarity[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Vaal_Clarity[0])
-                            DrawBuff(Settings.Vaal_Clarity_X, Settings.Vaal_Clarity_Y, Settings.Vaal_Clarity_Size, 30, (string)Vaal_Clarity[1], (string)Vaal_Clarity[3]);
-                        else if (Settings.Vaal_Clarity_ShowInactive)
-                            DrawBuff(Settings.Vaal_Clarity_X, Settings.Vaal_Clarity_Y, Settings.Vaal_Clarity_Size, 30, (string)Vaal_Clarity[1], (string)Vaal_Clarity[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Vaal_Clarity, (bool)Vaal_Clarity[0], Settings.Vaal_Clarity_ShowInactive, true,
+                    Settings.Vaal_Clarity_X,
+                    Settings.Vaal_Clarity_Y,
+                    Settings.Vaal_Clarity_Size,
+                    (string)Vaal_Clarity[1], (string)Vaal_Clarity[3], (string)Vaal_Clarity[4]);
                 #endregion 
                 #region Vaal_Discipline
-                if (Settings.Vaal_Discipline)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Vaal_Discipline_X, Settings.Vaal_Discipline_Y, Settings.Vaal_Discipline_Size, 30, "99", (string)Vaal_Discipline[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Vaal_Discipline[0])
-                            DrawBuff(Settings.Vaal_Discipline_X, Settings.Vaal_Discipline_Y, Settings.Vaal_Discipline_Size, 30, (string)Vaal_Discipline[1], (string)Vaal_Discipline[3]);
-                        else if (Settings.Vaal_Discipline_ShowInactive)
-                            DrawBuff(Settings.Vaal_Discipline_X, Settings.Vaal_Discipline_Y, Settings.Vaal_Discipline_Size, 30, (string)Vaal_Discipline[1], (string)Vaal_Discipline[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Vaal_Discipline, (bool)Vaal_Discipline[0], Settings.Vaal_Discipline_ShowInactive, true,
+                    Settings.Vaal_Discipline_X,
+                    Settings.Vaal_Discipline_Y,
+                    Settings.Vaal_Discipline_Size,
+                    (string)Vaal_Discipline[1], (string)Vaal_Discipline[3], (string)Vaal_Discipline[4]);
                 #endregion 
             }
             #endregion
@@ -535,19 +470,19 @@ namespace Buff_God
                 {
                     if (Settings.Force_Icons_On)
                     {
-                        DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, 30, "", (string)Flesh_Offering[3]);
+                        DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, "", (string)Flesh_Offering[3]);
                     }
                     // Icon Not Forced On
                     else
                     {
                         if ((bool)Flesh_Offering[0])
-                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, 30, (string)Flesh_Offering[1], (string)Flesh_Offering[3]);
+                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, (string)Flesh_Offering[1], (string)Flesh_Offering[3]);
                         else if ((bool)Bone_Offering[0])
-                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, 30, (string)Bone_Offering[1], (string)Bone_Offering[3]);
+                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, (string)Bone_Offering[1], (string)Bone_Offering[3]);
                         else if ((bool)Spirit_Offering[0])
-                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, 30, (string)Spirit_Offering[1], (string)Spirit_Offering[3]);
+                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, (string)Spirit_Offering[1], (string)Spirit_Offering[3]);
                         else if (Settings.Offering_Effect_ShowInactive)
-                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, 30, (string)Flesh_Offering[1], (string)Flesh_Offering[4]);
+                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, (string)Flesh_Offering[1], (string)Flesh_Offering[4]);
                     }
                 }
                 #endregion 
@@ -557,94 +492,39 @@ namespace Buff_God
             if (Settings.Golems)
             {
                 #region Fire Golem
-                if (Settings.Fire_Golem)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Fire_Golem_X, Settings.Fire_Golem_Y, Settings.Fire_Golem_Size, 30, "", (string)Fire_Golem[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Fire_Golem[0])
-                            DrawBuff(Settings.Fire_Golem_X, Settings.Fire_Golem_Y, Settings.Fire_Golem_Size, 30, (string)Fire_Golem[1], (string)Fire_Golem[3]);
-                        else if (Settings.Fire_Golem_ShowInactive)
-                            DrawBuff(Settings.Fire_Golem_X, Settings.Fire_Golem_Y, Settings.Fire_Golem_Size, 30, (string)Fire_Golem[1], (string)Fire_Golem[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Fire_Golem, (bool)Fire_Golem[0], Settings.Fire_Golem_ShowInactive, false,
+                    Settings.Fire_Golem_X,
+                    Settings.Fire_Golem_Y,
+                    Settings.Fire_Golem_Size,
+                    (string)Fire_Golem[1], (string)Fire_Golem[3], (string)Fire_Golem[4]);
                 #endregion
                 #region Ice Golem
-                if (Settings.Ice_Golem)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Ice_Golem_X, Settings.Ice_Golem_Y, Settings.Ice_Golem_Size, 30, "", (string)Ice_Golem[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Ice_Golem[0])
-                            DrawBuff(Settings.Ice_Golem_X, Settings.Ice_Golem_Y, Settings.Ice_Golem_Size, 30, (string)Ice_Golem[1], (string)Ice_Golem[3]);
-                        else if (Settings.Ice_Golem_ShowInactive)
-                            DrawBuff(Settings.Ice_Golem_X, Settings.Ice_Golem_Y, Settings.Ice_Golem_Size, 30, (string)Ice_Golem[1], (string)Ice_Golem[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Ice_Golem, (bool)Ice_Golem[0], Settings.Ice_Golem_ShowInactive, false,
+                    Settings.Ice_Golem_X,
+                    Settings.Ice_Golem_Y,
+                    Settings.Ice_Golem_Size,
+                    (string)Ice_Golem[1], (string)Ice_Golem[3], (string)Ice_Golem[4]);
                 #endregion
                 #region Lightning Golem
-                if (Settings.Lightning_Golem)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Lightning_Golem_X, Settings.Lightning_Golem_Y, Settings.Lightning_Golem_Size, 30, "", (string)Lightning_Golem[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Lightning_Golem[0])
-                            DrawBuff(Settings.Lightning_Golem_X, Settings.Lightning_Golem_Y, Settings.Lightning_Golem_Size, 30, (string)Lightning_Golem[1], (string)Lightning_Golem[3]);
-                        else if (Settings.Lightning_Golem_ShowInactive)
-                            DrawBuff(Settings.Lightning_Golem_X, Settings.Lightning_Golem_Y, Settings.Lightning_Golem_Size, 30, (string)Lightning_Golem[1], (string)Lightning_Golem[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Lightning_Golem, (bool)Lightning_Golem[0], Settings.Lightning_Golem_ShowInactive, false,
+                    Settings.Lightning_Golem_X,
+                    Settings.Lightning_Golem_Y,
+                    Settings.Lightning_Golem_Size,
+                    (string)Lightning_Golem[1], (string)Lightning_Golem[3], (string)Lightning_Golem[4]);
                 #endregion
                 #region Chaos Golem
-                if (Settings.Chaos_Golem)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Chaos_Golem_X, Settings.Chaos_Golem_Y, Settings.Chaos_Golem_Size, 30, "", (string)Chaos_Golem[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Chaos_Golem[0])
-                            DrawBuff(Settings.Chaos_Golem_X, Settings.Chaos_Golem_Y, Settings.Chaos_Golem_Size, 30, (string)Chaos_Golem[1], (string)Chaos_Golem[3]);
-                        else if (Settings.Chaos_Golem_ShowInactive)
-                            DrawBuff(Settings.Chaos_Golem_X, Settings.Chaos_Golem_Y, Settings.Chaos_Golem_Size, 30, (string)Chaos_Golem[1], (string)Chaos_Golem[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Chaos_Golem, (bool)Chaos_Golem[0], Settings.Chaos_Golem_ShowInactive, false,
+                    Settings.Chaos_Golem_X,
+                    Settings.Chaos_Golem_Y,
+                    Settings.Chaos_Golem_Size,
+                    (string)Chaos_Golem[1], (string)Chaos_Golem[3], (string)Chaos_Golem[4]);
                 #endregion
                 #region Stone Golem
-                if (Settings.Stone_Golem)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Stone_Golem_X, Settings.Stone_Golem_Y, Settings.Stone_Golem_Size, 30, "", (string)Stone_Golem[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Stone_Golem[0])
-                            DrawBuff(Settings.Stone_Golem_X, Settings.Stone_Golem_Y, Settings.Stone_Golem_Size, 30, (string)Stone_Golem[1], (string)Stone_Golem[3]);
-                        else if (Settings.Stone_Golem_ShowInactive)
-                            DrawBuff(Settings.Stone_Golem_X, Settings.Stone_Golem_Y, Settings.Stone_Golem_Size, 30, (string)Stone_Golem[1], (string)Stone_Golem[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Stone_Golem, (bool)Stone_Golem[0], Settings.Stone_Golem_ShowInactive, false,
+                    Settings.Stone_Golem_X,
+                    Settings.Stone_Golem_Y,
+                    Settings.Stone_Golem_Size,
+                    (string)Stone_Golem[1], (string)Stone_Golem[3], (string)Stone_Golem[4]);
                 #endregion
             }
             #endregion
@@ -652,130 +532,53 @@ namespace Buff_God
             if (Settings.Offensive_Aura)
             {
                 #region Anger
-                if (Settings.Anger)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Anger_X, Settings.Anger_Y, Settings.Anger_Size, 30, "", (string)Anger[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Anger[0])
-                            DrawBuff(Settings.Anger_X, Settings.Anger_Y, Settings.Anger_Size, 30, (string)Anger[1], (string)Anger[3]);
-                        else if (Settings.Anger_ShowInactive)
-                            DrawBuff(Settings.Anger_X, Settings.Anger_Y, Settings.Anger_Size, 30, (string)Anger[1], (string)Anger[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Anger, (bool)Anger[0], Settings.Anger_ShowInactive, false,
+                    Settings.Anger_X,
+                    Settings.Anger_Y,
+                    Settings.Anger_Size,
+                    (string)Anger[1], (string)Anger[3], (string)Anger[4]);
                 #endregion 
                 #region Hatred
-                if (Settings.Hatred)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Hatred_X, Settings.Hatred_Y, Settings.Hatred_Size, 30, "", (string)Hatred[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Hatred[0])
-                            DrawBuff(Settings.Hatred_X, Settings.Hatred_Y, Settings.Hatred_Size, 30, (string)Hatred[1], (string)Hatred[3]);
-                        else if (Settings.Hatred_ShowInactive)
-                            DrawBuff(Settings.Hatred_X, Settings.Hatred_Y, Settings.Hatred_Size, 30, (string)Hatred[1], (string)Hatred[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Hatred, (bool)Hatred[0], Settings.Hatred_ShowInactive, false,
+                    Settings.Hatred_X,
+                    Settings.Hatred_Y,
+                    Settings.Hatred_Size,
+                    (string)Hatred[1], (string)Hatred[3], (string)Hatred[4]);
                 #endregion 
                 #region Wrath
-                if (Settings.Wrath)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Wrath_X, Settings.Wrath_Y, Settings.Wrath_Size, 30, "", (string)Wrath[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Wrath[0])
-                            DrawBuff(Settings.Wrath_X, Settings.Wrath_Y, Settings.Wrath_Size, 30, (string)Wrath[1], (string)Wrath[3]);
-                        else if (Settings.Wrath_ShowInactive)
-                            DrawBuff(Settings.Wrath_X, Settings.Wrath_Y, Settings.Wrath_Size, 30, (string)Wrath[1], (string)Wrath[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Wrath, (bool)Wrath[0], Settings.Wrath_ShowInactive, false,
+                    Settings.Wrath_X,
+                    Settings.Wrath_Y,
+                    Settings.Wrath_Size,
+                    (string)Wrath[1], (string)Wrath[3], (string)Wrath[4]);
                 #endregion 
                 #region Herald_of_Ash
-                if (Settings.Herald_of_Ash)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Herald_of_Ash_X, Settings.Herald_of_Ash_Y, Settings.Herald_of_Ash_Size, 30, "", (string)Herald_of_Ash[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Herald_of_Ash[0])
-                            DrawBuff(Settings.Herald_of_Ash_X, Settings.Herald_of_Ash_Y, Settings.Herald_of_Ash_Size, 30, (string)Herald_of_Ash[1], (string)Herald_of_Ash[3]);
-                        else if (Settings.Herald_of_Ash_ShowInactive)
-                            DrawBuff(Settings.Herald_of_Ash_X, Settings.Herald_of_Ash_Y, Settings.Herald_of_Ash_Size, 30, (string)Herald_of_Ash[1], (string)Herald_of_Ash[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Herald_of_Ash, (bool)Herald_of_Ash[0], Settings.Herald_of_Ash_ShowInactive, false,
+                    Settings.Herald_of_Ash_X,
+                    Settings.Herald_of_Ash_Y,
+                    Settings.Herald_of_Ash_Size,
+                    (string)Herald_of_Ash[1], (string)Herald_of_Ash[3], (string)Herald_of_Ash[4]);
                 #endregion 
                 #region Herald_of_Ice
-                if (Settings.Herald_of_Ice)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Herald_of_Ice_X, Settings.Herald_of_Ice_Y, Settings.Herald_of_Ice_Size, 30, "", (string)Herald_of_Ice[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Herald_of_Ice[0])
-                            DrawBuff(Settings.Herald_of_Ice_X, Settings.Herald_of_Ice_Y, Settings.Herald_of_Ice_Size, 30, (string)Herald_of_Ice[1], (string)Herald_of_Ice[3]);
-                        else if (Settings.Herald_of_Ice_ShowInactive)
-                            DrawBuff(Settings.Herald_of_Ice_X, Settings.Herald_of_Ice_Y, Settings.Herald_of_Ice_Size, 30, (string)Herald_of_Ice[1], (string)Herald_of_Ice[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Herald_of_Ice, (bool)Herald_of_Ice[0], Settings.Herald_of_Ice_ShowInactive, false,
+                    Settings.Herald_of_Ice_X,
+                    Settings.Herald_of_Ice_Y,
+                    Settings.Herald_of_Ice_Size,
+                    (string)Herald_of_Ice[1], (string)Herald_of_Ice[3], (string)Herald_of_Ice[4]);
                 #endregion 
                 #region Herald_of_Thunder
-                if (Settings.Herald_of_Thunder)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Herald_of_Thunder_X, Settings.Herald_of_Thunder_Y, Settings.Herald_of_Thunder_Size, 30, "", (string)Herald_of_Thunder[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Herald_of_Thunder[0])
-                            DrawBuff(Settings.Herald_of_Thunder_X, Settings.Herald_of_Thunder_Y, Settings.Herald_of_Thunder_Size, 30, (string)Herald_of_Thunder[1], (string)Herald_of_Thunder[3]);
-                        else if (Settings.Herald_of_Thunder_ShowInactive)
-                            DrawBuff(Settings.Herald_of_Thunder_X, Settings.Herald_of_Thunder_Y, Settings.Herald_of_Thunder_Size, 30, (string)Herald_of_Thunder[1], (string)Herald_of_Thunder[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Herald_of_Thunder, (bool)Herald_of_Thunder[0], Settings.Herald_of_Thunder_ShowInactive, false,
+                    Settings.Herald_of_Thunder_X,
+                    Settings.Herald_of_Thunder_Y,
+                    Settings.Herald_of_Thunder_Size,
+                    (string)Herald_of_Thunder[1], (string)Herald_of_Thunder[3], (string)Herald_of_Thunder[4]);
                 #endregion 
                 #region Haste
-                if (Settings.Haste)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Haste_X, Settings.Haste_Y, Settings.Haste_Size, 30, "", (string)Haste[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Haste[0])
-                            DrawBuff(Settings.Haste_X, Settings.Haste_Y, Settings.Haste_Size, 30, (string)Haste[1], (string)Haste[3]);
-                        else if (Settings.Haste_ShowInactive)
-                            DrawBuff(Settings.Haste_X, Settings.Haste_Y, Settings.Haste_Size, 30, (string)Haste[1], (string)Haste[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Haste, (bool)Haste[0], Settings.Haste_ShowInactive, false,
+                    Settings.Haste_X,
+                    Settings.Haste_Y,
+                    Settings.Haste_Size,
+                    (string)Haste[1], (string)Haste[3], (string)Haste[4]);
                 #endregion 
             }
             #endregion
@@ -783,166 +586,67 @@ namespace Buff_God
             if (Settings.Defenseive_Aura)
             {
                 #region Purity_of_Fire
-                if (Settings.Purity_of_Fire)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Purity_of_Fire_X, Settings.Purity_of_Fire_Y, Settings.Purity_of_Fire_Size, 30, "", (string)Purity_of_Fire[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Purity_of_Fire[0])
-                            DrawBuff(Settings.Purity_of_Fire_X, Settings.Purity_of_Fire_Y, Settings.Purity_of_Fire_Size, 30, (string)Purity_of_Fire[1], (string)Purity_of_Fire[3]);
-                        else if (Settings.Purity_of_Fire_ShowInactive)
-                            DrawBuff(Settings.Purity_of_Fire_X, Settings.Purity_of_Fire_Y, Settings.Purity_of_Fire_Size, 30, (string)Purity_of_Fire[1], (string)Purity_of_Fire[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Purity_of_Fire, (bool)Purity_of_Fire[0], Settings.Purity_of_Fire_ShowInactive, false,
+                    Settings.Purity_of_Fire_X,
+                    Settings.Purity_of_Fire_Y,
+                    Settings.Purity_of_Fire_Size,
+                    (string)Purity_of_Fire[1], (string)Purity_of_Fire[3], (string)Purity_of_Fire[4]);
                 #endregion 
                 #region Purity_of_Ice
-                if (Settings.Purity_of_Ice)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Purity_of_Ice_X, Settings.Purity_of_Ice_Y, Settings.Purity_of_Ice_Size, 30, "", (string)Purity_of_Ice[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Purity_of_Ice[0])
-                            DrawBuff(Settings.Purity_of_Ice_X, Settings.Purity_of_Ice_Y, Settings.Purity_of_Ice_Size, 30, (string)Purity_of_Ice[1], (string)Purity_of_Ice[3]);
-                        else if (Settings.Purity_of_Ice_ShowInactive)
-                            DrawBuff(Settings.Purity_of_Ice_X, Settings.Purity_of_Ice_Y, Settings.Purity_of_Ice_Size, 30, (string)Purity_of_Ice[1], (string)Purity_of_Ice[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Purity_of_Ice, (bool)Purity_of_Ice[0], Settings.Purity_of_Ice_ShowInactive, false,
+                    Settings.Purity_of_Ice_X,
+                    Settings.Purity_of_Ice_Y,
+                    Settings.Purity_of_Ice_Size,
+                    (string)Purity_of_Ice[1], (string)Purity_of_Ice[3], (string)Purity_of_Ice[4]);
                 #endregion 
                 #region Purity_of_Lightning
-                if (Settings.Purity_of_Lightning)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Purity_of_Lightning_X, Settings.Purity_of_Lightning_Y, Settings.Purity_of_Lightning_Size, 30, "", (string)Purity_of_Lightning[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Purity_of_Lightning[0])
-                            DrawBuff(Settings.Purity_of_Lightning_X, Settings.Purity_of_Lightning_Y, Settings.Purity_of_Lightning_Size, 30, (string)Purity_of_Lightning[1], (string)Purity_of_Lightning[3]);
-                        else if (Settings.Purity_of_Lightning_ShowInactive)
-                            DrawBuff(Settings.Purity_of_Lightning_X, Settings.Purity_of_Lightning_Y, Settings.Purity_of_Lightning_Size, 30, (string)Purity_of_Lightning[1], (string)Purity_of_Lightning[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Purity_of_Lightning, (bool)Purity_of_Lightning[0], Settings.Purity_of_Lightning_ShowInactive, false,
+                    Settings.Purity_of_Lightning_X,
+                    Settings.Purity_of_Lightning_Y,
+                    Settings.Purity_of_Lightning_Size,
+                    (string)Purity_of_Lightning[1], (string)Purity_of_Lightning[3], (string)Purity_of_Lightning[4]);
                 #endregion 
                 #region Purity_of_Elements
-                if (Settings.Purity_of_Elements)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Purity_of_Elements_X, Settings.Purity_of_Elements_Y, Settings.Purity_of_Elements_Size, 30, "", (string)Purity_of_Elements[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Purity_of_Elements[0])
-                            DrawBuff(Settings.Purity_of_Elements_X, Settings.Purity_of_Elements_Y, Settings.Purity_of_Elements_Size, 30, (string)Purity_of_Elements[1], (string)Purity_of_Elements[3]);
-                        else if (Settings.Purity_of_Elements_ShowInactive)
-                            DrawBuff(Settings.Purity_of_Elements_X, Settings.Purity_of_Elements_Y, Settings.Purity_of_Elements_Size, 30, (string)Purity_of_Elements[1], (string)Purity_of_Elements[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Purity_of_Elements, (bool)Purity_of_Elements[0], Settings.Purity_of_Elements_ShowInactive, false,
+                    Settings.Purity_of_Elements_X,
+                    Settings.Purity_of_Elements_Y,
+                    Settings.Purity_of_Elements_Size,
+                    (string)Purity_of_Elements[1], (string)Purity_of_Elements[3], (string)Purity_of_Elements[4]);
                 #endregion 
                 #region Vitality
-                if (Settings.Vitality)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Vitality_X, Settings.Vitality_Y, Settings.Vitality_Size, 30, "", (string)Vitality[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Vitality[0])
-                            DrawBuff(Settings.Vitality_X, Settings.Vitality_Y, Settings.Vitality_Size, 30, (string)Vitality[1], (string)Vitality[3]);
-                        else if (Settings.Vitality_ShowInactive)
-                            DrawBuff(Settings.Vitality_X, Settings.Vitality_Y, Settings.Vitality_Size, 30, (string)Vitality[1], (string)Vitality[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Vitality, (bool)Vitality[0], Settings.Vitality_ShowInactive, false,
+                    Settings.Vitality_X,
+                    Settings.Vitality_Y,
+                    Settings.Vitality_Size,
+                    (string)Vitality[1], (string)Vitality[3], (string)Vitality[4]);
                 #endregion 
                 #region Discipline
-                if (Settings.Discipline)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Discipline_X, Settings.Discipline_Y, Settings.Discipline_Size, 30, "", (string)Discipline[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Discipline[0])
-                            DrawBuff(Settings.Discipline_X, Settings.Discipline_Y, Settings.Discipline_Size, 30, (string)Discipline[1], (string)Discipline[3]);
-                        else if (Settings.Discipline_ShowInactive)
-                            DrawBuff(Settings.Discipline_X, Settings.Discipline_Y, Settings.Discipline_Size, 30, (string)Discipline[1], (string)Discipline[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Discipline, (bool)Discipline[0], Settings.Discipline_ShowInactive, false,
+                    Settings.Discipline_X,
+                    Settings.Discipline_Y,
+                    Settings.Discipline_Size,
+                    (string)Discipline[1], (string)Discipline[3], (string)Discipline[4]);
                 #endregion 
                 #region Determination
-                if (Settings.Determination)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Determination_X, Settings.Determination_Y, Settings.Determination_Size, 30, "", (string)Determination[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Determination[0])
-                            DrawBuff(Settings.Determination_X, Settings.Determination_Y, Settings.Determination_Size, 30, (string)Determination[1], (string)Determination[3]);
-                        else if (Settings.Determination_ShowInactive)
-                            DrawBuff(Settings.Determination_X, Settings.Determination_Y, Settings.Determination_Size, 30, (string)Determination[1], (string)Determination[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Determination, (bool)Determination[0], Settings.Determination_ShowInactive, false,
+                    Settings.Determination_X,
+                    Settings.Determination_Y,
+                    Settings.Determination_Size,
+                    (string)Determination[1], (string)Determination[3], (string)Determination[4]);
                 #endregion 
                 #region Grace
-                if (Settings.Grace)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Grace_X, Settings.Grace_Y, Settings.Grace_Size, 30, "", (string)Grace[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Grace[0])
-                            DrawBuff(Settings.Grace_X, Settings.Grace_Y, Settings.Grace_Size, 30, (string)Grace[1], (string)Grace[3]);
-                        else if (Settings.Grace_ShowInactive)
-                            DrawBuff(Settings.Grace_X, Settings.Grace_Y, Settings.Grace_Size, 30, (string)Grace[1], (string)Grace[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Grace, (bool)Grace[0], Settings.Grace_ShowInactive, false,
+                    Settings.Grace_X,
+                    Settings.Grace_Y,
+                    Settings.Grace_Size,
+                    (string)Grace[1], (string)Grace[3], (string)Grace[4]);
                 #endregion
                 #region Clarity
-                if (Settings.Clarity)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Clarity_X, Settings.Clarity_Y, Settings.Clarity_Size, 30, "", (string)Clarity[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Clarity[0])
-                            DrawBuff(Settings.Clarity_X, Settings.Clarity_Y, Settings.Clarity_Size, 30, (string)Clarity[1], (string)Clarity[3]);
-                        else if (Settings.Clarity_ShowInactive)
-                            DrawBuff(Settings.Clarity_X, Settings.Clarity_Y, Settings.Clarity_Size, 30, (string)Clarity[1], (string)Clarity[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Clarity, (bool)Clarity[0], Settings.Clarity_ShowInactive, false,
+                    Settings.Clarity_X,
+                    Settings.Clarity_Y,
+                    Settings.Clarity_Size,
+                    (string)Clarity[1], (string)Clarity[3], (string)Clarity[4]);
                 #endregion
             }
             #endregion
@@ -950,105 +654,39 @@ namespace Buff_God
             if (Settings.Others)
             {
                 #region Power_Charges
-                if (Settings.Power_Charges)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, "99", (string)Power_Charges[3], "99");
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Power_Charges[0])
-                            DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, (string)Power_Charges[1], (string)Power_Charges[3], (string)Power_Charges[5]);
-                        else if (Settings.Power_Charges_ShowInactive)
-                            DrawBuff(Settings.Power_Charges_X, Settings.Power_Charges_Y, Settings.Power_Charges_Size, 30, (string)Power_Charges[1], (string)Power_Charges[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Power_Charges, (bool)Power_Charges[0], Settings.Power_Charges_ShowInactive, true,
+                    Settings.Power_Charges_X,
+                    Settings.Power_Charges_Y,
+                    Settings.Power_Charges_Size,
+                    (string)Power_Charges[1], (string)Power_Charges[3], (string)Power_Charges[4], (string)Power_Charges[5]);
                 #endregion
                 #region Frenzy_Charges
-                if (Settings.Frenzy_Charges)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, "99", (string)Frenzy_Charges[3], "99");
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Frenzy_Charges[0])
-                            DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, (string)Frenzy_Charges[1], (string)Frenzy_Charges[3], (string)Frenzy_Charges[5]);
-                        else if (Settings.Frenzy_Charges_ShowInactive)
-                            DrawBuff(Settings.Frenzy_Charges_X, Settings.Frenzy_Charges_Y, Settings.Frenzy_Charges_Size, 30, (string)Frenzy_Charges[1], (string)Frenzy_Charges[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Frenzy_Charges, (bool)Frenzy_Charges[0], Settings.Frenzy_Charges_ShowInactive, true,
+                    Settings.Frenzy_Charges_X,
+                    Settings.Frenzy_Charges_Y,
+                    Settings.Frenzy_Charges_Size,
+                    (string)Frenzy_Charges[1], (string)Frenzy_Charges[3], (string)Frenzy_Charges[4], (string)Frenzy_Charges[5]);
                 #endregion
                 #region Endurance_Charges
-                if (Settings.Endurance_Charges)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, "99", (string)Endurance_Charges[3], "99");
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Endurance_Charges[0])
-                            DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[3], (string)Endurance_Charges[5]);
-                        else if (Settings.Endurance_Charges_ShowInactive)
-                            DrawBuff(Settings.Endurance_Charges_X, Settings.Endurance_Charges_Y, Settings.Endurance_Charges_Size, 30, (string)Endurance_Charges[1], (string)Endurance_Charges[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Endurance_Charges, (bool)Endurance_Charges[0], Settings.Endurance_Charges_ShowInactive, true,
+                    Settings.Endurance_Charges_X,
+                    Settings.Endurance_Charges_Y,
+                    Settings.Endurance_Charges_Size,
+                    (string)Endurance_Charges[1], (string)Endurance_Charges[3], (string)Endurance_Charges[4], (string)Endurance_Charges[5]);
                 #endregion
                 #region Blade_Vortex_Stacks
-                if (Settings.Blade_Vortex_Stacks)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, "99", (string)Blade_Vortex_Stacks[3], "99");
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Blade_Vortex_Stacks[0])
-                        {
-                            if (!Settings.Blade_Vortex_Stacks_BurnedCharges)
-                                //DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, (string)Blade_Vortex_Stacks[1], (string)Blade_Vortex_Stacks[3] + " " + (string)Blade_Vortex_Stacks[5]);
-                                DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, (string)Blade_Vortex_Stacks[1], (string)Blade_Vortex_Stacks[3], (string)Blade_Vortex_Stacks[5]);
-                            else
-                                DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, (string)Blade_Vortex_Stacks[5], (string)Blade_Vortex_Stacks[3]);
-                        }
-                        else if (Settings.Blade_Vortex_Stacks_ShowInactive)
-                            DrawBuff(Settings.Blade_Vortex_Stacks_X, Settings.Blade_Vortex_Stacks_Y, Settings.Blade_Vortex_Stacks_Size, 30, (string)Blade_Vortex_Stacks[1], (string)Blade_Vortex_Stacks[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Blade_Vortex_Stacks, (bool)Blade_Vortex_Stacks[0], Settings.Blade_Vortex_Stacks_ShowInactive, true,
+                    Settings.Blade_Vortex_Stacks_X,
+                    Settings.Blade_Vortex_Stacks_Y,
+                    Settings.Blade_Vortex_Stacks_Size,
+                    (string)Blade_Vortex_Stacks[1], (string)Blade_Vortex_Stacks[3], (string)Blade_Vortex_Stacks[4], (string)Blade_Vortex_Stacks[5]);
                 #endregion
                 #region Reave_Stacks
-                if (Settings.Reave_Stacks)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Reave_Stacks_X, Settings.Reave_Stacks_Y, Settings.Reave_Stacks_Size, 30, "99", (string)Reave_Stacks[3], "99");
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Reave_Stacks[0])
-                        {
-                            if (!Settings.Reave_Stacks_BurnedCharges)
-                                DrawBuff(Settings.Reave_Stacks_X, Settings.Reave_Stacks_Y, Settings.Reave_Stacks_Size, 30, (string)Reave_Stacks[1], (string)Reave_Stacks[3], (string)Reave_Stacks[5]);
-                            else
-                                DrawBuff(Settings.Reave_Stacks_X, Settings.Reave_Stacks_Y, Settings.Reave_Stacks_Size, 30, (string)Reave_Stacks[5], (string)Reave_Stacks[3]);
-                        }
-                        else if (Settings.Reave_Stacks_ShowInactive)
-                            DrawBuff(Settings.Reave_Stacks_X, Settings.Reave_Stacks_Y, Settings.Reave_Stacks_Size, 30, (string)Reave_Stacks[1], (string)Reave_Stacks[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Reave_Stacks, (bool)Reave_Stacks[0], Settings.Reave_Stacks_ShowInactive, true,
+                    Settings.Reave_Stacks_X,
+                    Settings.Reave_Stacks_Y,
+                    Settings.Reave_Stacks_Size,
+                    (string)Reave_Stacks[1], (string)Reave_Stacks[3], (string)Reave_Stacks[4], (string)Reave_Stacks[5]);
                 #endregion
             }
             #endregion
@@ -1056,220 +694,88 @@ namespace Buff_God
             if (Settings.Curses)
             {
                 #region Curse_Poachers_Mark
-                if (Settings.Curse_Poachers_Mark)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Poachers_Mark_X, Settings.Curse_Poachers_Mark_Y, Settings.Curse_Poachers_Mark_Size, 30, "99", (string)Curse_Poachers_Mark[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Poachers_Mark[0])
-                            DrawBuff(Settings.Curse_Poachers_Mark_X, Settings.Curse_Poachers_Mark_Y, Settings.Curse_Poachers_Mark_Size, 30, (string)Curse_Poachers_Mark[1], (string)Curse_Poachers_Mark[3]);
-                        else if (Settings.Curse_Poachers_Mark_ShowInactive)
-                            DrawBuff(Settings.Curse_Poachers_Mark_X, Settings.Curse_Poachers_Mark_Y, Settings.Curse_Poachers_Mark_Size, 30, (string)Curse_Poachers_Mark[1], (string)Curse_Poachers_Mark[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Poachers_Mark, (bool)Curse_Poachers_Mark[0], Settings.Curse_Poachers_Mark_ShowInactive, true,
+                    Settings.Curse_Poachers_Mark_X,
+                    Settings.Curse_Poachers_Mark_Y,
+                    Settings.Curse_Poachers_Mark_Size,
+                    (string)Curse_Poachers_Mark[1], (string)Curse_Poachers_Mark[3], (string)Curse_Poachers_Mark[4]);
                 #endregion
                 #region Curse_Frostbite
-                if (Settings.Curse_Frostbite)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Frostbite_X, Settings.Curse_Frostbite_Y, Settings.Curse_Frostbite_Size, 30, "99", (string)Curse_Frostbite[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Frostbite[0])
-                            DrawBuff(Settings.Curse_Frostbite_X, Settings.Curse_Frostbite_Y, Settings.Curse_Frostbite_Size, 30, (string)Curse_Frostbite[1], (string)Curse_Frostbite[3]);
-                        else if (Settings.Curse_Frostbite_ShowInactive)
-                            DrawBuff(Settings.Curse_Frostbite_X, Settings.Curse_Frostbite_Y, Settings.Curse_Frostbite_Size, 30, (string)Curse_Frostbite[1], (string)Curse_Frostbite[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Frostbite, (bool)Curse_Frostbite[0], Settings.Curse_Frostbite_ShowInactive, true,
+                    Settings.Curse_Frostbite_X,
+                    Settings.Curse_Frostbite_Y,
+                    Settings.Curse_Frostbite_Size,
+                    (string)Curse_Frostbite[1], (string)Curse_Frostbite[3], (string)Curse_Frostbite[4]);
                 #endregion
                 #region Curse_Vulnerability
-                if (Settings.Curse_Vulnerability)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Vulnerability_X, Settings.Curse_Vulnerability_Y, Settings.Curse_Vulnerability_Size, 30, "99", (string)Curse_Vulnerability[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Vulnerability[0])
-                            DrawBuff(Settings.Curse_Vulnerability_X, Settings.Curse_Vulnerability_Y, Settings.Curse_Vulnerability_Size, 30, (string)Curse_Vulnerability[1], (string)Curse_Vulnerability[3]);
-                        else if (Settings.Curse_Vulnerability_ShowInactive)
-                            DrawBuff(Settings.Curse_Vulnerability_X, Settings.Curse_Vulnerability_Y, Settings.Curse_Vulnerability_Size, 30, (string)Curse_Vulnerability[1], (string)Curse_Vulnerability[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Vulnerability, (bool)Curse_Vulnerability[0], Settings.Curse_Vulnerability_ShowInactive, true,
+                    Settings.Curse_Vulnerability_X,
+                    Settings.Curse_Vulnerability_Y,
+                    Settings.Curse_Vulnerability_Size,
+                    (string)Curse_Vulnerability[1], (string)Curse_Vulnerability[3], (string)Curse_Vulnerability[4]);
                 #endregion
                 #region Curse_Warlords_Mark
-                if (Settings.Curse_Warlords_Mark)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Warlords_Mark_X, Settings.Curse_Warlords_Mark_Y, Settings.Curse_Warlords_Mark_Size, 30, "99", (string)Curse_Warlords_Mark[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Warlords_Mark[0])
-                            DrawBuff(Settings.Curse_Warlords_Mark_X, Settings.Curse_Warlords_Mark_Y, Settings.Curse_Warlords_Mark_Size, 30, (string)Curse_Warlords_Mark[1], (string)Curse_Warlords_Mark[3]);
-                        else if (Settings.Curse_Warlords_Mark_ShowInactive)
-                            DrawBuff(Settings.Curse_Warlords_Mark_X, Settings.Curse_Warlords_Mark_Y, Settings.Curse_Warlords_Mark_Size, 30, (string)Curse_Warlords_Mark[1], (string)Curse_Warlords_Mark[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Warlords_Mark, (bool)Curse_Warlords_Mark[0], Settings.Curse_Warlords_Mark_ShowInactive, true,
+                    Settings.Curse_Warlords_Mark_X,
+                    Settings.Curse_Warlords_Mark_Y,
+                    Settings.Curse_Warlords_Mark_Size,
+                    (string)Curse_Warlords_Mark[1], (string)Curse_Warlords_Mark[3], (string)Curse_Warlords_Mark[4]);
                 #endregion
                 #region Curse_Flammability
-                if (Settings.Curse_Flammability)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Flammability_X, Settings.Curse_Flammability_Y, Settings.Curse_Flammability_Size, 30, "99", (string)Curse_Flammability[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Flammability[0])
-                            DrawBuff(Settings.Curse_Flammability_X, Settings.Curse_Flammability_Y, Settings.Curse_Flammability_Size, 30, (string)Curse_Flammability[1], (string)Curse_Flammability[3]);
-                        else if (Settings.Curse_Flammability_ShowInactive)
-                            DrawBuff(Settings.Curse_Flammability_X, Settings.Curse_Flammability_Y, Settings.Curse_Flammability_Size, 30, (string)Curse_Flammability[1], (string)Curse_Flammability[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Flammability, (bool)Curse_Flammability[0], Settings.Curse_Flammability_ShowInactive, true,
+                    Settings.Curse_Flammability_X,
+                    Settings.Curse_Flammability_Y,
+                    Settings.Curse_Flammability_Size,
+                    (string)Curse_Flammability[1], (string)Curse_Flammability[3], (string)Curse_Flammability[4]);
                 #endregion
                 #region Curse_Assassins_Mark
-                if (Settings.Curse_Assassins_Mark)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Assassins_Mark_X, Settings.Curse_Assassins_Mark_Y, Settings.Curse_Assassins_Mark_Size, 30, "99", (string)Curse_Assassins_Mark[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Assassins_Mark[0])
-                            DrawBuff(Settings.Curse_Assassins_Mark_X, Settings.Curse_Assassins_Mark_Y, Settings.Curse_Assassins_Mark_Size, 30, (string)Curse_Assassins_Mark[1], (string)Curse_Assassins_Mark[3]);
-                        else if (Settings.Curse_Assassins_Mark_ShowInactive)
-                            DrawBuff(Settings.Curse_Assassins_Mark_X, Settings.Curse_Assassins_Mark_Y, Settings.Curse_Assassins_Mark_Size, 30, (string)Curse_Assassins_Mark[1], (string)Curse_Assassins_Mark[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Assassins_Mark, (bool)Curse_Assassins_Mark[0], Settings.Curse_Assassins_Mark_ShowInactive, true,
+                    Settings.Curse_Assassins_Mark_X,
+                    Settings.Curse_Assassins_Mark_Y,
+                    Settings.Curse_Assassins_Mark_Size,
+                    (string)Curse_Assassins_Mark[1], (string)Curse_Assassins_Mark[3], (string)Curse_Assassins_Mark[4]);
                 #endregion
                 #region Curse_Elemental_Weakness
-                if (Settings.Curse_Elemental_Weakness)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Elemental_Weakness_X, Settings.Curse_Elemental_Weakness_Y, Settings.Curse_Elemental_Weakness_Size, 30, "99", (string)Curse_Elemental_Weakness[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Elemental_Weakness[0])
-                            DrawBuff(Settings.Curse_Elemental_Weakness_X, Settings.Curse_Elemental_Weakness_Y, Settings.Curse_Elemental_Weakness_Size, 30, (string)Curse_Elemental_Weakness[1], (string)Curse_Elemental_Weakness[3]);
-                        else if (Settings.Curse_Elemental_Weakness_ShowInactive)
-                            DrawBuff(Settings.Curse_Elemental_Weakness_X, Settings.Curse_Elemental_Weakness_Y, Settings.Curse_Elemental_Weakness_Size, 30, (string)Curse_Elemental_Weakness[1], (string)Curse_Elemental_Weakness[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Elemental_Weakness, (bool)Curse_Elemental_Weakness[0], Settings.Curse_Elemental_Weakness_ShowInactive, true,
+                    Settings.Curse_Elemental_Weakness_X,
+                    Settings.Curse_Elemental_Weakness_Y,
+                    Settings.Curse_Elemental_Weakness_Size,
+                    (string)Curse_Elemental_Weakness[1], (string)Curse_Elemental_Weakness[3], (string)Curse_Elemental_Weakness[4]);
                 #endregion
                 #region Curse_Conductivity
-                if (Settings.Curse_Conductivity)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Conductivity_X, Settings.Curse_Conductivity_Y, Settings.Curse_Conductivity_Size, 30, "99", (string)Curse_Conductivity[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Conductivity[0])
-                            DrawBuff(Settings.Curse_Conductivity_X, Settings.Curse_Conductivity_Y, Settings.Curse_Conductivity_Size, 30, (string)Curse_Conductivity[1], (string)Curse_Conductivity[3]);
-                        else if (Settings.Curse_Conductivity_ShowInactive)
-                            DrawBuff(Settings.Curse_Conductivity_X, Settings.Curse_Conductivity_Y, Settings.Curse_Conductivity_Size, 30, (string)Curse_Conductivity[1], (string)Curse_Conductivity[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Conductivity, (bool)Curse_Conductivity[0], Settings.Curse_Conductivity_ShowInactive, true,
+                    Settings.Curse_Conductivity_X,
+                    Settings.Curse_Conductivity_Y,
+                    Settings.Curse_Conductivity_Size,
+                    (string)Curse_Conductivity[1], (string)Curse_Conductivity[3], (string)Curse_Conductivity[4]);
                 #endregion
                 #region Curse_Enfeeble
-                if (Settings.Curse_Enfeeble)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Enfeeble_X, Settings.Curse_Enfeeble_Y, Settings.Curse_Enfeeble_Size, 30, "99", (string)Curse_Enfeeble[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Enfeeble[0])
-                            DrawBuff(Settings.Curse_Enfeeble_X, Settings.Curse_Enfeeble_Y, Settings.Curse_Enfeeble_Size, 30, (string)Curse_Enfeeble[1], (string)Curse_Enfeeble[3]);
-                        else if (Settings.Curse_Enfeeble_ShowInactive)
-                            DrawBuff(Settings.Curse_Enfeeble_X, Settings.Curse_Enfeeble_Y, Settings.Curse_Enfeeble_Size, 30, (string)Curse_Enfeeble[1], (string)Curse_Enfeeble[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Enfeeble, (bool)Curse_Enfeeble[0], Settings.Curse_Enfeeble_ShowInactive, true,
+                    Settings.Curse_Enfeeble_X,
+                    Settings.Curse_Enfeeble_Y,
+                    Settings.Curse_Enfeeble_Size,
+                    (string)Curse_Enfeeble[1], (string)Curse_Enfeeble[3], (string)Curse_Enfeeble[4]);
                 #endregion
                 #region Curse_Punishment
-                if (Settings.Curse_Punishment)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Punishment_X, Settings.Curse_Punishment_Y, Settings.Curse_Punishment_Size, 30, "99", (string)Curse_Punishment[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Punishment[0])
-                            DrawBuff(Settings.Curse_Punishment_X, Settings.Curse_Punishment_Y, Settings.Curse_Punishment_Size, 30, (string)Curse_Punishment[1], (string)Curse_Punishment[3]);
-                        else if (Settings.Curse_Punishment_ShowInactive)
-                            DrawBuff(Settings.Curse_Punishment_X, Settings.Curse_Punishment_Y, Settings.Curse_Punishment_Size, 30, (string)Curse_Punishment[1], (string)Curse_Punishment[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Punishment, (bool)Curse_Punishment[0], Settings.Curse_Punishment_ShowInactive, true,
+                    Settings.Curse_Punishment_X,
+                    Settings.Curse_Punishment_Y,
+                    Settings.Curse_Punishment_Size,
+                    (string)Curse_Punishment[1], (string)Curse_Punishment[3], (string)Curse_Punishment[4]);
                 #endregion
                 #region Curse_Projectile_Weakness
-                if (Settings.Curse_Projectile_Weakness)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Projectile_Weakness_X, Settings.Curse_Projectile_Weakness_Y, Settings.Curse_Projectile_Weakness_Size, 30, "99", (string)Curse_Projectile_Weakness[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Projectile_Weakness[0])
-                            DrawBuff(Settings.Curse_Projectile_Weakness_X, Settings.Curse_Projectile_Weakness_Y, Settings.Curse_Projectile_Weakness_Size, 30, (string)Curse_Projectile_Weakness[1], (string)Curse_Projectile_Weakness[3]);
-                        else if (Settings.Curse_Projectile_Weakness_ShowInactive)
-                            DrawBuff(Settings.Curse_Projectile_Weakness_X, Settings.Curse_Projectile_Weakness_Y, Settings.Curse_Projectile_Weakness_Size, 30, (string)Curse_Projectile_Weakness[1], (string)Curse_Projectile_Weakness[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Projectile_Weakness, (bool)Curse_Projectile_Weakness[0], Settings.Curse_Projectile_Weakness_ShowInactive, true,
+                    Settings.Curse_Projectile_Weakness_X,
+                    Settings.Curse_Projectile_Weakness_Y,
+                    Settings.Curse_Projectile_Weakness_Size,
+                    (string)Curse_Projectile_Weakness[1], (string)Curse_Projectile_Weakness[3], (string)Curse_Projectile_Weakness[4]);
                 #endregion
                 #region Curse_Temporal_Chains
-                if (Settings.Curse_Temporal_Chains)
-                {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Curse_Temporal_Chains_X, Settings.Curse_Temporal_Chains_Y, Settings.Curse_Temporal_Chains_Size, 30, "99", (string)Curse_Temporal_Chains[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Curse_Temporal_Chains[0])
-                            DrawBuff(Settings.Curse_Temporal_Chains_X, Settings.Curse_Temporal_Chains_Y, Settings.Curse_Temporal_Chains_Size, 30, (string)Curse_Temporal_Chains[1], (string)Curse_Temporal_Chains[3]);
-                        else if (Settings.Curse_Temporal_Chains_ShowInactive)
-                            DrawBuff(Settings.Curse_Temporal_Chains_X, Settings.Curse_Temporal_Chains_Y, Settings.Curse_Temporal_Chains_Size, 30, (string)Curse_Temporal_Chains[1], (string)Curse_Temporal_Chains[4]);
-                    }
-                }
+                Try_Draw_Buff(Settings.Curse_Temporal_Chains, (bool)Curse_Temporal_Chains[0], Settings.Curse_Temporal_Chains_ShowInactive, true,
+                    Settings.Curse_Temporal_Chains_X,
+                    Settings.Curse_Temporal_Chains_Y,
+                    Settings.Curse_Temporal_Chains_Size,
+                    (string)Curse_Temporal_Chains[1], (string)Curse_Temporal_Chains[3], (string)Curse_Temporal_Chains[4]);
                 #endregion
             }
             #endregion
@@ -1277,107 +783,146 @@ namespace Buff_God
             if (Settings.Leeching)
             {
                 #region Leeching_Life
-                if (Settings.Leeching_Life)
+                if (Settings.Leeching_Life_ShowInactive)
                 {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Leeching_Life_X, Settings.Leeching_Life_Y, Settings.Leeching_Life_Size, 30, "99", (string)Leeching_Life[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Leeching_Life[0])
-                        {
-                            // Sort life leech buff timers Highest -> Lowest
-                            Leeching_Life_Buff_Durations.Sort();
-                            Leeching_Life_Buff_Durations.Reverse();
-                            Leeching_Life[1] = Math.Ceiling(Leeching_Life_Buff_Durations.First()).ToString();
-
-                            DrawBuff(Settings.Leeching_Life_X, Settings.Leeching_Life_Y, Settings.Leeching_Life_Size, 30, (string)Leeching_Life[1], (string)Leeching_Life[3]);
-                        }
-                        else if (Settings.Leeching_Life_ShowInactive)
-                            DrawBuff(Settings.Leeching_Life_X, Settings.Leeching_Life_Y, Settings.Leeching_Life_Size, 30, (string)Leeching_Life[1], (string)Leeching_Life[4]);
-                    }
+                    // Sort life leech buff timers Highest -> Lowest
+                    Leeching_Life_Buff_Durations.Sort();
+                    Leeching_Life_Buff_Durations.Reverse();
+                    Leeching_Life[1] = Math.Ceiling(Leeching_Life_Buff_Durations.First()).ToString();
                 }
+
+                Try_Draw_Buff(Settings.Leeching_Life, (bool)Leeching_Life[0], Settings.Leeching_Life_ShowInactive, true,
+                    Settings.Leeching_Life_X,
+                    Settings.Leeching_Life_Y,
+                    Settings.Leeching_Life_Size,
+                    (string)Leeching_Life[1], (string)Leeching_Life[3], (string)Leeching_Life[4]);
                 #endregion
                 #region Leeching_Mana
-                if (Settings.Leeching_Mana)
+                if (Settings.Leeching_Mana_ShowInactive)
                 {
-                    // Icon Forced On
-                    if (Settings.Force_Icons_On)
-                    {
-                        DrawBuff(Settings.Leeching_Mana_X, Settings.Leeching_Mana_Y, Settings.Leeching_Mana_Size, 30, "99", (string)Leeching_Mana[3]);
-                    }
-                    // Icon Not Forced On
-                    else
-                    {
-                        if ((bool)Leeching_Mana[0])
-                        {
-                            // Sort mana leech buff timers Highest -> Lowest
-                            Leeching_Mana_Buff_Durations.Sort();
-                            Leeching_Mana_Buff_Durations.Reverse();
-                            Leeching_Mana[1] = Math.Ceiling(Leeching_Mana_Buff_Durations.First()).ToString();
-
-                            DrawBuff(Settings.Leeching_Mana_X, Settings.Leeching_Mana_Y, Settings.Leeching_Mana_Size, 30, (string)Leeching_Mana[1], (string)Leeching_Mana[3]);
-                        }
-                        else if (Settings.Leeching_Mana_ShowInactive)
-                            DrawBuff(Settings.Leeching_Mana_X, Settings.Leeching_Mana_Y, Settings.Leeching_Mana_Size, 30, (string)Leeching_Mana[1], (string)Leeching_Mana[4]);
-                    }
+                    // Sort life leech buff timers Highest -> Lowest
+                    Leeching_Mana_Buff_Durations.Sort();
+                    Leeching_Mana_Buff_Durations.Reverse();
+                    Leeching_Mana[1] = Math.Ceiling(Leeching_Mana_Buff_Durations.First()).ToString();
                 }
+
+                Try_Draw_Buff(Settings.Leeching_Mana, (bool)Leeching_Mana[0], Settings.Leeching_Mana_ShowInactive, true,
+                    Settings.Leeching_Mana_X,
+                    Settings.Leeching_Mana_Y,
+                    Settings.Leeching_Mana_Size,
+                    (string)Leeching_Mana[1], (string)Leeching_Mana[3], (string)Leeching_Mana[4]);
                 #endregion
             }
             #endregion
         }
 
-        private void DrawBuff(float BuffX, float BuffY, int BuffSize, int TextSize, string BuffTimerText, string BuffFile)
+        private void Try_Draw_Buff(ToggleNode isOn, bool gotBuff, ToggleNode showFade, bool CouldHaveTimer, RangeNode<float> X, RangeNode<float> Y, RangeNode<int> Size, string Timer, string FileActive, string FileInactive)
         {
-            // Hardcoding the text size to flow with buffSize for now, can be undone by removing the 3 lines underneath
+            if (isOn)
+            {
+                // Icon Forced On
+                if (Settings.Force_Icons_On)
+                {
+                    if (CouldHaveTimer)
+                     DrawBuff(X, Y, Size, "99", FileActive);
+                    else
+                        DrawBuff(X, Y, Size, "", FileActive);
+                }
+                // Icon Not Forced On
+                else
+                {
+                    if (gotBuff)
+                        DrawBuff(X, Y, Size, Timer, FileActive);
+                    else if (showFade)
+                        DrawBuff(X, Y, Size, Timer, FileInactive);
+                }
+            }
+        }
+
+        private void Try_Draw_Buff(ToggleNode isOn, bool gotBuff, ToggleNode showFade, bool CouldHaveTimer, RangeNode<float> X, RangeNode<float> Y, RangeNode<int> Size, string Timer, string FileActive, string FileInactive, string Charges)
+        {
+            if (isOn)
+            {
+                // Icon Forced On
+                if (Settings.Force_Icons_On)
+                {
+                    if (CouldHaveTimer)
+                        DrawBuff(X, Y, Size, "99", FileActive);
+                    else
+                        DrawBuff(X, Y, Size, "", FileActive);
+                }
+                // Icon Not Forced On
+                else
+                {
+                    if (gotBuff)
+                        DrawBuff(X, Y, Size, Timer, FileActive, Charges);
+                    else if (showFade)
+                        DrawBuff(X, Y, Size, Timer, FileInactive);
+                }
+            }
+        }
+
+        private void DrawBuff(float Buff_X, float Buff_Y, int Buff_Size, string Buff_Timer, string Buff_FileName)
+        {
+            int Timer_Size = TimerToBuffSize(Buff_Size);
+
+            RectangleF rect, Icon;
+            DrawBuffIcon(Buff_X, Buff_Y, Buff_Size, Buff_FileName, out rect, out Icon);
+            Icon = DrawBuffTimer(Buff_X, Timer_Size, Buff_Timer, rect, Icon);
+        }
+
+        private void DrawBuff(float Buff_X, float Buff_Y, int Buff_Size, string Buff_Timer, string Buff_FileName, string Buff_Charges)
+        {
+            int Timer_Size = TimerToBuffSize(Buff_Size);
+            int Charge_Size = ChargeToBuffSize(Buff_Size);
+
+            RectangleF rect, Icon;
+            DrawBuffIcon(Buff_X, Buff_Y, Buff_Size, Buff_FileName, out rect, out Icon);
+            Icon = DrawBuffTimer(Buff_X, Timer_Size, Buff_Timer, rect, Icon);
+            DrawCharge(Buff_Charges, Charge_Size, Icon);
+        }
+
+        private void DrawBuffIcon(float BuffX, float BuffY, int BuffSize, string BuffFile, out RectangleF Window, out RectangleF Icon)
+        {
+            Window = GameController.Window.GetWindowRectangle();
+            Icon = new RectangleF(Window.Width * BuffX * .01f - BuffSize / 2, Window.Height * BuffY * .01f, BuffSize, BuffSize);
+            Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", Icon);
+        }
+
+        private static int ChargeToBuffSize(int BuffSize)
+        {
+            double buffTextPercent2 = BuffSize / 100.00;
+            double HardTextSize2 = 28.00 * buffTextPercent2;
+            int TextSize2 = (int)Math.Floor(HardTextSize2);
+            return TextSize2;
+        }
+
+        private static int TimerToBuffSize(int BuffSize)
+        {
+            int TextSize;
             double buffTextPercent = BuffSize / 100.00;
             double HardTextSize = 32.00 * buffTextPercent;
             TextSize = (int)Math.Floor(HardTextSize);
+            return TextSize;
+        }
 
-            RectangleF rect = GameController.Window.GetWindowRectangle();
-            var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
-            Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
-
+        private RectangleF DrawBuffTimer(float BuffX, int TextSize, string BuffTimerText, RectangleF rect, RectangleF TestBuffWindow)
+        {
             if (BuffTimerText != "")
             {
                 // Buff Timer Text
                 int textYOffset = -1;
-                //var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
-                var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, TestBuffWindow.Top - TextSize + textYOffset+1), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
-                var TimerBackground = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, TestBuffWindow.Width, -BuffTimer.Height + textYOffset);
-                Graphics.DrawImage("lightBackground.png", TimerBackground);
-            }
-        }
-
-        private void DrawBuff(float BuffX, float BuffY, int BuffSize, int TextSize, string BuffTimerText, string BuffFile, string charges)
-        {
-            // Hardcoding the text size to flow with buffSize for now, can be undone by removing the 6 lines underneath
-            double buffTextPercent = BuffSize / 100.00;
-            double HardTextSize = 32.00 * buffTextPercent;
-            TextSize = (int)Math.Floor(HardTextSize);
-
-            double buffTextPercent2 = BuffSize / 100.00;
-            double HardTextSize2 = 28.00 * buffTextPercent2;
-            int TextSize2 = (int)Math.Floor(HardTextSize2);
-
-            RectangleF rect = GameController.Window.GetWindowRectangle();
-            var TestBuffWindow = new RectangleF(rect.Width * BuffX * .01f - BuffSize / 2, rect.Height * BuffY * .01f, BuffSize, BuffSize);
-            Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", TestBuffWindow);
-
-            if (BuffTimerText != "")
-            {
-                // Buff Timer Text
-                int textYOffset =-1;
                 //var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
                 var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, TestBuffWindow.Top - TextSize + textYOffset), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
                 var TimerBackground = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, TestBuffWindow.Width, -BuffTimer.Height + textYOffset + 1);
                 Graphics.DrawImage("lightBackground.png", TimerBackground);
             }
 
-            // Charge Text
+            return TestBuffWindow;
+        }
+
+        private void DrawCharge(string charges, int TextSize2, RectangleF TestBuffWindow)
+        {
             var ChargeText = Graphics.DrawText(charges, TextSize2, new Vector2(TestBuffWindow.Left + 3, TestBuffWindow.Top + 1), Color.White, SharpDX.Direct3D9.FontDrawFlags.Left);
             var background = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, ChargeText.Width + 6, ChargeText.Height + 2);
             Graphics.DrawImage("lightBackground.png", background);
