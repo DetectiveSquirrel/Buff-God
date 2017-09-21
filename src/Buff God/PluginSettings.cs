@@ -30,6 +30,12 @@ namespace Buff_God
             Blood_Rage_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
             Blood_Rage_Size = new RangeNode<int>(64, 1, 128);
             Blood_Rage_ShowInactive = false;
+
+            Elemental_Conflux = true;
+            Elemental_Conflux_X = new RangeNode<float>(13f, 0.0f, 100.0f);
+            Elemental_Conflux_Y = new RangeNode<float>(76f, 0.0f, 100.0f);
+            Elemental_Conflux_Size = new RangeNode<int>(64, 1, 128);
+            Elemental_Conflux_ShowInactive = false;
             #endregion
             #region Vaal Skills
             Vaal_Haste = true;
@@ -425,6 +431,17 @@ namespace Buff_God
         public RangeNode<int> Blood_Rage_Size { get; set; }
         [Menu("Show Inactive", 3134, 313)]
         public ToggleNode Blood_Rage_ShowInactive { get; set; }
+
+        [Menu("Elemental Conflux", 314, 7)]
+        public ToggleNode Elemental_Conflux { get; set; }
+        [Menu("X", 3141, 314)]
+        public RangeNode<float> Elemental_Conflux_X { get; set; }
+        [Menu("Y", 3142, 314)]
+        public RangeNode<float> Elemental_Conflux_Y { get; set; }
+        [Menu("Size", 3143, 314)]
+        public RangeNode<int> Elemental_Conflux_Size { get; set; }
+        [Menu("Show Inactive", 3144, 314)]
+        public ToggleNode Elemental_Conflux_ShowInactive { get; set; }
         #endregion
         #region Vaal Skills
         // Vaal Skills

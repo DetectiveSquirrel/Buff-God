@@ -74,6 +74,11 @@ namespace Buff_God
             // Others
             object[] Arcane_Surge = { false, "", "arcane_surge", "Arcane Surge Active", "Arcane Surge Inactive" };
             object[] Blood_Rage = { false, "", "blood_rage", "Blood Rage Active", "Blood Rage Inactive" };
+            // Others - Conflux
+            object[] Conflux_Elemental = { false, "", "elementalist_all_damage_chills_shocks_ignites", "Elemental Conflux", "Elemental Conflux Inactive" };
+            object[] Conflux_Chill = { false, "", "elementalist_all_damage_chills", "Chilling Conflux", "Elemental Conflux Inactive" };
+            object[] Conflux_Shock = { false, "", "elementalist_all_damage_shocks", "Shocking Conflux", "Elemental Conflux Inactive" };
+            object[] Conflux_Ignite = { false, "", "elementalist_all_damage_ignites", "Igniting Conflux", "Elemental Conflux Inactive" };
 
             //Offensive Auras
             object[] Anger = { false, "", "player_aura_fire_damage", "Anger Active", "Anger Inactive" };
@@ -151,6 +156,26 @@ namespace Buff_God
                 {
                     Blood_Rage[0] = true;
                     Blood_Rage[1] = BuffText;
+                }
+                if (ThisBuff.Equals((string)Conflux_Elemental[2]))
+                {
+                    Conflux_Elemental[0] = true;
+                    Conflux_Elemental[1] = BuffText;
+                }
+                if (ThisBuff.Equals((string)Conflux_Chill[2]))
+                {
+                    Conflux_Chill[0] = true;
+                    Conflux_Chill[1] = BuffText;
+                }
+                if (ThisBuff.Equals((string)Conflux_Shock[2]))
+                {
+                    Conflux_Shock[0] = true;
+                    Conflux_Shock[1] = BuffText;
+                }
+                if (ThisBuff.Equals((string)Conflux_Ignite[2]))
+                {
+                    Conflux_Ignite[0] = true;
+                    Conflux_Ignite[1] = BuffText;
                 }
                 #endregion
                 #region Vaal Skills
@@ -427,6 +452,29 @@ namespace Buff_God
                     Settings.Blood_Rage_Size,
                     (string)Blood_Rage[1], (string)Blood_Rage[3], (string)Blood_Rage[4]);
                 #endregion
+                #region Elemental_Conflux
+                if (Settings.Elemental_Conflux)
+                {
+                    if (Settings.Force_Icons_On)
+                    {
+                        DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, "99", (string)Conflux_Elemental[3]);
+                    }
+                    // Icon Not Forced On
+                    else
+                    {
+                        if ((bool)Conflux_Elemental[0])
+                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Elemental[1], (string)Conflux_Elemental[3]);
+                        else if ((bool)Conflux_Chill[0])
+                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Chill[1], (string)Conflux_Chill[3]);
+                        else if ((bool)Conflux_Shock[0])
+                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Shock[1], (string)Conflux_Shock[3]);
+                        else if ((bool)Conflux_Ignite[0])
+                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Ignite[1], (string)Conflux_Ignite[3]);
+                        else if (Settings.Elemental_Conflux_ShowInactive)
+                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Elemental[1], (string)Conflux_Elemental[4]);
+                    }
+                }
+                #endregion 
             }
             #endregion
             #region Vaal Skills
