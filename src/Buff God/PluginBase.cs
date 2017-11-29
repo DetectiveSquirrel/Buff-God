@@ -1,22 +1,24 @@
-﻿using PoeHUD.Controllers;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using PoeHUD.Controllers;
+using PoeHUD.Hud.Settings;
 using PoeHUD.Plugins;
 using PoeHUD.Poe.Components;
 using SharpDX;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using PoeHUD.Hud.Settings;
+using SharpDX.Direct3D9;
 
 namespace Buff_God
 {
     public class PluginBase : BaseSettingsPlugin<PluginSettings>
     {
+        private bool _isTown;
+
         public PluginBase()
         {
             PluginName = "Buff God";
         }
-
-        private bool _isTown;
 
         public override void Initialise()
         {
@@ -32,12 +34,10 @@ namespace Buff_God
 
         public void DrawBuffIcons()
         {
-            var Panels = GameController.Game.IngameState.IngameUi;
+            var panels = GameController.Game.IngameState.IngameUi;
 
-            if (_isTown || (Panels.AtlasPanel.IsVisible || Panels.OpenLeftPanel.IsVisible || Panels.TreePanel.IsVisible)) return;
-            var x = GameController.Window.GetWindowRectangle().Width * 50 * .01f;
-            var y = GameController.Window.GetWindowRectangle().Height * 50 * .01f;
-            var position = new Vector2(x, y);
+            if (_isTown || panels.AtlasPanel.IsVisible || panels.OpenLeftPanel.IsVisible ||
+                panels.TreePanel.IsVisible) return;
 
             /* TO-DO
              * Phase run - new_phase_run (new_phase_run_damage is presetn a fraction of a second before showing new_phase_run?)
@@ -54,65 +54,92 @@ namespace Buff_God
             */
 
             // Golems
-            object[] Fire_Golem = { false, "", "fire_elemental_buff", "Fire Golem Active", "Fire Golem Inactive" };
-            object[] Ice_Golem = { false, "", "ice_elemental_buff", "Ice Golem Active", "Ice Golem Inactive" };
-            object[] Lightning_Golem = { false, "", "lightning_elemental_buff", "Lightning Golem Active", "Lightning Golem Inactive" };
-            object[] Chaos_Golem = { false, "", "chaos_elemental_buff", "Chaos Golem Active", "Chaos Golem Inactive" };
-            object[] Stone_Golem = { false, "", "rock_golem_buff", "Stone Golem Active", "Stone Golem Inactive" };
+            object[] fireGolem = {false, "", "fire_elemental_buff", "Fire Golem Active", "Fire Golem Inactive"};
+            object[] iceGolem = {false, "", "ice_elemental_buff", "Ice Golem Active", "Ice Golem Inactive"};
+            object[] lightningGolem =
+                {false, "", "lightning_elemental_buff", "Lightning Golem Active", "Lightning Golem Inactive"};
+            object[] chaosGolem = {false, "", "chaos_elemental_buff", "Chaos Golem Active", "Chaos Golem Inactive"};
+            object[] stoneGolem = {false, "", "rock_golem_buff", "Stone Golem Active", "Stone Golem Inactive"};
 
             //Offerings
-            object[] Flesh_Offering = { false, "", "offering_offensive", "Flesh Offering Active", "Offering Inactive" };
-            object[] Bone_Offering = { false, "", "offering_defensive", "Bone Offering Active", "Offering Inactive" };
-            object[] Spirit_Offering = { false, "", "offering_spirit", "Spirit Offering Active", "Offering Inactive" };
+            object[] fleshOffering = {false, "", "offering_offensive", "Flesh Offering Active", "Offering Inactive"};
+            object[] boneOffering = {false, "", "offering_defensive", "Bone Offering Active", "Offering Inactive"};
+            object[] spiritOffering = {false, "", "offering_spirit", "Spirit Offering Active", "Offering Inactive"};
 
             // Vaal Skills
-            object[] Vaal_Haste = { false, "", "vaal_aura_speed", "Vaal Haste Active", "Vaal Haste Inactive" };
-            object[] Vaal_Grace = { false, "", "vaal_aura_dodge", "Vaal Grace Active", "Vaal Grace Inactive" };
-            object[] Vaal_Clarity = { false, "", "vaal_aura_no_mana_cost", "Vaal Clarity Active", "Vaal Clarity Inactive" };
-            object[] Vaal_Discipline = { false, "", "vaal_aura_energy_shield", "Vaal Discipline Active", "Vaal Discipline Inactive" };
+            object[] vaalHaste = {false, "", "vaal_aura_speed", "Vaal Haste Active", "Vaal Haste Inactive"};
+            object[] vaalGrace = {false, "", "vaal_aura_dodge", "Vaal Grace Active", "Vaal Grace Inactive"};
+            object[] vaalClarity =
+                {false, "", "vaal_aura_no_mana_cost", "Vaal Clarity Active", "Vaal Clarity Inactive"};
+            object[] vaalDiscipline =
+                {false, "", "vaal_aura_energy_shield", "Vaal Discipline Active", "Vaal Discipline Inactive"};
 
             // Others
-            object[] Arcane_Surge = { false, "", "arcane_surge", "Arcane Surge Active", "Arcane Surge Inactive" };
-            object[] Blood_Rage = { false, "", "blood_rage", "Blood Rage Active", "Blood Rage Inactive" };
+            object[] arcaneSurge = {false, "", "arcane_surge", "Arcane Surge Active", "Arcane Surge Inactive"};
+            object[] bloodRage = {false, "", "blood_rage", "Blood Rage Active", "Blood Rage Inactive"};
             // Others - Conflux
-            object[] Conflux_Elemental = { false, "", "elementalist_all_damage_chills_shocks_ignites", "Elemental Conflux", "Elemental Conflux Inactive" };
-            object[] Conflux_Chill = { false, "", "elementalist_all_damage_chills", "Chilling Conflux", "Elemental Conflux Inactive" };
-            object[] Conflux_Shock = { false, "", "elementalist_all_damage_shocks", "Shocking Conflux", "Elemental Conflux Inactive" };
-            object[] Conflux_Ignite = { false, "", "elementalist_all_damage_ignites", "Igniting Conflux", "Elemental Conflux Inactive" };
+            object[] confluxElemental =
+            {
+                false, "", "elementalist_all_damage_chills_shocks_ignites", "Elemental Conflux",
+                "Elemental Conflux Inactive"
+            };
+            object[] confluxChill =
+                {false, "", "elementalist_all_damage_chills", "Chilling Conflux", "Elemental Conflux Inactive"};
+            object[] confluxShock =
+                {false, "", "elementalist_all_damage_shocks", "Shocking Conflux", "Elemental Conflux Inactive"};
+            object[] confluxIgnite =
+                {false, "", "elementalist_all_damage_ignites", "Igniting Conflux", "Elemental Conflux Inactive"};
 
             //Offensive Auras
-            object[] Anger = { false, "", "player_aura_fire_damage", "Anger Active", "Anger Inactive" };
-            object[] Hatred = { false, "", "player_aura_cold_damage", "Hatred Active", "Hatred Inactive" };
-            object[] Wrath = { false, "", "player_aura_lightning_damage", "Wrath Active", "Wrath Inactive" };
-            object[] Herald_of_Ash = { false, "", "herald_of_ash", "Herald of Ash Active", "Herald of Ash Inactive" };
-            object[] Herald_of_Ice = { false, "", "herald_of_ice", "Herald of Ice Active", "Herald of Ice Inactive" };
-            object[] Herald_of_Thunder = { false, "", "herald_of_thunder", "Herald of Thunder Active", "Herald of Thunder Inactive" };
-            object[] Haste = { false, "", "player_aura_speed", "Haste Active", "Haste Inactive" };
+            object[] anger = {false, "", "player_aura_fire_damage", "Anger Active", "Anger Inactive"};
+            object[] hatred = {false, "", "player_aura_cold_damage", "Hatred Active", "Hatred Inactive"};
+            object[] wrath = {false, "", "player_aura_lightning_damage", "Wrath Active", "Wrath Inactive"};
+            object[] heraldOfAsh = {false, "", "herald_of_ash", "Herald of Ash Active", "Herald of Ash Inactive"};
+            object[] heraldOfIce = {false, "", "herald_of_ice", "Herald of Ice Active", "Herald of Ice Inactive"};
+            object[] heraldOfThunder =
+                {false, "", "herald_of_thunder", "Herald of Thunder Active", "Herald of Thunder Inactive"};
+            object[] haste = {false, "", "player_aura_speed", "Haste Active", "Haste Inactive"};
 
             //Defensive Auras
-            object[] Purity_of_Fire = { false, "", "player_aura_fire_resist", "Purity of Fire Active", "Purity of Fire Inactive" };
-            object[] Purity_of_Ice = { false, "", "player_aura_cold_resist", "Purity of Ice Active", "Purity of Ice Inactive" };
-            object[] Purity_of_Lightning = { false, "", "player_aura_lightning_resist", "Purity of Lightning Active", "Purity of Lightning Inactive" };
-            object[] Purity_of_Elements = { false, "", "player_aura_resists", "Purity of Elements Active", "Purity of Elements Inactive" };
-            object[] Vitality = { false, "", "player_aura_life_regen", "Vitality Active", "Vitality Inactive" };
-            object[] Discipline = { false, "", "player_aura_energy_shield", "Discipline Active", "Discipline Inactive" };
-            object[] Determination = { false, "", "player_aura_armour", "Determination Active", "Determination Inactive" };
-            object[] Grace = { false, "", "player_aura_evasion", "Grace Active", "Grace Inactive" };
-            object[] Clarity = { false, "", "player_aura_mana_regen", "Clarity Active", "Clarity Inactive" };
+            object[] purityOfFire =
+                {false, "", "player_aura_fire_resist", "Purity of Fire Active", "Purity of Fire Inactive"};
+            object[] purityOfIce =
+                {false, "", "player_aura_cold_resist", "Purity of Ice Active", "Purity of Ice Inactive"};
+            object[] purityOfLightning =
+            {
+                false, "", "player_aura_lightning_resist", "Purity of Lightning Active", "Purity of Lightning Inactive"
+            };
+            object[] purityOfElements =
+                {false, "", "player_aura_resists", "Purity of Elements Active", "Purity of Elements Inactive"};
+            object[] vitality = {false, "", "player_aura_life_regen", "Vitality Active", "Vitality Inactive"};
+            object[] discipline = {false, "", "player_aura_energy_shield", "Discipline Active", "Discipline Inactive"};
+            object[] determination =
+                {false, "", "player_aura_armour", "Determination Active", "Determination Inactive"};
+            object[] grace = {false, "", "player_aura_evasion", "Grace Active", "Grace Inactive"};
+            object[] clarity = {false, "", "player_aura_mana_regen", "Clarity Active", "Clarity Inactive"};
 
             // Curses
-            object[] Curse_Poachers_Mark = { false, "", "curse_poachers_mark", "Poacher's Mark Active", "Poacher's Mark Inactive" };
-            object[] Curse_Frostbite = { false, "", "curse_cold_weakness", "Frostbite Active", "Frostbite Inactive" };
-            object[] Curse_Vulnerability = { false, "", "curse_vulnerability", "Vulnerability Active", "Vulnerability Inactive" };
-            object[] Curse_Warlords_Mark = { false, "", "curse_warlords_mark", "Warlord's Mark Active", "Warlord's Mark Inactive" };
-            object[] Curse_Flammability = { false, "", "curse_fire_weakness", "Flammability Active", "Flammability Inactive" };
-            object[] Curse_Assassins_Mark = { false, "", "curse_assassins_mark", "Assassin's Mark Active", "Assassin's Mark Inactive" };
-            object[] Curse_Elemental_Weakness = { false, "", "curse_elemental_weakness", "Elemental Weakness Active", "Elemental Weakness Inactive" };
-            object[] Curse_Conductivity = { false, "", "curse_lightning_weakness", "Conductivity Active", "Conductivity Inactive" };
-            object[] Curse_Enfeeble = { false, "", "curse_enfeeble", "Enfeeble Active", "Enfeeble Inactive" };
-            object[] Curse_Punishment = { false, "", "curse_newpunishment", "Punishment Active", "Punishment Inactive" };
-            object[] Curse_Projectile_Weakness = { false, "", "curse_projectile_weakness", "Projectile Weakness Active", "Projectile Weakness Inactive" };
-            object[] Curse_Temporal_Chains = { false, "", "curse_temporal_chains", "Temporal Chains Active", "Temporal Chains Inactive" };
+            object[] cursePoachersMark =
+                {false, "", "curse_poachers_mark", "Poacher's Mark Active", "Poacher's Mark Inactive"};
+            object[] curseFrostbite = {false, "", "curse_cold_weakness", "Frostbite Active", "Frostbite Inactive"};
+            object[] curseVulnerability =
+                {false, "", "curse_vulnerability", "Vulnerability Active", "Vulnerability Inactive"};
+            object[] curseWarlordsMark =
+                {false, "", "curse_warlords_mark", "Warlord's Mark Active", "Warlord's Mark Inactive"};
+            object[] curseFlammability =
+                {false, "", "curse_fire_weakness", "Flammability Active", "Flammability Inactive"};
+            object[] curseAssassinsMark =
+                {false, "", "curse_assassins_mark", "Assassin's Mark Active", "Assassin's Mark Inactive"};
+            object[] curseElementalWeakness =
+                {false, "", "curse_elemental_weakness", "Elemental Weakness Active", "Elemental Weakness Inactive"};
+            object[] curseConductivity =
+                {false, "", "curse_lightning_weakness", "Conductivity Active", "Conductivity Inactive"};
+            object[] curseEnfeeble = {false, "", "curse_enfeeble", "Enfeeble Active", "Enfeeble Inactive"};
+            object[] cursePunishment = {false, "", "curse_newpunishment", "Punishment Active", "Punishment Inactive"};
+            object[] curseProjectileWeakness =
+                {false, "", "curse_projectile_weakness", "Projectile Weakness Active", "Projectile Weakness Inactive"};
+            object[] curseTemporalChains =
+                {false, "", "curse_temporal_chains", "Temporal Chains Active", "Temporal Chains Inactive"};
 
 
             /* Buff Array[]
@@ -122,857 +149,1098 @@ namespace Buff_God
              * Buff Name,
              * Active Icon,
              * Inactive Icon
-             * Charges
+             * charges
             */
-            // Charges
-            object[] Power_Charges = { false, "", "power_charge", "Power Charges Active", "Power Charges Inactive", "" };
-            object[] Frenzy_Charges = { false, "", "frenzy_charge", "Frenzy Charges Active", "Frenzy Charges Inactive", "" };
-            object[] Endurance_Charges = { false, "", "endurance_charge", "Endurance Charges Active", "Endurance Charges Inactive", "" };
-            object[] Blade_Vortex_Stacks = { false, "", "blade_vortex_counter", "Blade Vortex Active", "Blade Vortex Inactive", "" };
-            object[] Reave_Stacks = { false, "", "reave_counter", "Reave Active", "Reave Inactive", "" };
+            // charges
+            object[] powerCharges = {false, "", "power_charge", "Power charges Active", "Power charges Inactive", ""};
+            object[] frenzyCharges =
+                {false, "", "frenzy_charge", "Frenzy charges Active", "Frenzy charges Inactive", ""};
+            object[] enduranceCharges =
+                {false, "", "endurance_charge", "Endurance charges Active", "Endurance charges Inactive", ""};
+            object[] bladeVortexStacks =
+                {false, "", "blade_vortex_counter", "Blade Vortex Active", "Blade Vortex Inactive", ""};
+            object[] reaveStacks = {false, "", "reave_counter", "Reave Active", "Reave Inactive", ""};
 
             // Leeching
-            object[] Leeching_Life = { false, "", "life_leech", "Life Leech Active", "Leech Inactive", };
-            object[] Leeching_Mana = { false, "", "mana_leech", "Mana Leech Active", "Leech Inactive", };
-            List<float> Leeching_Life_Buff_Durations = new List<float>();
-            List<float> Leeching_Mana_Buff_Durations = new List<float>();
+            object[] leechingLife = {false, "", "life_leech", "Life Leech Active", "Leech Inactive"};
+            object[] leechingMana = {false, "", "mana_leech", "Mana Leech Active", "Leech Inactive"};
+            var leechingLifeBuffDurations = new List<float>();
+            var leechingManaBuffDurations = new List<float>();
 
 
             // Loop through all buffs on me
             foreach (var buff in GameController.Game.IngameState.Data.LocalPlayer.GetComponent<Life>().Buffs)
             {
                 var isInfinity = float.IsInfinity(buff.Timer);
-                var BuffText = isInfinity ? "" : Math.Ceiling(buff.Timer).ToString();
-                var ThisBuff = buff.Name.ToLower();
-                var Charges = buff.Charges < 0 ? "" : buff.Charges.ToString();
+                var buffText = isInfinity ? "" : Math.Ceiling(buff.Timer).ToString(CultureInfo.InvariantCulture);
+                var thisBuff = buff.Name.ToLower();
+                var charges = buff.Charges < 1 ? "" : buff.Charges.ToString();
 
                 #region Others
-                if (ThisBuff.Equals((string)Arcane_Surge[2]))
+
+                if (thisBuff.Equals((string) arcaneSurge[2]))
                 {
-                    Arcane_Surge[0] = true;
-                    Arcane_Surge[1] = BuffText;
+                    arcaneSurge[0] = true;
+                    arcaneSurge[1] = buffText;
                 }
-                if (ThisBuff.Equals((string)Blood_Rage[2]))
+                if (thisBuff.Equals((string) bloodRage[2]))
                 {
-                    Blood_Rage[0] = true;
-                    Blood_Rage[1] = BuffText;
+                    bloodRage[0] = true;
+                    bloodRage[1] = buffText;
                 }
-                if (ThisBuff.Equals((string)Conflux_Elemental[2]))
+                if (thisBuff.Equals((string) confluxElemental[2]))
                 {
-                    Conflux_Elemental[0] = true;
-                    Conflux_Elemental[1] = BuffText;
+                    confluxElemental[0] = true;
+                    confluxElemental[1] = buffText;
                 }
-                if (ThisBuff.Equals((string)Conflux_Chill[2]))
+                if (thisBuff.Equals((string) confluxChill[2]))
                 {
-                    Conflux_Chill[0] = true;
-                    Conflux_Chill[1] = BuffText;
+                    confluxChill[0] = true;
+                    confluxChill[1] = buffText;
                 }
-                if (ThisBuff.Equals((string)Conflux_Shock[2]))
+                if (thisBuff.Equals((string) confluxShock[2]))
                 {
-                    Conflux_Shock[0] = true;
-                    Conflux_Shock[1] = BuffText;
+                    confluxShock[0] = true;
+                    confluxShock[1] = buffText;
                 }
-                if (ThisBuff.Equals((string)Conflux_Ignite[2]))
+                if (thisBuff.Equals((string) confluxIgnite[2]))
                 {
-                    Conflux_Ignite[0] = true;
-                    Conflux_Ignite[1] = BuffText;
+                    confluxIgnite[0] = true;
+                    confluxIgnite[1] = buffText;
                 }
+
                 #endregion
+
                 #region Vaal Skills
-                else if (ThisBuff.Equals((string)Vaal_Haste[2]))
+
+                else if (thisBuff.Equals((string) vaalHaste[2]))
                 {
-                    Vaal_Haste[0] = true;
-                    Vaal_Haste[1] = BuffText;
+                    vaalHaste[0] = true;
+                    vaalHaste[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Vaal_Grace[2]))
+                else if (thisBuff.Equals((string) vaalGrace[2]))
                 {
-                    Vaal_Grace[0] = true;
-                    Vaal_Grace[1] = BuffText;
+                    vaalGrace[0] = true;
+                    vaalGrace[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Vaal_Clarity[2]))
+                else if (thisBuff.Equals((string) vaalClarity[2]))
                 {
-                    Vaal_Clarity[0] = true;
-                    Vaal_Clarity[1] = BuffText;
+                    vaalClarity[0] = true;
+                    vaalClarity[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Vaal_Discipline[2]))
+                else if (thisBuff.Equals((string) vaalDiscipline[2]))
                 {
-                    Vaal_Discipline[0] = true;
-                    Vaal_Discipline[1] = BuffText;
+                    vaalDiscipline[0] = true;
+                    vaalDiscipline[1] = buffText;
                 }
+
                 #endregion
+
                 #region Offerings
-                else if (ThisBuff.Equals((string)Flesh_Offering[2]))
+
+                else if (thisBuff.Equals((string) fleshOffering[2]))
                 {
-                    Flesh_Offering[0] = true;
-                    Flesh_Offering[1] = BuffText;
+                    fleshOffering[0] = true;
+                    fleshOffering[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Bone_Offering[2]))
+                else if (thisBuff.Equals((string) boneOffering[2]))
                 {
-                    Bone_Offering[0] = true;
-                    Bone_Offering[1] = BuffText;
+                    boneOffering[0] = true;
+                    boneOffering[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Spirit_Offering[2]))
+                else if (thisBuff.Equals((string) spiritOffering[2]))
                 {
-                    Spirit_Offering[0] = true;
-                    Spirit_Offering[1] = BuffText;
+                    spiritOffering[0] = true;
+                    spiritOffering[1] = buffText;
                 }
+
                 #endregion
+
                 #region Golems
-                else if (ThisBuff.Equals((string)Fire_Golem[2]))
+
+                else if (thisBuff.Equals((string) fireGolem[2]))
                 {
-                    Fire_Golem[0] = true;
-                    Fire_Golem[1] = BuffText;
+                    fireGolem[0] = true;
+                    fireGolem[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Ice_Golem[2]))
+                else if (thisBuff.Equals((string) iceGolem[2]))
                 {
-                    Ice_Golem[0] = true;
-                    Ice_Golem[1] = BuffText;
+                    iceGolem[0] = true;
+                    iceGolem[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Lightning_Golem[2]))
+                else if (thisBuff.Equals((string) lightningGolem[2]))
                 {
-                    Lightning_Golem[0] = true;
-                    Lightning_Golem[1] = BuffText;
+                    lightningGolem[0] = true;
+                    lightningGolem[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Chaos_Golem[2]))
+                else if (thisBuff.Equals((string) chaosGolem[2]))
                 {
-                    Chaos_Golem[0] = true;
-                    Chaos_Golem[1] = BuffText;
+                    chaosGolem[0] = true;
+                    chaosGolem[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Stone_Golem[2]))
+                else if (thisBuff.Equals((string) stoneGolem[2]))
                 {
-                    Stone_Golem[0] = true;
-                    Stone_Golem[1] = BuffText;
+                    stoneGolem[0] = true;
+                    stoneGolem[1] = buffText;
                 }
+
                 #endregion
+
                 #region Offensive Auras
-                else if (ThisBuff.Equals((string)Anger[2]))
+
+                else if (thisBuff.Equals((string) anger[2]))
                 {
-                    Anger[0] = true;
-                    Anger[1] = BuffText;
+                    anger[0] = true;
+                    anger[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Hatred[2]))
+                else if (thisBuff.Equals((string) hatred[2]))
                 {
-                    Hatred[0] = true;
-                    Hatred[1] = BuffText;
+                    hatred[0] = true;
+                    hatred[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Wrath[2]))
+                else if (thisBuff.Equals((string) wrath[2]))
                 {
-                    Wrath[0] = true;
-                    Wrath[1] = BuffText;
+                    wrath[0] = true;
+                    wrath[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Herald_of_Ash[2]))
+                else if (thisBuff.Equals((string) heraldOfAsh[2]))
                 {
-                    Herald_of_Ash[0] = true;
-                    Herald_of_Ash[1] = BuffText;
+                    heraldOfAsh[0] = true;
+                    heraldOfAsh[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Herald_of_Ice[2]))
+                else if (thisBuff.Equals((string) heraldOfIce[2]))
                 {
-                    Herald_of_Ice[0] = true;
-                    Herald_of_Ice[1] = BuffText;
+                    heraldOfIce[0] = true;
+                    heraldOfIce[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Herald_of_Thunder[2]))
+                else if (thisBuff.Equals((string) heraldOfThunder[2]))
                 {
-                    Herald_of_Thunder[0] = true;
-                    Herald_of_Thunder[1] = BuffText;
+                    heraldOfThunder[0] = true;
+                    heraldOfThunder[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Haste[2]))
+                else if (thisBuff.Equals((string) haste[2]))
                 {
-                    Haste[0] = true;
-                    Haste[1] = BuffText;
+                    haste[0] = true;
+                    haste[1] = buffText;
                 }
+
                 #endregion
+
                 #region Defensive Auras
-                else if (ThisBuff.Equals((string)Purity_of_Fire[2]))
+
+                else if (thisBuff.Equals((string) purityOfFire[2]))
                 {
-                    Purity_of_Fire[0] = true;
-                    Purity_of_Fire[1] = BuffText;
+                    purityOfFire[0] = true;
+                    purityOfFire[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Purity_of_Ice[2]))
+                else if (thisBuff.Equals((string) purityOfIce[2]))
                 {
-                    Purity_of_Ice[0] = true;
-                    Purity_of_Ice[1] = BuffText;
+                    purityOfIce[0] = true;
+                    purityOfIce[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Purity_of_Lightning[2]))
+                else if (thisBuff.Equals((string) purityOfLightning[2]))
                 {
-                    Purity_of_Lightning[0] = true;
-                    Purity_of_Lightning[1] = BuffText;
+                    purityOfLightning[0] = true;
+                    purityOfLightning[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Purity_of_Elements[2]))
+                else if (thisBuff.Equals((string) purityOfElements[2]))
                 {
-                    Purity_of_Elements[0] = true;
-                    Purity_of_Elements[1] = BuffText;
+                    purityOfElements[0] = true;
+                    purityOfElements[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Vitality[2]))
+                else if (thisBuff.Equals((string) vitality[2]))
                 {
-                    Vitality[0] = true;
-                    Vitality[1] = BuffText;
+                    vitality[0] = true;
+                    vitality[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Discipline[2]))
+                else if (thisBuff.Equals((string) discipline[2]))
                 {
-                    Discipline[0] = true;
-                    Discipline[1] = BuffText;
+                    discipline[0] = true;
+                    discipline[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Determination[2]))
+                else if (thisBuff.Equals((string) determination[2]))
                 {
-                    Determination[0] = true;
-                    Determination[1] = BuffText;
+                    determination[0] = true;
+                    determination[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Grace[2]))
+                else if (thisBuff.Equals((string) grace[2]))
                 {
-                    Grace[0] = true;
-                    Grace[1] = BuffText;
+                    grace[0] = true;
+                    grace[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Clarity[2]))
+                else if (thisBuff.Equals((string) clarity[2]))
                 {
-                    Clarity[0] = true;
-                    Clarity[1] = BuffText;
+                    clarity[0] = true;
+                    clarity[1] = buffText;
                 }
+
                 #endregion
-                #region Charges
-                else if (ThisBuff.Equals((string)Power_Charges[2]))
+
+                #region charges
+
+                else if (thisBuff.Equals((string) powerCharges[2]))
                 {
-                    Power_Charges[0] = true;
-                    Power_Charges[1] = BuffText;
-                    Power_Charges[5] = Charges;
+                    powerCharges[0] = true;
+                    powerCharges[1] = buffText;
+                    powerCharges[5] = charges;
                 }
-                else if (ThisBuff.Equals((string)Frenzy_Charges[2]))
+                else if (thisBuff.Equals((string) frenzyCharges[2]))
                 {
-                    Frenzy_Charges[0] = true;
-                    Frenzy_Charges[1] = BuffText;
-                    Frenzy_Charges[5] = Charges;
+                    frenzyCharges[0] = true;
+                    frenzyCharges[1] = buffText;
+                    frenzyCharges[5] = charges;
                 }
-                else if (ThisBuff.Equals((string)Endurance_Charges[2]))
+                else if (thisBuff.Equals((string) enduranceCharges[2]))
                 {
-                    Endurance_Charges[0] = true;
-                    Endurance_Charges[1] = BuffText;
-                    Endurance_Charges[5] = Charges;
+                    enduranceCharges[0] = true;
+                    enduranceCharges[1] = buffText;
+                    enduranceCharges[5] = charges;
                 }
-                else if (ThisBuff.Equals((string)Blade_Vortex_Stacks[2]))
+                else if (thisBuff.Equals((string) bladeVortexStacks[2]))
                 {
-                    Blade_Vortex_Stacks[0] = true;
-                    Blade_Vortex_Stacks[1] = BuffText;
-                    Blade_Vortex_Stacks[5] = Charges;
+                    bladeVortexStacks[0] = true;
+                    bladeVortexStacks[1] = buffText;
+                    bladeVortexStacks[5] = charges;
                 }
-                else if (ThisBuff.Equals((string)Reave_Stacks[2]))
+                else if (thisBuff.Equals((string) reaveStacks[2]))
                 {
-                    Reave_Stacks[0] = true;
-                    Reave_Stacks[1] = BuffText;
-                    Reave_Stacks[5] = Charges;
+                    reaveStacks[0] = true;
+                    reaveStacks[1] = buffText;
+                    reaveStacks[5] = charges;
                 }
+
                 #endregion
+
                 #region Curses
-                else if (ThisBuff.Equals((string)Curse_Poachers_Mark[2]))
+
+                else if (thisBuff.Equals((string) cursePoachersMark[2]))
                 {
-                    Curse_Poachers_Mark[0] = true;
-                    Curse_Poachers_Mark[1] = BuffText;
+                    cursePoachersMark[0] = true;
+                    cursePoachersMark[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Frostbite[2]))
+                else if (thisBuff.Equals((string) curseFrostbite[2]))
                 {
-                    Curse_Frostbite[0] = true;
-                    Curse_Frostbite[1] = BuffText;
+                    curseFrostbite[0] = true;
+                    curseFrostbite[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Vulnerability[2]))
+                else if (thisBuff.Equals((string) curseVulnerability[2]))
                 {
-                    Curse_Vulnerability[0] = true;
-                    Curse_Vulnerability[1] = BuffText;
+                    curseVulnerability[0] = true;
+                    curseVulnerability[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Warlords_Mark[2]))
+                else if (thisBuff.Equals((string) curseWarlordsMark[2]))
                 {
-                    Curse_Warlords_Mark[0] = true;
-                    Curse_Warlords_Mark[1] = BuffText;
+                    curseWarlordsMark[0] = true;
+                    curseWarlordsMark[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Flammability[2]))
+                else if (thisBuff.Equals((string) curseFlammability[2]))
                 {
-                    Curse_Flammability[0] = true;
-                    Curse_Flammability[1] = BuffText;
+                    curseFlammability[0] = true;
+                    curseFlammability[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Assassins_Mark[2]))
+                else if (thisBuff.Equals((string) curseAssassinsMark[2]))
                 {
-                    Curse_Assassins_Mark[0] = true;
-                    Curse_Assassins_Mark[1] = BuffText;
+                    curseAssassinsMark[0] = true;
+                    curseAssassinsMark[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Elemental_Weakness[2]))
+                else if (thisBuff.Equals((string) curseElementalWeakness[2]))
                 {
-                    Curse_Elemental_Weakness[0] = true;
-                    Curse_Elemental_Weakness[1] = BuffText;
+                    curseElementalWeakness[0] = true;
+                    curseElementalWeakness[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Conductivity[2]))
+                else if (thisBuff.Equals((string) curseConductivity[2]))
                 {
-                    Curse_Conductivity[0] = true;
-                    Curse_Conductivity[1] = BuffText;
+                    curseConductivity[0] = true;
+                    curseConductivity[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Enfeeble[2]))
+                else if (thisBuff.Equals((string) curseEnfeeble[2]))
                 {
-                    Curse_Enfeeble[0] = true;
-                    Curse_Enfeeble[1] = BuffText;
+                    curseEnfeeble[0] = true;
+                    curseEnfeeble[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Punishment[2]))
+                else if (thisBuff.Equals((string) cursePunishment[2]))
                 {
-                    Curse_Punishment[0] = true;
-                    Curse_Punishment[1] = BuffText;
+                    cursePunishment[0] = true;
+                    cursePunishment[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Projectile_Weakness[2]))
+                else if (thisBuff.Equals((string) curseProjectileWeakness[2]))
                 {
-                    Curse_Projectile_Weakness[0] = true;
-                    Curse_Projectile_Weakness[1] = BuffText;
+                    curseProjectileWeakness[0] = true;
+                    curseProjectileWeakness[1] = buffText;
                 }
-                else if (ThisBuff.Equals((string)Curse_Temporal_Chains[2]))
+                else if (thisBuff.Equals((string) curseTemporalChains[2]))
                 {
-                    Curse_Temporal_Chains[0] = true;
-                    Curse_Temporal_Chains[1] = BuffText;
+                    curseTemporalChains[0] = true;
+                    curseTemporalChains[1] = buffText;
                 }
+
                 #endregion
+
                 #region Leeching
-                else if (ThisBuff.Equals((string)Leeching_Life[2]))
+
+                else if (thisBuff.Equals((string) leechingLife[2]))
                 {
-                    Leeching_Life[0] = true;
-                    Leeching_Life_Buff_Durations.Add(buff.Timer);
+                    leechingLife[0] = true;
+                    leechingLifeBuffDurations.Add(buff.Timer);
                 }
-                else if (ThisBuff.Equals((string)Leeching_Mana[2]))
+                else if (thisBuff.Equals((string) leechingMana[2]))
                 {
-                    Leeching_Mana[0] = true;
-                    Leeching_Mana_Buff_Durations.Add(buff.Timer);
+                    leechingMana[0] = true;
+                    leechingManaBuffDurations.Add(buff.Timer);
                 }
+
                 #endregion
             }
+
             #region Others
+
             if (Settings.Others)
             {
                 #region Arcane Surge
-                Try_Draw_Buff(Settings.Arcane_Surge, (bool)Arcane_Surge[0], Settings.Arcane_Surge_ShowInactive, true,
-                    Settings.Arcane_Surge_X,
-                    Settings.Arcane_Surge_Y,
-                    Settings.Arcane_Surge_Size,
-                    (string)Arcane_Surge[1], (string)Arcane_Surge[3], (string)Arcane_Surge[4]);
+
+                Try_Draw_Buff(Settings.ArcaneSurge, (bool) arcaneSurge[0], Settings.ArcaneSurgeShowInactive, true,
+                    Settings.ArcaneSurgeX,
+                    Settings.ArcaneSurgeY,
+                    Settings.ArcaneSurgeSize,
+                    (string) arcaneSurge[1], (string) arcaneSurge[3], (string) arcaneSurge[4]);
+
                 #endregion
+
                 #region Blood_Rage
-                Try_Draw_Buff(Settings.Blood_Rage, (bool)Blood_Rage[0], Settings.Blood_Rage_ShowInactive, true,
-                    Settings.Blood_Rage_X,
-                    Settings.Blood_Rage_Y,
-                    Settings.Blood_Rage_Size,
-                    (string)Blood_Rage[1], (string)Blood_Rage[3], (string)Blood_Rage[4]);
+
+                Try_Draw_Buff(Settings.BloodRage, (bool) bloodRage[0], Settings.BloodRageShowInactive, true,
+                    Settings.BloodRageX,
+                    Settings.BloodRageY,
+                    Settings.BloodRageSize,
+                    (string) bloodRage[1], (string) bloodRage[3], (string) bloodRage[4]);
+
                 #endregion
+
                 #region Elemental_Conflux
-                if (Settings.Elemental_Conflux)
-                {
-                    if (Settings.Force_Icons_On)
+
+                if (Settings.ElementalConflux)
+                    if (Settings.ForceIconsOn)
                     {
-                        DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, "99", (string)Conflux_Elemental[3]);
+                        DrawBuff(Settings.ElementalConfluxX, Settings.ElementalConfluxY,
+                            Settings.ElementalConfluxSize, "99", (string) confluxElemental[3]);
                     }
                     // Icon Not Forced On
                     else
                     {
-                        if ((bool)Conflux_Elemental[0])
-                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Elemental[1], (string)Conflux_Elemental[3]);
-                        else if ((bool)Conflux_Chill[0])
-                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Chill[1], (string)Conflux_Chill[3]);
-                        else if ((bool)Conflux_Shock[0])
-                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Shock[1], (string)Conflux_Shock[3]);
-                        else if ((bool)Conflux_Ignite[0])
-                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Ignite[1], (string)Conflux_Ignite[3]);
-                        else if (Settings.Elemental_Conflux_ShowInactive)
-                            DrawBuff(Settings.Elemental_Conflux_X, Settings.Elemental_Conflux_Y, Settings.Elemental_Conflux_Size, (string)Conflux_Elemental[1], (string)Conflux_Elemental[4]);
+                        if ((bool) confluxElemental[0])
+                            DrawBuff(Settings.ElementalConfluxX, Settings.ElementalConfluxY,
+                                Settings.ElementalConfluxSize, (string) confluxElemental[1],
+                                (string) confluxElemental[3]);
+                        else if ((bool) confluxChill[0])
+                            DrawBuff(Settings.ElementalConfluxX, Settings.ElementalConfluxY,
+                                Settings.ElementalConfluxSize, (string) confluxChill[1], (string) confluxChill[3]);
+                        else if ((bool) confluxShock[0])
+                            DrawBuff(Settings.ElementalConfluxX, Settings.ElementalConfluxY,
+                                Settings.ElementalConfluxSize, (string) confluxShock[1], (string) confluxShock[3]);
+                        else if ((bool) confluxIgnite[0])
+                            DrawBuff(Settings.ElementalConfluxX, Settings.ElementalConfluxY,
+                                Settings.ElementalConfluxSize, (string) confluxIgnite[1],
+                                (string) confluxIgnite[3]);
+                        else if (Settings.ElementalConfluxShowInactive)
+                            DrawBuff(Settings.ElementalConfluxX, Settings.ElementalConfluxY,
+                                Settings.ElementalConfluxSize, (string) confluxElemental[1],
+                                (string) confluxElemental[4]);
                     }
-                }
-                #endregion 
+
+                #endregion
             }
+
             #endregion
+
             #region Vaal Skills
-            if (Settings.Vaal_Skills)
+
+            if (Settings.VaalSkills)
             {
                 #region Vaal_Haste
-                Try_Draw_Buff(Settings.Vaal_Haste, (bool)Vaal_Haste[0], Settings.Vaal_Haste_ShowInactive, true,
-                    Settings.Vaal_Haste_X,
-                    Settings.Vaal_Haste_Y,
-                    Settings.Vaal_Haste_Size,
-                    (string)Vaal_Haste[1], (string)Vaal_Haste[3], (string)Vaal_Haste[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.VaalHaste, (bool) vaalHaste[0], Settings.VaalHasteShowInactive, true,
+                    Settings.VaalHasteX,
+                    Settings.VaalHasteY,
+                    Settings.VaalHasteSize,
+                    (string) vaalHaste[1], (string) vaalHaste[3], (string) vaalHaste[4]);
+
+                #endregion
+
                 #region Vaal_Grace
-                Try_Draw_Buff(Settings.Vaal_Grace, (bool)Vaal_Grace[0], Settings.Vaal_Grace_ShowInactive, true,
-                    Settings.Vaal_Grace_X,
-                    Settings.Vaal_Grace_Y,
-                    Settings.Vaal_Grace_Size,
-                    (string)Vaal_Grace[1], (string)Vaal_Grace[3], (string)Vaal_Grace[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.VaalGrace, (bool) vaalGrace[0], Settings.VaalGraceShowInactive, true,
+                    Settings.VaalGraceX,
+                    Settings.VaalGraceY,
+                    Settings.VaalGraceSize,
+                    (string) vaalGrace[1], (string) vaalGrace[3], (string) vaalGrace[4]);
+
+                #endregion
+
                 #region Vaal_Clarity
-                Try_Draw_Buff(Settings.Vaal_Clarity, (bool)Vaal_Clarity[0], Settings.Vaal_Clarity_ShowInactive, true,
-                    Settings.Vaal_Clarity_X,
-                    Settings.Vaal_Clarity_Y,
-                    Settings.Vaal_Clarity_Size,
-                    (string)Vaal_Clarity[1], (string)Vaal_Clarity[3], (string)Vaal_Clarity[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.VaalClarity, (bool) vaalClarity[0], Settings.VaalClarityShowInactive, true,
+                    Settings.VaalClarityX,
+                    Settings.VaalClarityY,
+                    Settings.VaalClaritySize,
+                    (string) vaalClarity[1], (string) vaalClarity[3], (string) vaalClarity[4]);
+
+                #endregion
+
                 #region Vaal_Discipline
-                Try_Draw_Buff(Settings.Vaal_Discipline, (bool)Vaal_Discipline[0], Settings.Vaal_Discipline_ShowInactive, true,
-                    Settings.Vaal_Discipline_X,
-                    Settings.Vaal_Discipline_Y,
-                    Settings.Vaal_Discipline_Size,
-                    (string)Vaal_Discipline[1], (string)Vaal_Discipline[3], (string)Vaal_Discipline[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.VaalDiscipline, (bool) vaalDiscipline[0],
+                    Settings.VaalDisciplineShowInactive, true,
+                    Settings.VaalDisciplineX,
+                    Settings.VaalDisciplineY,
+                    Settings.VaalDisciplineSize,
+                    (string) vaalDiscipline[1], (string) vaalDiscipline[3], (string) vaalDiscipline[4]);
+
+                #endregion
             }
+
             #endregion
+
             #region Offerings
+
             if (Settings.Offerings)
             {
                 #region Spirit Offerings
-                if (Settings.Offering_Effect)
-                {
-                    if (Settings.Force_Icons_On)
+
+                if (Settings.OfferingEffect)
+                    if (Settings.ForceIconsOn)
                     {
-                        DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, "", (string)Flesh_Offering[3]);
+                        DrawBuff(Settings.OfferingEffectX, Settings.OfferingEffectY, Settings.OfferingEffectSize,
+                            "", (string) fleshOffering[3]);
                     }
                     // Icon Not Forced On
                     else
                     {
-                        if ((bool)Flesh_Offering[0])
-                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, (string)Flesh_Offering[1], (string)Flesh_Offering[3]);
-                        else if ((bool)Bone_Offering[0])
-                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, (string)Bone_Offering[1], (string)Bone_Offering[3]);
-                        else if ((bool)Spirit_Offering[0])
-                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, (string)Spirit_Offering[1], (string)Spirit_Offering[3]);
-                        else if (Settings.Offering_Effect_ShowInactive)
-                            DrawBuff(Settings.Offering_Effect_X, Settings.Offering_Effect_Y, Settings.Offering_Effect_Size, (string)Flesh_Offering[1], (string)Flesh_Offering[4]);
+                        if ((bool) fleshOffering[0])
+                            DrawBuff(Settings.OfferingEffectX, Settings.OfferingEffectY,
+                                Settings.OfferingEffectSize, (string) fleshOffering[1], (string) fleshOffering[3]);
+                        else if ((bool) boneOffering[0])
+                            DrawBuff(Settings.OfferingEffectX, Settings.OfferingEffectY,
+                                Settings.OfferingEffectSize, (string) boneOffering[1], (string) boneOffering[3]);
+                        else if ((bool) spiritOffering[0])
+                            DrawBuff(Settings.OfferingEffectX, Settings.OfferingEffectY,
+                                Settings.OfferingEffectSize, (string) spiritOffering[1],
+                                (string) spiritOffering[3]);
+                        else if (Settings.OfferingEffectShowInactive)
+                            DrawBuff(Settings.OfferingEffectX, Settings.OfferingEffectY,
+                                Settings.OfferingEffectSize, (string) fleshOffering[1], (string) fleshOffering[4]);
                     }
-                }
-                #endregion 
+
+                #endregion
             }
+
             #endregion
+
             #region Golems
+
             if (Settings.Golems)
             {
                 #region Fire Golem
-                Try_Draw_Buff(Settings.Fire_Golem, (bool)Fire_Golem[0], Settings.Fire_Golem_ShowInactive, false,
-                    Settings.Fire_Golem_X,
-                    Settings.Fire_Golem_Y,
-                    Settings.Fire_Golem_Size,
-                    (string)Fire_Golem[1], (string)Fire_Golem[3], (string)Fire_Golem[4]);
+
+                Try_Draw_Buff(Settings.FireGolem, (bool) fireGolem[0], Settings.FireGolemShowInactive, false,
+                    Settings.FireGolemX,
+                    Settings.FireGolemY,
+                    Settings.FireGolemSize,
+                    (string) fireGolem[1], (string) fireGolem[3], (string) fireGolem[4]);
+
                 #endregion
+
                 #region Ice Golem
-                Try_Draw_Buff(Settings.Ice_Golem, (bool)Ice_Golem[0], Settings.Ice_Golem_ShowInactive, false,
-                    Settings.Ice_Golem_X,
-                    Settings.Ice_Golem_Y,
-                    Settings.Ice_Golem_Size,
-                    (string)Ice_Golem[1], (string)Ice_Golem[3], (string)Ice_Golem[4]);
+
+                Try_Draw_Buff(Settings.IceGolem, (bool) iceGolem[0], Settings.IceGolemShowInactive, false,
+                    Settings.IceGolemX,
+                    Settings.IceGolemY,
+                    Settings.IceGolemSize,
+                    (string) iceGolem[1], (string) iceGolem[3], (string) iceGolem[4]);
+
                 #endregion
+
                 #region Lightning Golem
-                Try_Draw_Buff(Settings.Lightning_Golem, (bool)Lightning_Golem[0], Settings.Lightning_Golem_ShowInactive, false,
-                    Settings.Lightning_Golem_X,
-                    Settings.Lightning_Golem_Y,
-                    Settings.Lightning_Golem_Size,
-                    (string)Lightning_Golem[1], (string)Lightning_Golem[3], (string)Lightning_Golem[4]);
+
+                Try_Draw_Buff(Settings.LightningGolem, (bool) lightningGolem[0],
+                    Settings.LightningGolemShowInactive, false,
+                    Settings.LightningGolemX,
+                    Settings.LightningGolemY,
+                    Settings.LightningGolemSize,
+                    (string) lightningGolem[1], (string) lightningGolem[3], (string) lightningGolem[4]);
+
                 #endregion
+
                 #region Chaos Golem
-                Try_Draw_Buff(Settings.Chaos_Golem, (bool)Chaos_Golem[0], Settings.Chaos_Golem_ShowInactive, false,
-                    Settings.Chaos_Golem_X,
-                    Settings.Chaos_Golem_Y,
-                    Settings.Chaos_Golem_Size,
-                    (string)Chaos_Golem[1], (string)Chaos_Golem[3], (string)Chaos_Golem[4]);
+
+                Try_Draw_Buff(Settings.ChaosGolem, (bool) chaosGolem[0], Settings.ChaosGolemShowInactive, false,
+                    Settings.ChaosGolemX,
+                    Settings.ChaosGolemY,
+                    Settings.ChaosGolemSize,
+                    (string) chaosGolem[1], (string) chaosGolem[3], (string) chaosGolem[4]);
+
                 #endregion
+
                 #region Stone Golem
-                Try_Draw_Buff(Settings.Stone_Golem, (bool)Stone_Golem[0], Settings.Stone_Golem_ShowInactive, false,
-                    Settings.Stone_Golem_X,
-                    Settings.Stone_Golem_Y,
-                    Settings.Stone_Golem_Size,
-                    (string)Stone_Golem[1], (string)Stone_Golem[3], (string)Stone_Golem[4]);
+
+                Try_Draw_Buff(Settings.StoneGolem, (bool) stoneGolem[0], Settings.StoneGolemShowInactive, false,
+                    Settings.StoneGolemX,
+                    Settings.StoneGolemY,
+                    Settings.StoneGolemSize,
+                    (string) stoneGolem[1], (string) stoneGolem[3], (string) stoneGolem[4]);
+
                 #endregion
             }
+
             #endregion
+
             #region Offensive Auras
-            if (Settings.Offensive_Aura)
+
+            if (Settings.OffensiveAura)
             {
                 #region Anger
-                Try_Draw_Buff(Settings.Anger, (bool)Anger[0], Settings.Anger_ShowInactive, false,
-                    Settings.Anger_X,
-                    Settings.Anger_Y,
-                    Settings.Anger_Size,
-                    (string)Anger[1], (string)Anger[3], (string)Anger[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.Anger, (bool) anger[0], Settings.AngerShowInactive, false,
+                    Settings.AngerX,
+                    Settings.AngerY,
+                    Settings.AngerSize,
+                    (string) anger[1], (string) anger[3], (string) anger[4]);
+
+                #endregion
+
                 #region Hatred
-                Try_Draw_Buff(Settings.Hatred, (bool)Hatred[0], Settings.Hatred_ShowInactive, false,
-                    Settings.Hatred_X,
-                    Settings.Hatred_Y,
-                    Settings.Hatred_Size,
-                    (string)Hatred[1], (string)Hatred[3], (string)Hatred[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.Hatred, (bool) hatred[0], Settings.HatredShowInactive, false,
+                    Settings.HatredX,
+                    Settings.HatredY,
+                    Settings.HatredSize,
+                    (string) hatred[1], (string) hatred[3], (string) hatred[4]);
+
+                #endregion
+
                 #region Wrath
-                Try_Draw_Buff(Settings.Wrath, (bool)Wrath[0], Settings.Wrath_ShowInactive, false,
-                    Settings.Wrath_X,
-                    Settings.Wrath_Y,
-                    Settings.Wrath_Size,
-                    (string)Wrath[1], (string)Wrath[3], (string)Wrath[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.Wrath, (bool) wrath[0], Settings.WrathShowInactive, false,
+                    Settings.WrathX,
+                    Settings.WrathY,
+                    Settings.WrathSize,
+                    (string) wrath[1], (string) wrath[3], (string) wrath[4]);
+
+                #endregion
+
                 #region Herald_of_Ash
-                Try_Draw_Buff(Settings.Herald_of_Ash, (bool)Herald_of_Ash[0], Settings.Herald_of_Ash_ShowInactive, false,
-                    Settings.Herald_of_Ash_X,
-                    Settings.Herald_of_Ash_Y,
-                    Settings.Herald_of_Ash_Size,
-                    (string)Herald_of_Ash[1], (string)Herald_of_Ash[3], (string)Herald_of_Ash[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.HeraldOfAsh, (bool) heraldOfAsh[0], Settings.HeraldOfAshShowInactive,
+                    false,
+                    Settings.HeraldOfAshX,
+                    Settings.HeraldOfAshY,
+                    Settings.HeraldOfAshSize,
+                    (string) heraldOfAsh[1], (string) heraldOfAsh[3], (string) heraldOfAsh[4]);
+
+                #endregion
+
                 #region Herald_of_Ice
-                Try_Draw_Buff(Settings.Herald_of_Ice, (bool)Herald_of_Ice[0], Settings.Herald_of_Ice_ShowInactive, false,
-                    Settings.Herald_of_Ice_X,
-                    Settings.Herald_of_Ice_Y,
-                    Settings.Herald_of_Ice_Size,
-                    (string)Herald_of_Ice[1], (string)Herald_of_Ice[3], (string)Herald_of_Ice[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.HeraldOfIce, (bool) heraldOfIce[0], Settings.HeraldOfIceShowInactive,
+                    false,
+                    Settings.HeraldOfIceX,
+                    Settings.HeraldOfIceY,
+                    Settings.HeraldOfIceSize,
+                    (string) heraldOfIce[1], (string) heraldOfIce[3], (string) heraldOfIce[4]);
+
+                #endregion
+
                 #region Herald_of_Thunder
-                Try_Draw_Buff(Settings.Herald_of_Thunder, (bool)Herald_of_Thunder[0], Settings.Herald_of_Thunder_ShowInactive, false,
-                    Settings.Herald_of_Thunder_X,
-                    Settings.Herald_of_Thunder_Y,
-                    Settings.Herald_of_Thunder_Size,
-                    (string)Herald_of_Thunder[1], (string)Herald_of_Thunder[3], (string)Herald_of_Thunder[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.HeraldOfThunder, (bool) heraldOfThunder[0],
+                    Settings.HeraldOfThunderShowInactive, false,
+                    Settings.HeraldOfThunderX,
+                    Settings.HeraldOfThunderY,
+                    Settings.HeraldOfThunderSize,
+                    (string) heraldOfThunder[1], (string) heraldOfThunder[3], (string) heraldOfThunder[4]);
+
+                #endregion
+
                 #region Haste
-                Try_Draw_Buff(Settings.Haste, (bool)Haste[0], Settings.Haste_ShowInactive, false,
-                    Settings.Haste_X,
-                    Settings.Haste_Y,
-                    Settings.Haste_Size,
-                    (string)Haste[1], (string)Haste[3], (string)Haste[4]);
-                #endregion 
+
+                Try_Draw_Buff(Settings.Haste, (bool) haste[0], Settings.HasteShowInactive, false,
+                    Settings.HasteX,
+                    Settings.HasteY,
+                    Settings.HasteSize,
+                    (string) haste[1], (string) haste[3], (string) haste[4]);
+
+                #endregion
             }
+
             #endregion
+
             #region Defensive Auras
-            if (Settings.Defenseive_Aura)
+
+            if (Settings.DefenseiveAura)
             {
                 #region Purity_of_Fire
-                Try_Draw_Buff(Settings.Purity_of_Fire, (bool)Purity_of_Fire[0], Settings.Purity_of_Fire_ShowInactive, false,
-                    Settings.Purity_of_Fire_X,
-                    Settings.Purity_of_Fire_Y,
-                    Settings.Purity_of_Fire_Size,
-                    (string)Purity_of_Fire[1], (string)Purity_of_Fire[3], (string)Purity_of_Fire[4]);
-                #endregion 
-                #region Purity_of_Ice
-                Try_Draw_Buff(Settings.Purity_of_Ice, (bool)Purity_of_Ice[0], Settings.Purity_of_Ice_ShowInactive, false,
-                    Settings.Purity_of_Ice_X,
-                    Settings.Purity_of_Ice_Y,
-                    Settings.Purity_of_Ice_Size,
-                    (string)Purity_of_Ice[1], (string)Purity_of_Ice[3], (string)Purity_of_Ice[4]);
-                #endregion 
-                #region Purity_of_Lightning
-                Try_Draw_Buff(Settings.Purity_of_Lightning, (bool)Purity_of_Lightning[0], Settings.Purity_of_Lightning_ShowInactive, false,
-                    Settings.Purity_of_Lightning_X,
-                    Settings.Purity_of_Lightning_Y,
-                    Settings.Purity_of_Lightning_Size,
-                    (string)Purity_of_Lightning[1], (string)Purity_of_Lightning[3], (string)Purity_of_Lightning[4]);
-                #endregion 
-                #region Purity_of_Elements
-                Try_Draw_Buff(Settings.Purity_of_Elements, (bool)Purity_of_Elements[0], Settings.Purity_of_Elements_ShowInactive, false,
-                    Settings.Purity_of_Elements_X,
-                    Settings.Purity_of_Elements_Y,
-                    Settings.Purity_of_Elements_Size,
-                    (string)Purity_of_Elements[1], (string)Purity_of_Elements[3], (string)Purity_of_Elements[4]);
-                #endregion 
-                #region Vitality
-                Try_Draw_Buff(Settings.Vitality, (bool)Vitality[0], Settings.Vitality_ShowInactive, false,
-                    Settings.Vitality_X,
-                    Settings.Vitality_Y,
-                    Settings.Vitality_Size,
-                    (string)Vitality[1], (string)Vitality[3], (string)Vitality[4]);
-                #endregion 
-                #region Discipline
-                Try_Draw_Buff(Settings.Discipline, (bool)Discipline[0], Settings.Discipline_ShowInactive, false,
-                    Settings.Discipline_X,
-                    Settings.Discipline_Y,
-                    Settings.Discipline_Size,
-                    (string)Discipline[1], (string)Discipline[3], (string)Discipline[4]);
-                #endregion 
-                #region Determination
-                Try_Draw_Buff(Settings.Determination, (bool)Determination[0], Settings.Determination_ShowInactive, false,
-                    Settings.Determination_X,
-                    Settings.Determination_Y,
-                    Settings.Determination_Size,
-                    (string)Determination[1], (string)Determination[3], (string)Determination[4]);
-                #endregion 
-                #region Grace
-                Try_Draw_Buff(Settings.Grace, (bool)Grace[0], Settings.Grace_ShowInactive, false,
-                    Settings.Grace_X,
-                    Settings.Grace_Y,
-                    Settings.Grace_Size,
-                    (string)Grace[1], (string)Grace[3], (string)Grace[4]);
+
+                Try_Draw_Buff(Settings.PurityOfFire, (bool) purityOfFire[0], Settings.PurityOfFireShowInactive,
+                    false,
+                    Settings.PurityOfFireX,
+                    Settings.PurityOfFireY,
+                    Settings.PurityOfFireSize,
+                    (string) purityOfFire[1], (string) purityOfFire[3], (string) purityOfFire[4]);
+
                 #endregion
+
+                #region Purity_of_Ice
+
+                Try_Draw_Buff(Settings.PurityOfIce, (bool) purityOfIce[0], Settings.PurityOfIceShowInactive,
+                    false,
+                    Settings.PurityOfIceX,
+                    Settings.PurityOfIceY,
+                    Settings.PurityOfIceSize,
+                    (string) purityOfIce[1], (string) purityOfIce[3], (string) purityOfIce[4]);
+
+                #endregion
+
+                #region Purity_of_Lightning
+
+                Try_Draw_Buff(Settings.PurityOfLightning, (bool) purityOfLightning[0],
+                    Settings.PurityOfLightningShowInactive, false,
+                    Settings.PurityOfLightningX,
+                    Settings.PurityOfLightningY,
+                    Settings.PurityOfLightningSize,
+                    (string) purityOfLightning[1], (string) purityOfLightning[3], (string) purityOfLightning[4]);
+
+                #endregion
+
+                #region Purity_of_Elements
+
+                Try_Draw_Buff(Settings.PurityOfElements, (bool) purityOfElements[0],
+                    Settings.PurityOfElementsShowInactive, false,
+                    Settings.PurityOfElementsX,
+                    Settings.PurityOfElementsY,
+                    Settings.PurityOfElementsSize,
+                    (string) purityOfElements[1], (string) purityOfElements[3], (string) purityOfElements[4]);
+
+                #endregion
+
+                #region Vitality
+
+                Try_Draw_Buff(Settings.Vitality, (bool) vitality[0], Settings.VitalityShowInactive, false,
+                    Settings.VitalityX,
+                    Settings.VitalityY,
+                    Settings.VitalitySize,
+                    (string) vitality[1], (string) vitality[3], (string) vitality[4]);
+
+                #endregion
+
+                #region Discipline
+
+                Try_Draw_Buff(Settings.Discipline, (bool) discipline[0], Settings.DisciplineShowInactive, false,
+                    Settings.DisciplineX,
+                    Settings.DisciplineY,
+                    Settings.DisciplineSize,
+                    (string) discipline[1], (string) discipline[3], (string) discipline[4]);
+
+                #endregion
+
+                #region Determination
+
+                Try_Draw_Buff(Settings.Determination, (bool) determination[0], Settings.DeterminationShowInactive,
+                    false,
+                    Settings.DeterminationX,
+                    Settings.DeterminationY,
+                    Settings.DeterminationSize,
+                    (string) determination[1], (string) determination[3], (string) determination[4]);
+
+                #endregion
+
+                #region Grace
+
+                Try_Draw_Buff(Settings.Grace, (bool) grace[0], Settings.GraceShowInactive, false,
+                    Settings.GraceX,
+                    Settings.GraceY,
+                    Settings.GraceSize,
+                    (string) grace[1], (string) grace[3], (string) grace[4]);
+
+                #endregion
+
                 #region Clarity
-                Try_Draw_Buff(Settings.Clarity, (bool)Clarity[0], Settings.Clarity_ShowInactive, false,
-                    Settings.Clarity_X,
-                    Settings.Clarity_Y,
-                    Settings.Clarity_Size,
-                    (string)Clarity[1], (string)Clarity[3], (string)Clarity[4]);
+
+                Try_Draw_Buff(Settings.Clarity, (bool) clarity[0], Settings.ClarityShowInactive, false,
+                    Settings.ClarityX,
+                    Settings.ClarityY,
+                    Settings.ClaritySize,
+                    (string) clarity[1], (string) clarity[3], (string) clarity[4]);
+
                 #endregion
             }
+
             #endregion
-            #region Charges
+
+            #region charges
+
             if (Settings.Others)
             {
                 #region Power_Charges
-                Try_Draw_Buff(Settings.Power_Charges, (bool)Power_Charges[0], Settings.Power_Charges_ShowInactive, true,
-                    Settings.Power_Charges_X,
-                    Settings.Power_Charges_Y,
-                    Settings.Power_Charges_Size,
-                    (string)Power_Charges[1], (string)Power_Charges[3], (string)Power_Charges[4], (string)Power_Charges[5]);
+
+                Try_Draw_Buff(Settings.PowerCharges, (bool) powerCharges[0], Settings.PowerChargesShowInactive,
+                    true,
+                    Settings.PowerChargesX,
+                    Settings.PowerChargesY,
+                    Settings.PowerChargesSize,
+                    (string) powerCharges[1], (string) powerCharges[3], (string) powerCharges[4],
+                    (string) powerCharges[5]);
+
                 #endregion
+
                 #region Frenzy_Charges
-                Try_Draw_Buff(Settings.Frenzy_Charges, (bool)Frenzy_Charges[0], Settings.Frenzy_Charges_ShowInactive, true,
-                    Settings.Frenzy_Charges_X,
-                    Settings.Frenzy_Charges_Y,
-                    Settings.Frenzy_Charges_Size,
-                    (string)Frenzy_Charges[1], (string)Frenzy_Charges[3], (string)Frenzy_Charges[4], (string)Frenzy_Charges[5]);
+
+                Try_Draw_Buff(Settings.FrenzyCharges, (bool) frenzyCharges[0], Settings.FrenzyChargesShowInactive,
+                    true,
+                    Settings.FrenzyChargesX,
+                    Settings.FrenzyChargesY,
+                    Settings.FrenzyChargesSize,
+                    (string) frenzyCharges[1], (string) frenzyCharges[3], (string) frenzyCharges[4],
+                    (string) frenzyCharges[5]);
+
                 #endregion
+
                 #region Endurance_Charges
-                Try_Draw_Buff(Settings.Endurance_Charges, (bool)Endurance_Charges[0], Settings.Endurance_Charges_ShowInactive, true,
-                    Settings.Endurance_Charges_X,
-                    Settings.Endurance_Charges_Y,
-                    Settings.Endurance_Charges_Size,
-                    (string)Endurance_Charges[1], (string)Endurance_Charges[3], (string)Endurance_Charges[4], (string)Endurance_Charges[5]);
+
+                Try_Draw_Buff(Settings.EnduranceCharges, (bool) enduranceCharges[0],
+                    Settings.EnduranceChargesShowInactive, true,
+                    Settings.EnduranceChargesX,
+                    Settings.EnduranceChargesY,
+                    Settings.EnduranceChargesSize,
+                    (string) enduranceCharges[1], (string) enduranceCharges[3], (string) enduranceCharges[4],
+                    (string) enduranceCharges[5]);
+
                 #endregion
+
                 #region Blade_Vortex_Stacks
-                Try_Draw_Buff(Settings.Blade_Vortex_Stacks, (bool)Blade_Vortex_Stacks[0], Settings.Blade_Vortex_Stacks_ShowInactive, true,
-                    Settings.Blade_Vortex_Stacks_X,
-                    Settings.Blade_Vortex_Stacks_Y,
-                    Settings.Blade_Vortex_Stacks_Size,
-                    (string)Blade_Vortex_Stacks[1], (string)Blade_Vortex_Stacks[3], (string)Blade_Vortex_Stacks[4], (string)Blade_Vortex_Stacks[5]);
+
+                Try_Draw_Buff(Settings.BladeVortexStacks, (bool) bladeVortexStacks[0],
+                    Settings.BladeVortexStacksShowInactive, true,
+                    Settings.BladeVortexStacksX,
+                    Settings.BladeVortexStacksY,
+                    Settings.BladeVortexStacksSize,
+                    (string) bladeVortexStacks[1], (string) bladeVortexStacks[3], (string) bladeVortexStacks[4],
+                    (string) bladeVortexStacks[5]);
+
                 #endregion
+
                 #region Reave_Stacks
-                Try_Draw_Buff(Settings.Reave_Stacks, (bool)Reave_Stacks[0], Settings.Reave_Stacks_ShowInactive, true,
-                    Settings.Reave_Stacks_X,
-                    Settings.Reave_Stacks_Y,
-                    Settings.Reave_Stacks_Size,
-                    (string)Reave_Stacks[1], (string)Reave_Stacks[3], (string)Reave_Stacks[4], (string)Reave_Stacks[5]);
+
+                Try_Draw_Buff(Settings.ReaveStacks, (bool) reaveStacks[0], Settings.ReaveStacksShowInactive, true,
+                    Settings.ReaveStacksX,
+                    Settings.ReaveStacksY,
+                    Settings.ReaveStacksSize,
+                    (string) reaveStacks[1], (string) reaveStacks[3], (string) reaveStacks[4],
+                    (string) reaveStacks[5]);
+
                 #endregion
             }
+
             #endregion
+
             #region Curses
+
             if (Settings.Curses)
             {
                 #region Curse_Poachers_Mark
-                Try_Draw_Buff(Settings.Curse_Poachers_Mark, (bool)Curse_Poachers_Mark[0], Settings.Curse_Poachers_Mark_ShowInactive, true,
-                    Settings.Curse_Poachers_Mark_X,
-                    Settings.Curse_Poachers_Mark_Y,
-                    Settings.Curse_Poachers_Mark_Size,
-                    (string)Curse_Poachers_Mark[1], (string)Curse_Poachers_Mark[3], (string)Curse_Poachers_Mark[4]);
+
+                Try_Draw_Buff(Settings.CursePoachersMark, (bool) cursePoachersMark[0],
+                    Settings.CursePoachersMarkShowInactive, true,
+                    Settings.CursePoachersMarkX,
+                    Settings.CursePoachersMarkY,
+                    Settings.CursePoachersMarkSize,
+                    (string) cursePoachersMark[1], (string) cursePoachersMark[3], (string) cursePoachersMark[4]);
+
                 #endregion
+
                 #region Curse_Frostbite
-                Try_Draw_Buff(Settings.Curse_Frostbite, (bool)Curse_Frostbite[0], Settings.Curse_Frostbite_ShowInactive, true,
-                    Settings.Curse_Frostbite_X,
-                    Settings.Curse_Frostbite_Y,
-                    Settings.Curse_Frostbite_Size,
-                    (string)Curse_Frostbite[1], (string)Curse_Frostbite[3], (string)Curse_Frostbite[4]);
+
+                Try_Draw_Buff(Settings.CurseFrostbite, (bool) curseFrostbite[0],
+                    Settings.CurseFrostbiteShowInactive, true,
+                    Settings.CurseFrostbiteX,
+                    Settings.CurseFrostbiteY,
+                    Settings.CurseFrostbiteSize,
+                    (string) curseFrostbite[1], (string) curseFrostbite[3], (string) curseFrostbite[4]);
+
                 #endregion
+
                 #region Curse_Vulnerability
-                Try_Draw_Buff(Settings.Curse_Vulnerability, (bool)Curse_Vulnerability[0], Settings.Curse_Vulnerability_ShowInactive, true,
-                    Settings.Curse_Vulnerability_X,
-                    Settings.Curse_Vulnerability_Y,
-                    Settings.Curse_Vulnerability_Size,
-                    (string)Curse_Vulnerability[1], (string)Curse_Vulnerability[3], (string)Curse_Vulnerability[4]);
+
+                Try_Draw_Buff(Settings.CurseVulnerability, (bool) curseVulnerability[0],
+                    Settings.CurseVulnerabilityShowInactive, true,
+                    Settings.CurseVulnerabilityX,
+                    Settings.CurseVulnerabilityY,
+                    Settings.CurseVulnerabilitySize,
+                    (string) curseVulnerability[1], (string) curseVulnerability[3], (string) curseVulnerability[4]);
+
                 #endregion
+
                 #region Curse_Warlords_Mark
-                Try_Draw_Buff(Settings.Curse_Warlords_Mark, (bool)Curse_Warlords_Mark[0], Settings.Curse_Warlords_Mark_ShowInactive, true,
-                    Settings.Curse_Warlords_Mark_X,
-                    Settings.Curse_Warlords_Mark_Y,
-                    Settings.Curse_Warlords_Mark_Size,
-                    (string)Curse_Warlords_Mark[1], (string)Curse_Warlords_Mark[3], (string)Curse_Warlords_Mark[4]);
+
+                Try_Draw_Buff(Settings.CurseWarlordsMark, (bool) curseWarlordsMark[0],
+                    Settings.CurseWarlordsMarkShowInactive, true,
+                    Settings.CurseWarlordsMarkX,
+                    Settings.CurseWarlordsMarkY,
+                    Settings.CurseWarlordsMarkSize,
+                    (string) curseWarlordsMark[1], (string) curseWarlordsMark[3], (string) curseWarlordsMark[4]);
+
                 #endregion
+
                 #region Curse_Flammability
-                Try_Draw_Buff(Settings.Curse_Flammability, (bool)Curse_Flammability[0], Settings.Curse_Flammability_ShowInactive, true,
-                    Settings.Curse_Flammability_X,
-                    Settings.Curse_Flammability_Y,
-                    Settings.Curse_Flammability_Size,
-                    (string)Curse_Flammability[1], (string)Curse_Flammability[3], (string)Curse_Flammability[4]);
+
+                Try_Draw_Buff(Settings.CurseFlammability, (bool) curseFlammability[0],
+                    Settings.CurseFlammabilityShowInactive, true,
+                    Settings.CurseFlammabilityX,
+                    Settings.CurseFlammabilityY,
+                    Settings.CurseFlammabilitySize,
+                    (string) curseFlammability[1], (string) curseFlammability[3], (string) curseFlammability[4]);
+
                 #endregion
+
                 #region Curse_Assassins_Mark
-                Try_Draw_Buff(Settings.Curse_Assassins_Mark, (bool)Curse_Assassins_Mark[0], Settings.Curse_Assassins_Mark_ShowInactive, true,
-                    Settings.Curse_Assassins_Mark_X,
-                    Settings.Curse_Assassins_Mark_Y,
-                    Settings.Curse_Assassins_Mark_Size,
-                    (string)Curse_Assassins_Mark[1], (string)Curse_Assassins_Mark[3], (string)Curse_Assassins_Mark[4]);
+
+                Try_Draw_Buff(Settings.CurseAssassinsMark, (bool) curseAssassinsMark[0],
+                    Settings.CurseAssassinsMarkShowInactive, true,
+                    Settings.CurseAssassinsMarkX,
+                    Settings.CurseAssassinsMarkY,
+                    Settings.CurseAssassinsMarkSize,
+                    (string) curseAssassinsMark[1], (string) curseAssassinsMark[3],
+                    (string) curseAssassinsMark[4]);
+
                 #endregion
+
                 #region Curse_Elemental_Weakness
-                Try_Draw_Buff(Settings.Curse_Elemental_Weakness, (bool)Curse_Elemental_Weakness[0], Settings.Curse_Elemental_Weakness_ShowInactive, true,
-                    Settings.Curse_Elemental_Weakness_X,
-                    Settings.Curse_Elemental_Weakness_Y,
-                    Settings.Curse_Elemental_Weakness_Size,
-                    (string)Curse_Elemental_Weakness[1], (string)Curse_Elemental_Weakness[3], (string)Curse_Elemental_Weakness[4]);
+
+                Try_Draw_Buff(Settings.CurseElementalWeakness, (bool) curseElementalWeakness[0],
+                    Settings.CurseElementalWeaknessShowInactive, true,
+                    Settings.CurseElementalWeaknessX,
+                    Settings.CurseElementalWeaknessY,
+                    Settings.CurseElementalWeaknessSize,
+                    (string) curseElementalWeakness[1], (string) curseElementalWeakness[3],
+                    (string) curseElementalWeakness[4]);
+
                 #endregion
+
                 #region Curse_Conductivity
-                Try_Draw_Buff(Settings.Curse_Conductivity, (bool)Curse_Conductivity[0], Settings.Curse_Conductivity_ShowInactive, true,
-                    Settings.Curse_Conductivity_X,
-                    Settings.Curse_Conductivity_Y,
-                    Settings.Curse_Conductivity_Size,
-                    (string)Curse_Conductivity[1], (string)Curse_Conductivity[3], (string)Curse_Conductivity[4]);
+
+                Try_Draw_Buff(Settings.CurseConductivity, (bool) curseConductivity[0],
+                    Settings.CurseConductivityShowInactive, true,
+                    Settings.CurseConductivityX,
+                    Settings.CurseConductivityY,
+                    Settings.CurseConductivitySize,
+                    (string) curseConductivity[1], (string) curseConductivity[3], (string) curseConductivity[4]);
+
                 #endregion
+
                 #region Curse_Enfeeble
-                Try_Draw_Buff(Settings.Curse_Enfeeble, (bool)Curse_Enfeeble[0], Settings.Curse_Enfeeble_ShowInactive, true,
-                    Settings.Curse_Enfeeble_X,
-                    Settings.Curse_Enfeeble_Y,
-                    Settings.Curse_Enfeeble_Size,
-                    (string)Curse_Enfeeble[1], (string)Curse_Enfeeble[3], (string)Curse_Enfeeble[4]);
+
+                Try_Draw_Buff(Settings.CurseEnfeeble, (bool) curseEnfeeble[0], Settings.CurseEnfeebleShowInactive,
+                    true,
+                    Settings.CurseEnfeebleX,
+                    Settings.CurseEnfeebleY,
+                    Settings.CurseEnfeebleSize,
+                    (string) curseEnfeeble[1], (string) curseEnfeeble[3], (string) curseEnfeeble[4]);
+
                 #endregion
+
                 #region Curse_Punishment
-                Try_Draw_Buff(Settings.Curse_Punishment, (bool)Curse_Punishment[0], Settings.Curse_Punishment_ShowInactive, true,
-                    Settings.Curse_Punishment_X,
-                    Settings.Curse_Punishment_Y,
-                    Settings.Curse_Punishment_Size,
-                    (string)Curse_Punishment[1], (string)Curse_Punishment[3], (string)Curse_Punishment[4]);
+
+                Try_Draw_Buff(Settings.CursePunishment, (bool) cursePunishment[0],
+                    Settings.CursePunishmentShowInactive, true,
+                    Settings.CursePunishmentX,
+                    Settings.CursePunishmentY,
+                    Settings.CursePunishmentSize,
+                    (string) cursePunishment[1], (string) cursePunishment[3], (string) cursePunishment[4]);
+
                 #endregion
+
                 #region Curse_Projectile_Weakness
-                Try_Draw_Buff(Settings.Curse_Projectile_Weakness, (bool)Curse_Projectile_Weakness[0], Settings.Curse_Projectile_Weakness_ShowInactive, true,
-                    Settings.Curse_Projectile_Weakness_X,
-                    Settings.Curse_Projectile_Weakness_Y,
-                    Settings.Curse_Projectile_Weakness_Size,
-                    (string)Curse_Projectile_Weakness[1], (string)Curse_Projectile_Weakness[3], (string)Curse_Projectile_Weakness[4]);
+
+                Try_Draw_Buff(Settings.CurseProjectileWeakness, (bool) curseProjectileWeakness[0],
+                    Settings.CurseProjectileWeaknessShowInactive, true,
+                    Settings.CurseProjectileWeaknessX,
+                    Settings.CurseProjectileWeaknessY,
+                    Settings.CurseProjectileWeaknessSize,
+                    (string) curseProjectileWeakness[1], (string) curseProjectileWeakness[3],
+                    (string) curseProjectileWeakness[4]);
+
                 #endregion
+
                 #region Curse_Temporal_Chains
-                Try_Draw_Buff(Settings.Curse_Temporal_Chains, (bool)Curse_Temporal_Chains[0], Settings.Curse_Temporal_Chains_ShowInactive, true,
-                    Settings.Curse_Temporal_Chains_X,
-                    Settings.Curse_Temporal_Chains_Y,
-                    Settings.Curse_Temporal_Chains_Size,
-                    (string)Curse_Temporal_Chains[1], (string)Curse_Temporal_Chains[3], (string)Curse_Temporal_Chains[4]);
+
+                Try_Draw_Buff(Settings.CurseTemporalChains, (bool) curseTemporalChains[0],
+                    Settings.CurseTemporalChainsShowInactive, true,
+                    Settings.CurseTemporalChainsX,
+                    Settings.CurseTemporalChainsY,
+                    Settings.CurseTemporalChainsSize,
+                    (string) curseTemporalChains[1], (string) curseTemporalChains[3],
+                    (string) curseTemporalChains[4]);
+
                 #endregion
             }
+
             #endregion
+
             #region Leeching
+
             if (Settings.Leeching)
             {
                 #region Leeching_Life
-                if ((bool)Leeching_Life[0])
+
+                if ((bool) leechingLife[0])
                 {
                     // Sort life leech buff timers Highest -> Lowest
-                    Leeching_Life_Buff_Durations.Sort();
-                    Leeching_Life_Buff_Durations.Reverse();
-                    Leeching_Life[1] = Math.Ceiling(Leeching_Life_Buff_Durations.First()).ToString();
+                    leechingLifeBuffDurations.Sort();
+                    leechingLifeBuffDurations.Reverse();
+                    leechingLife[1] = Math.Ceiling(leechingLifeBuffDurations.First()).ToString(CultureInfo.InvariantCulture);
                 }
 
-                Try_Draw_Buff(Settings.Leeching_Life, (bool)Leeching_Life[0], Settings.Leeching_Life_ShowInactive, true,
-                    Settings.Leeching_Life_X,
-                    Settings.Leeching_Life_Y,
-                    Settings.Leeching_Life_Size,
-                    (string)Leeching_Life[1], (string)Leeching_Life[3], (string)Leeching_Life[4], Leeching_Life_Buff_Durations.Count.ToString());
+                Try_Draw_Buff(Settings.LeechingLife, (bool) leechingLife[0], Settings.LeechingLifeShowInactive,
+                    true,
+                    Settings.LeechingLifeX,
+                    Settings.LeechingLifeY,
+                    Settings.LeechingLifeSize,
+                    (string) leechingLife[1], (string) leechingLife[3], (string) leechingLife[4],
+                    leechingLifeBuffDurations.Count.ToString());
+
                 #endregion
+
                 #region Leeching_Mana
-                if ((bool)Leeching_Mana[0])
+
+                if ((bool) leechingMana[0])
                 {
                     // Sort life leech buff timers Highest -> Lowest
-                    Leeching_Mana_Buff_Durations.Sort();
-                    Leeching_Mana_Buff_Durations.Reverse();
-                    Leeching_Mana[1] = Math.Ceiling(Leeching_Mana_Buff_Durations.First()).ToString();
+                    leechingManaBuffDurations.Sort();
+                    leechingManaBuffDurations.Reverse();
+                    leechingMana[1] = Math.Ceiling(leechingManaBuffDurations.First()).ToString(CultureInfo.InvariantCulture);
                 }
 
-                Try_Draw_Buff(Settings.Leeching_Mana, (bool)Leeching_Mana[0], Settings.Leeching_Mana_ShowInactive, true,
-                    Settings.Leeching_Mana_X,
-                    Settings.Leeching_Mana_Y,
-                    Settings.Leeching_Mana_Size,
-                    (string)Leeching_Mana[1], (string)Leeching_Mana[3], (string)Leeching_Mana[4], Leeching_Mana_Buff_Durations.Count.ToString());
+                Try_Draw_Buff(Settings.LeechingMana, (bool) leechingMana[0], Settings.LeechingManaShowInactive,
+                    true,
+                    Settings.LeechingManaX,
+                    Settings.LeechingManaY,
+                    Settings.LeechingManaSize,
+                    (string) leechingMana[1], (string) leechingMana[3], (string) leechingMana[4],
+                    leechingManaBuffDurations.Count.ToString());
+
                 #endregion
             }
+
             #endregion
         }
 
-        private void Try_Draw_Buff(ToggleNode isOn, bool gotBuff, ToggleNode showFade, bool CouldHaveTimer, RangeNode<float> X, RangeNode<float> Y, RangeNode<int> Size, string Timer, string FileActive, string FileInactive)
+        private void Try_Draw_Buff(ToggleNode isOn, bool gotBuff, ToggleNode showFade, bool couldHaveTimer,
+            RangeNode<float> xRangeNode, RangeNode<float> yRangeNode, RangeNode<int> size, string timer,
+            string fileActive,
+            string fileInactive)
         {
-            if (isOn)
+            if (!isOn) return;
+            if (Settings.ForceIconsOn)
             {
-                // Icon Forced On
-                if (Settings.Force_Icons_On)
-                {
-                    if (CouldHaveTimer)
-                     DrawBuff(X, Y, Size, "99", FileActive);
-                    else
-                        DrawBuff(X, Y, Size, "", FileActive);
-                }
-                // Icon Not Forced On
-                else
-                {
-                    if (gotBuff)
-                        DrawBuff(X, Y, Size, Timer, FileActive);
-                    else if (showFade)
-                        DrawBuff(X, Y, Size, Timer, FileInactive);
-                }
+                DrawBuff(xRangeNode, yRangeNode, size, couldHaveTimer ? "99" : "", fileActive);
+            }
+            // Icon Not Forced On
+            else
+            {
+                if (gotBuff)
+                    DrawBuff(xRangeNode, yRangeNode, size, timer, fileActive);
+                else if (showFade)
+                    DrawBuff(xRangeNode, yRangeNode, size, timer, fileInactive);
             }
         }
 
-        private void Try_Draw_Buff(ToggleNode isOn, bool gotBuff, ToggleNode showFade, bool CouldHaveTimer, RangeNode<float> X, RangeNode<float> Y, RangeNode<int> Size, string Timer, string FileActive, string FileInactive, string Charges)
+        private void Try_Draw_Buff(ToggleNode isOn, bool gotBuff, ToggleNode showFade, bool couldHaveTimer,
+            RangeNode<float> xRangeNode, RangeNode<float> yRangeNode, RangeNode<int> size, string timer,
+            string fileActive,
+            string fileInactive, string charges)
         {
-            if (isOn)
+            if (!isOn) return;
+            if (Settings.ForceIconsOn)
             {
-                // Icon Forced On
-                if (Settings.Force_Icons_On)
-                {
-                    if (CouldHaveTimer)
-                        DrawBuff(X, Y, Size, "99", FileActive);
-                    else
-                        DrawBuff(X, Y, Size, "", FileActive);
-                }
-                // Icon Not Forced On
-                else
-                {
-                    if (gotBuff)
-                        DrawBuff(X, Y, Size, Timer, FileActive, Charges);
-                    else if (showFade)
-                        DrawBuff(X, Y, Size, Timer, FileInactive);
-                }
+                DrawBuff(xRangeNode, yRangeNode, size, couldHaveTimer ? "99" : "", fileActive);
+            }
+            // Icon Not Forced On
+            else
+            {
+                if (gotBuff)
+                    DrawBuff(xRangeNode, yRangeNode, size, timer, fileActive, charges);
+                else if (showFade)
+                    DrawBuff(xRangeNode, yRangeNode, size, timer, fileInactive);
             }
         }
 
-        private void DrawBuff(float Buff_X, float Buff_Y, int Buff_Size, string Buff_Timer, string Buff_FileName)
+        private void DrawBuff(float buffX, float buffY, int buffSize, string buffTimer, string buffFileName)
         {
-            int Timer_Size = TimerToBuffSize(Buff_Size);
+            var timerSize = TimerToBuffSize(buffSize);
 
-            RectangleF rect, Icon;
-            DrawBuffIcon(Buff_X, Buff_Y, Buff_Size, Buff_FileName, out rect, out Icon);
-            Icon = DrawBuffTimer(Buff_X, Timer_Size, Buff_Timer, rect, Icon);
+            DrawBuffIcon(buffX, buffY, buffSize, buffFileName, out var rect, out var icon);
+            DrawBuffTimer(buffX, timerSize, buffTimer, rect, icon);
         }
 
-        private void DrawBuff(float Buff_X, float Buff_Y, int Buff_Size, string Buff_Timer, string Buff_FileName, string Buff_Charges)
+        private void DrawBuff(float buffX, float buffY, int buffSize, string buffTimer, string buffFileName,
+            string buffCharges)
         {
-            int Timer_Size = TimerToBuffSize(Buff_Size);
-            int Charge_Size = ChargeToBuffSize(Buff_Size);
+            var timerSize = TimerToBuffSize(buffSize);
+            var chargeSize = ChargeToBuffSize(buffSize);
 
-            RectangleF rect, Icon;
-            DrawBuffIcon(Buff_X, Buff_Y, Buff_Size, Buff_FileName, out rect, out Icon);
-            Icon = DrawBuffTimer(Buff_X, Timer_Size, Buff_Timer, rect, Icon);
-            DrawCharge(Buff_Charges, Charge_Size, Icon);
+            RectangleF rect, icon;
+            DrawBuffIcon(buffX, buffY, buffSize, buffFileName, out rect, out icon);
+            icon = DrawBuffTimer(buffX, timerSize, buffTimer, rect, icon);
+            DrawCharge(buffCharges, chargeSize, icon);
         }
 
-        private void DrawBuffIcon(float BuffX, float BuffY, int BuffSize, string BuffFile, out RectangleF Window, out RectangleF Icon)
+        private void DrawBuffIcon(float buffX, float buffY, int buffSize, string buffFile, out RectangleF window,
+            out RectangleF icon)
         {
-            Window = GameController.Window.GetWindowRectangle();
-            Icon = new RectangleF(Window.Width * BuffX * .01f - BuffSize / 2, Window.Height * BuffY * .01f, BuffSize, BuffSize);
-            Graphics.DrawPluginImage(PluginDirectory + $"/images/{BuffFile}.png", Icon);
+            window = GameController.Window.GetWindowRectangle();
+            icon = new RectangleF(window.Width * buffX * .01f - buffSize / 2, window.Height * buffY * .01f, buffSize,
+                buffSize);
+            Graphics.DrawPluginImage(PluginDirectory + $"/images/{buffFile}.png", icon);
         }
 
-        private static int ChargeToBuffSize(int BuffSize)
+        private static int ChargeToBuffSize(int buffSize)
         {
-            double buffTextPercent2 = BuffSize / 100.00;
-            double HardTextSize2 = 28.00 * buffTextPercent2;
-            int TextSize2 = (int)Math.Floor(HardTextSize2);
-            return TextSize2;
+            var buffTextPercent2 = buffSize / 100.00;
+            var hardTextSize2 = 28.00 * buffTextPercent2;
+            var textSize2 = (int) Math.Floor(hardTextSize2);
+            return textSize2;
         }
 
-        private static int TimerToBuffSize(int BuffSize)
+        private static int TimerToBuffSize(int buffSize)
         {
-            int TextSize;
-            double buffTextPercent = BuffSize / 100.00;
-            double HardTextSize = 32.00 * buffTextPercent;
-            TextSize = (int)Math.Floor(HardTextSize);
-            return TextSize;
+            var buffTextPercent = buffSize / 100.00;
+            var hardTextSize = 32.00 * buffTextPercent;
+            return (int) Math.Floor(hardTextSize);
         }
 
-        private RectangleF DrawBuffTimer(float BuffX, int TextSize, string BuffTimerText, RectangleF rect, RectangleF TestBuffWindow)
+        private RectangleF DrawBuffTimer(float buffX, int textSize, string buffTimerText, RectangleF rect,
+            RectangleF testBuffWindow)
         {
-            if (BuffTimerText != "")
-            {
-                // Buff Timer Text
-                int textYOffset = -1;
-                //var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, rect.Height * BuffY * .01f - TextSize), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
-                var BuffTimer = Graphics.DrawText(BuffTimerText, TextSize, new Vector2(rect.Width * BuffX * .01f, TestBuffWindow.Top - TextSize + textYOffset), Color.White, SharpDX.Direct3D9.FontDrawFlags.Center);
-                var TimerBackground = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, TestBuffWindow.Width, -BuffTimer.Height + textYOffset + 1);
-                Graphics.DrawImage("lightBackground.png", TimerBackground);
-            }
+            if (buffTimerText == "") return testBuffWindow;
 
-            return TestBuffWindow;
+            var buffTimer = Graphics.DrawText(buffTimerText, textSize,
+                new Vector2(rect.Width * buffX * .01f, testBuffWindow.Top - textSize + -1), Color.White,
+                FontDrawFlags.Center);
+
+            var timerBackground = new RectangleF(testBuffWindow.X, testBuffWindow.Y, testBuffWindow.Width,
+                -buffTimer.Height + -1 + 1);
+
+            Graphics.DrawImage("lightBackground.png", timerBackground);
+
+            return testBuffWindow;
         }
 
-        private void DrawCharge(string charges, int TextSize2, RectangleF TestBuffWindow)
+        private void DrawCharge(string charges, int textSize, RectangleF testBuffWindow)
         {
-            var ChargeText = Graphics.DrawText(charges, TextSize2, new Vector2(TestBuffWindow.Left + 3, TestBuffWindow.Top + 1), Color.White, SharpDX.Direct3D9.FontDrawFlags.Left);
-            var background = new RectangleF(TestBuffWindow.X, TestBuffWindow.Y, ChargeText.Width + 6, ChargeText.Height + 2);
+            var chargeText = Graphics.DrawText(charges, textSize,
+                new Vector2(testBuffWindow.Left + 3, testBuffWindow.Top + 1), Color.White);
+
+            var background = new RectangleF(testBuffWindow.X, testBuffWindow.Y, chargeText.Width + 6,
+                chargeText.Height + 2);
+
             Graphics.DrawImage("lightBackground.png", background);
         }
 
