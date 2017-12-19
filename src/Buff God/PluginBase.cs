@@ -76,7 +76,8 @@ namespace Buff_God
 
             // Others
             object[] arcaneSurge = {false, "", "arcane_surge", "Arcane Surge Active", "Arcane Surge Inactive"};
-            object[] bloodRage = {false, "", "blood_rage", "Blood Rage Active", "Blood Rage Inactive"};
+            object[] bloodRage = { false, "", "blood_rage", "Blood Rage Active", "Blood Rage Inactive" };
+            object[] elementalOverload = { false, "", "elemental_overload", "Elemental Overload Active", "Elemental Overload Inactive" };
             // Others - Conflux
             object[] confluxElemental =
             {
@@ -183,10 +184,15 @@ namespace Buff_God
                     arcaneSurge[0] = true;
                     arcaneSurge[1] = buffText;
                 }
-                if (thisBuff.Equals((string) bloodRage[2]))
+                if (thisBuff.Equals((string)bloodRage[2]))
                 {
                     bloodRage[0] = true;
                     bloodRage[1] = buffText;
+                }
+                if (thisBuff.Equals((string)elementalOverload[2]))
+                {
+                    elementalOverload[0] = true;
+                    elementalOverload[1] = buffText;
                 }
                 if (thisBuff.Equals((string) confluxElemental[2]))
                 {
@@ -508,11 +514,21 @@ namespace Buff_God
 
                 #region Blood_Rage
 
-                Try_Draw_Buff(Settings.BloodRage, (bool) bloodRage[0], Settings.BloodRageShowInactive, true,
+                Try_Draw_Buff(Settings.BloodRage, (bool)bloodRage[0], Settings.BloodRageShowInactive, true,
                     Settings.BloodRageX,
                     Settings.BloodRageY,
                     Settings.BloodRageSize,
-                    (string) bloodRage[1], (string) bloodRage[3], (string) bloodRage[4]);
+                    (string)bloodRage[1], (string)bloodRage[3], (string)bloodRage[4]);
+
+                #endregion
+
+                #region elemental Overloard
+
+                Try_Draw_Buff(Settings.ElementalOverload, (bool)elementalOverload[0], Settings.ElementalOverloadShowInactive, true,
+                    Settings.ElementalOverloadX,
+                    Settings.ElementalOverloadY,
+                    Settings.ElementalOverloadSize,
+                    (string)elementalOverload[1], (string)elementalOverload[3], (string)elementalOverload[4]);
 
                 #endregion
 

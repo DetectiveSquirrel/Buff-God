@@ -33,6 +33,12 @@ namespace Buff_God
             BloodRageSize = new RangeNode<int>(64, 1, 128);
             BloodRageShowInactive = false;
 
+            ElementalOverload = true;
+            ElementalOverloadX = new RangeNode<float>(13f, 0.0f, 100.0f);
+            ElementalOverloadY = new RangeNode<float>(76f, 0.0f, 100.0f);
+            ElementalOverloadSize = new RangeNode<int>(64, 1, 128);
+            ElementalOverloadShowInactive = false;
+
             ElementalConflux = true;
             ElementalConfluxX = new RangeNode<float>(13f, 0.0f, 100.0f);
             ElementalConfluxY = new RangeNode<float>(76f, 0.0f, 100.0f);
@@ -492,6 +498,21 @@ namespace Buff_God
 
         [Menu("Show Inactive", 3134, 313)]
         public ToggleNode BloodRageShowInactive { get; set; }
+        
+        [Menu("Elemental Overload", 315, 7)]
+        public ToggleNode ElementalOverload { get; set; }
+
+        [Menu("X", 3151, 315)]
+        public RangeNode<float> ElementalOverloadX { get; set; }
+
+        [Menu("Y", 3152, 315)]
+        public RangeNode<float> ElementalOverloadY { get; set; }
+
+        [Menu("Size", 3153, 315)]
+        public RangeNode<int> ElementalOverloadSize { get; set; }
+
+        [Menu("Show Inactive", 3154, 315)]
+        public ToggleNode ElementalOverloadShowInactive { get; set; }
 
         [Menu("Elemental Conflux", 314, 7)]
         public ToggleNode ElementalConflux { get; set; }
