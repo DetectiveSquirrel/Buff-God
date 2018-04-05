@@ -91,6 +91,9 @@ namespace Buff_God
             object[] confluxIgnite =
                 {false, "", "elementalist_all_damage_ignites", "Igniting Conflux", "Elemental Conflux Inactive"};
 
+            //Flasks
+            object[] divination_distillate = { false, "", "unique_flask_divination_distillate", "Divination Distillate Active", "Divination Distillate Inactive", "" };
+
             //Offensive Auras
             object[] anger = {false, "", "player_aura_fire_damage", "Anger Active", "Anger Inactive"};
             object[] hatred = {false, "", "player_aura_cold_damage", "Hatred Active", "Hatred Inactive"};
@@ -158,7 +161,7 @@ namespace Buff_God
                 {false, "", "frenzy_charge", "Frenzy charges Active", "Frenzy charges Inactive", ""};
             object[] enduranceCharges =
                 {false, "", "endurance_charge", "Endurance charges Active", "Endurance charges Inactive", ""};
-            object[] bladeVortexStacks =
+            object[] bladeVortexStacks = 
                 {false, "", "blade_vortex_counter", "Blade Vortex Active", "Blade Vortex Inactive", ""};
             object[] reaveStacks = {false, "", "reave_counter", "Reave Active", "Reave Inactive", ""};
 
@@ -213,6 +216,11 @@ namespace Buff_God
                 {
                     confluxIgnite[0] = true;
                     confluxIgnite[1] = buffText;
+                }
+                if (thisBuff.Equals((string)divination_distillate[2]))
+                {
+                    divination_distillate[0] = true;
+                    divination_distillate[1] = buffText;
                 }
 
                 #endregion
@@ -562,6 +570,16 @@ namespace Buff_God
                                 Settings.ElementalConfluxSize, (string) confluxElemental[1],
                                 (string) confluxElemental[4]);
                     }
+
+                #endregion
+
+                #region Divination_Distillate
+
+                Try_Draw_Buff(Settings.DivinationDistillate, (bool)divination_distillate[0], Settings.DivinationDistillateShowInactive, true,
+                    Settings.DivinationDistillateX,
+                    Settings.DivinationDistillateY,
+                    Settings.DivinationDistillateSize,
+                    (string)divination_distillate[1], (string)divination_distillate[3], (string)divination_distillate[4]);
 
                 #endregion
             }

@@ -45,6 +45,12 @@ namespace Buff_God
             ElementalConfluxSize = new RangeNode<int>(64, 1, 128);
             ElementalConfluxShowInactive = false;
 
+            DivinationDistillate = true;
+            DivinationDistillateX = new RangeNode<float>(13f, 0.0f, 100.0f);
+            DivinationDistillateY = new RangeNode<float>(76f, 0.0f, 100.0f);
+            DivinationDistillateSize = new RangeNode<int>(64, 1, 128);
+            DivinationDistillateShowInactive = false;
+
             #endregion
 
             #region Vaal Skills
@@ -528,6 +534,21 @@ namespace Buff_God
 
         [Menu("Show Inactive", 3144, 314)]
         public ToggleNode ElementalConfluxShowInactive { get; set; }
+
+        [Menu("Divination Distillate", 316, 7)]
+        public ToggleNode DivinationDistillate { get; set; }
+
+        [Menu("X", 3161, 316)]
+        public RangeNode<float> DivinationDistillateX { get; set; }
+
+        [Menu("Y", 3162, 316)]
+        public RangeNode<float> DivinationDistillateY { get; set; }
+
+        [Menu("Size", 3163, 316)]
+        public RangeNode<int> DivinationDistillateSize { get; set; }
+
+        [Menu("Show Inactive", 3164, 316)]
+        public ToggleNode DivinationDistillateShowInactive { get; set; }
 
         #endregion
 
