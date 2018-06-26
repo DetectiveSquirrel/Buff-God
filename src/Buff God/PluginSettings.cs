@@ -21,29 +21,53 @@ namespace Buff_God
 
             #region Others
 
+            #region Arcane Surge
             ArcaneSurge = true;
             ArcaneSurgeX = new RangeNode<float>(13f, 0.0f, 100.0f);
             ArcaneSurgeY = new RangeNode<float>(76f, 0.0f, 100.0f);
             ArcaneSurgeSize = new RangeNode<int>(64, 1, 128);
             ArcaneSurgeShowInactive = false;
+            #endregion
 
+            #region Blood Rage
             BloodRage = true;
             BloodRageX = new RangeNode<float>(13f, 0.0f, 100.0f);
             BloodRageY = new RangeNode<float>(76f, 0.0f, 100.0f);
             BloodRageSize = new RangeNode<int>(64, 1, 128);
             BloodRageShowInactive = false;
+            #endregion
 
+            #region Elemental Overload
             ElementalOverload = true;
             ElementalOverloadX = new RangeNode<float>(13f, 0.0f, 100.0f);
             ElementalOverloadY = new RangeNode<float>(76f, 0.0f, 100.0f);
             ElementalOverloadSize = new RangeNode<int>(64, 1, 128);
             ElementalOverloadShowInactive = false;
+            #endregion
 
+            #region Elemental Conflux
             ElementalConflux = true;
             ElementalConfluxX = new RangeNode<float>(13f, 0.0f, 100.0f);
             ElementalConfluxY = new RangeNode<float>(76f, 0.0f, 100.0f);
             ElementalConfluxSize = new RangeNode<int>(64, 1, 128);
             ElementalConfluxShowInactive = false;
+            #endregion
+
+            #region Fortify
+            Fortify = true;
+            FortifyX = new RangeNode<float>(13f, 0.0f, 100.0f);
+            FortifyY = new RangeNode<float>(76f, 0.0f, 100.0f);
+            FortifySize = new RangeNode<int>(64, 1, 128);
+            FortifyShowInactive = false;
+            #endregion
+
+            #region Adrenaline
+            Adrenaline = true;
+            AdrenalineX = new RangeNode<float>(13f, 0.0f, 100.0f);
+            AdrenalineY = new RangeNode<float>(76f, 0.0f, 100.0f);
+            AdrenalineSize = new RangeNode<int>(64, 1, 128);
+            AdrenalineShowInactive = false;
+            #endregion
 
             #endregion
 
@@ -468,7 +492,7 @@ namespace Buff_God
 
         #region Others
 
-        // Others
+        #region Arcane Surge
         [Menu("Arcane Surge", 312, 7)]
         public ToggleNode ArcaneSurge { get; set; }
 
@@ -483,7 +507,9 @@ namespace Buff_God
 
         [Menu("Show Inactive", 3124, 312)]
         public ToggleNode ArcaneSurgeShowInactive { get; set; }
+        #endregion
 
+        #region Blood Rage
         [Menu("Blood Rage", 313, 7)]
         public ToggleNode BloodRage { get; set; }
 
@@ -498,7 +524,9 @@ namespace Buff_God
 
         [Menu("Show Inactive", 3134, 313)]
         public ToggleNode BloodRageShowInactive { get; set; }
-        
+        #endregion
+
+        #region Elemental Overload
         [Menu("Elemental Overload", 315, 7)]
         public ToggleNode ElementalOverload { get; set; }
 
@@ -513,7 +541,9 @@ namespace Buff_God
 
         [Menu("Show Inactive", 3154, 315)]
         public ToggleNode ElementalOverloadShowInactive { get; set; }
-
+        #endregion
+        
+        #region Elemental Conflux
         [Menu("Elemental Conflux", 314, 7)]
         public ToggleNode ElementalConflux { get; set; }
 
@@ -528,6 +558,41 @@ namespace Buff_God
 
         [Menu("Show Inactive", 3144, 314)]
         public ToggleNode ElementalConfluxShowInactive { get; set; }
+        #endregion
+
+        #region Fortify
+        [Menu("Fortify", 316, 7)]
+        public ToggleNode Fortify { get; set; }
+
+        [Menu("X", 3161, 316)]
+        public RangeNode<float> FortifyX { get; set; }
+
+        [Menu("Y", 3162, 316)]
+        public RangeNode<float> FortifyY { get; set; }
+
+        [Menu("Size", 3163, 316)]
+        public RangeNode<int> FortifySize { get; set; }
+
+        [Menu("Show Inactive", 3164, 316)]
+        public ToggleNode FortifyShowInactive { get; set; }
+        #endregion
+
+        #region Adrenaline
+        [Menu("Adrenaline", 317, 7)]
+        public ToggleNode Adrenaline { get; set; }
+
+        [Menu("X", 3171, 317)]
+        public RangeNode<float> AdrenalineX { get; set; }
+
+        [Menu("Y", 3172, 317)]
+        public RangeNode<float> AdrenalineY { get; set; }
+
+        [Menu("Size", 3173, 317)]
+        public RangeNode<int> AdrenalineSize { get; set; }
+
+        [Menu("Show Inactive", 3174, 317)]
+        public ToggleNode AdrenalineShowInactive { get; set; }
+        #endregion
 
         #endregion
 

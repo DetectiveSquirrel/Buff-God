@@ -53,31 +53,38 @@ namespace Buff_God
              * Inactive Icon
             */
 
-            // Golems
+            #region Golems
             object[] fireGolem = {false, "", "fire_elemental_buff", "Fire Golem Active", "Fire Golem Inactive"};
             object[] iceGolem = {false, "", "ice_elemental_buff", "Ice Golem Active", "Ice Golem Inactive"};
             object[] lightningGolem =
                 {false, "", "lightning_elemental_buff", "Lightning Golem Active", "Lightning Golem Inactive"};
             object[] chaosGolem = {false, "", "chaos_elemental_buff", "Chaos Golem Active", "Chaos Golem Inactive"};
             object[] stoneGolem = {false, "", "rock_golem_buff", "Stone Golem Active", "Stone Golem Inactive"};
+            #endregion
 
-            //Offerings
+            #region Offerings
             object[] fleshOffering = {false, "", "offering_offensive", "Flesh Offering Active", "Offering Inactive"};
             object[] boneOffering = {false, "", "offering_defensive", "Bone Offering Active", "Offering Inactive"};
             object[] spiritOffering = {false, "", "offering_spirit", "Spirit Offering Active", "Offering Inactive"};
+            #endregion
 
-            // Vaal Skills
+            #region Vaal Skills
             object[] vaalHaste = {false, "", "vaal_aura_speed", "Vaal Haste Active", "Vaal Haste Inactive"};
             object[] vaalGrace = {false, "", "vaal_aura_dodge", "Vaal Grace Active", "Vaal Grace Inactive"};
             object[] vaalClarity =
                 {false, "", "vaal_aura_no_mana_cost", "Vaal Clarity Active", "Vaal Clarity Inactive"};
             object[] vaalDiscipline =
                 {false, "", "vaal_aura_energy_shield", "Vaal Discipline Active", "Vaal Discipline Inactive"};
+            #endregion
 
-            // Others
+            #region Others
             object[] arcaneSurge = {false, "", "arcane_surge", "Arcane Surge Active", "Arcane Surge Inactive"};
             object[] bloodRage = { false, "", "blood_rage", "Blood Rage Active", "Blood Rage Inactive" };
             object[] elementalOverload = { false, "", "elemental_overload", "Elemental Overload Active", "Elemental Overload Inactive" };
+            object[] fortify = { false, "", "fortify", "Fortify Active", "Fortify Inactive" };
+            object[] adrenaline = { false, "", "adrenaline", "Adrenaline Active", "Adrenaline Inactive" };
+
+            #region Conflux
             // Others - Conflux
             object[] confluxElemental =
             {
@@ -90,8 +97,11 @@ namespace Buff_God
                 {false, "", "elementalist_all_damage_shocks", "Shocking Conflux", "Elemental Conflux Inactive"};
             object[] confluxIgnite =
                 {false, "", "elementalist_all_damage_ignites", "Igniting Conflux", "Elemental Conflux Inactive"};
+            #endregion
 
-            //Offensive Auras
+            #endregion
+
+            #region Offensive Auras
             object[] anger = {false, "", "player_aura_fire_damage", "Anger Active", "Anger Inactive"};
             object[] hatred = {false, "", "player_aura_cold_damage", "Hatred Active", "Hatred Inactive"};
             object[] wrath = {false, "", "player_aura_lightning_damage", "Wrath Active", "Wrath Inactive"};
@@ -100,8 +110,9 @@ namespace Buff_God
             object[] heraldOfThunder =
                 {false, "", "herald_of_thunder", "Herald of Thunder Active", "Herald of Thunder Inactive"};
             object[] haste = {false, "", "player_aura_speed", "Haste Active", "Haste Inactive"};
+            #endregion
 
-            //Defensive Auras
+            #region Defensive Auras
             object[] purityOfFire =
                 {false, "", "player_aura_fire_resist", "Purity of Fire Active", "Purity of Fire Inactive"};
             object[] purityOfIce =
@@ -118,8 +129,9 @@ namespace Buff_God
                 {false, "", "player_aura_armour", "Determination Active", "Determination Inactive"};
             object[] grace = {false, "", "player_aura_evasion", "Grace Active", "Grace Inactive"};
             object[] clarity = {false, "", "player_aura_mana_regen", "Clarity Active", "Clarity Inactive"};
+            #endregion
 
-            // Curses
+            #region Curses
             object[] cursePoachersMark =
                 {false, "", "curse_poachers_mark", "Poacher's Mark Active", "Poacher's Mark Inactive"};
             object[] curseFrostbite = {false, "", "curse_cold_weakness", "Frostbite Active", "Frostbite Inactive"};
@@ -141,7 +153,7 @@ namespace Buff_God
                 {false, "", "curse_projectile_weakness", "Projectile Weakness Active", "Projectile Weakness Inactive"};
             object[] curseTemporalChains =
                 {false, "", "curse_temporal_chains", "Temporal Chains Active", "Temporal Chains Inactive"};
-
+            #endregion
 
             /* Buff Array[]
              * 
@@ -152,7 +164,7 @@ namespace Buff_God
              * Inactive Icon
              * charges
             */
-            // charges
+            #region Charges
             object[] powerCharges = {false, "", "power_charge", "Power charges Active", "Power charges Inactive", ""};
             object[] frenzyCharges =
                 {false, "", "frenzy_charge", "Frenzy charges Active", "Frenzy charges Inactive", ""};
@@ -161,13 +173,14 @@ namespace Buff_God
             object[] bladeVortexStacks =
                 {false, "", "blade_vortex_counter", "Blade Vortex Active", "Blade Vortex Inactive", ""};
             object[] reaveStacks = {false, "", "reave_counter", "Reave Active", "Reave Inactive", ""};
+            #endregion
 
-            // Leeching
+            #region Leech
             object[] leechingLife = {false, "", "life_leech", "Life Leech Active", "Leech Inactive"};
             object[] leechingMana = {false, "", "mana_leech", "Mana Leech Active", "Leech Inactive"};
             var leechingLifeBuffDurations = new List<float>();
             var leechingManaBuffDurations = new List<float>();
-
+            #endregion
 
             // Loop through all buffs on me
             foreach (var buff in GameController.Game.IngameState.Data.LocalPlayer.GetComponent<Life>().Buffs)
@@ -188,6 +201,16 @@ namespace Buff_God
                 {
                     bloodRage[0] = true;
                     bloodRage[1] = buffText;
+                }
+                if (thisBuff.Equals((string)fortify[2]))
+                {
+                    fortify[0] = true;
+                    fortify[1] = buffText;
+                }
+                if (thisBuff.Equals((string)adrenaline[2]))
+                {
+                    adrenaline[0] = true;
+                    adrenaline[1] = buffText;
                 }
                 if (thisBuff.Equals((string)elementalOverload[2]))
                 {
@@ -509,6 +532,25 @@ namespace Buff_God
                     Settings.ArcaneSurgeY,
                     Settings.ArcaneSurgeSize,
                     (string) arcaneSurge[1], (string) arcaneSurge[3], (string) arcaneSurge[4]);
+
+                #endregion
+
+                #region Fortify
+
+                Try_Draw_Buff(Settings.Fortify, (bool)fortify[0], Settings.FortifyShowInactive, true,
+                    Settings.FortifyX,
+                    Settings.FortifyY,
+                    Settings.FortifySize,
+                    (string)fortify[1], (string)fortify[3], (string)fortify[4]);
+
+                #endregion
+                #region Adrenaline
+
+                Try_Draw_Buff(Settings.Fortify, (bool)adrenaline[0], Settings.AdrenalineShowInactive, true,
+                    Settings.AdrenalineX,
+                    Settings.AdrenalineY,
+                    Settings.AdrenalineSize,
+                    (string)adrenaline[1], (string)adrenaline[3], (string)adrenaline[4]);
 
                 #endregion
 
