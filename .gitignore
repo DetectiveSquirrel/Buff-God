@@ -49,3 +49,6 @@ Buff God.dll.config
 config.ini
 Buff God.pdb
 ErrorLog.txt
+
+#vs folder
+.vs
