@@ -363,6 +363,10 @@ namespace BuffGod
                 return false;
             if (GameController.Player == null || GameController.Player.Address == 0 || !GameController.Player.IsValid)
                 return false;
+            if (GameController.Game.IngameState.IngameUi.AtlasPanel.IsVisible)
+                return false;
+            if (GameController.Game.IngameState.IngameUi.TreePanel.IsVisible)
+                return false;
             return true;
         }
     }
