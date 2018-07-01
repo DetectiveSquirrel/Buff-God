@@ -1,6 +1,14 @@
 Buff God
 ======
 
+
+## Massive Rewrite has taken place and is now totaly configureable
+You will need to add your own buffs instead of using pre-defined buffs, sorry about that part but its for the best.
+You can find what buff youre looking for with this plugin https://github.com/DetectiveSquirrel/PoeHUD-Developer
+And by opening these nodes https://i.imgur.com/6ZdaMEj.png
+You will need to provide an image for the buff if its not already there, i took them from the wiki :^)
+Here is what it looks like now https://i.imgur.com/FkBC2hD.png
+
 ## Huh?
 Show buffs on your screen that you choose.
 
