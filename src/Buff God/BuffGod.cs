@@ -7,13 +7,12 @@ using System.Runtime.CompilerServices;
 using ImGuiNET;
 using Newtonsoft.Json;
 using PoeHUD.Hud.Settings;
-using PoeHUD.Hud.UI;
 using PoeHUD.Plugins;
 using PoeHUD.Poe.Components;
 using SharpDX;
 using SharpDX.Direct3D9;
 
-namespace BuffGod
+namespace Buff_God
 {
     public class BuffGod : BaseSettingsPlugin<PluginSettings>
     {
@@ -97,32 +96,32 @@ namespace BuffGod
             {
                 if (ImGui.Button($"X##Delete{i}")) buffsToRemove.Add(i);
                 ImGui.NextColumn();
-                BuffList[i].Settings.Enabled = ImGuiExtension.Checkbox($"##Enabled{i}", BuffList[i].Settings.Enabled);
+                BuffList[i].Settings.Enabled = PoeHUD.Hud.UI.ImGuiExtension.Checkbox($"##Enabled{i}", BuffList[i].Settings.Enabled);
                 ImGui.NextColumn();
-                BuffList[i].Settings.ShowInactive = ImGuiExtension.Checkbox($"##ShowInactive{i}", BuffList[i].Settings.ShowInactive);
+                BuffList[i].Settings.ShowInactive = PoeHUD.Hud.UI.ImGuiExtension.Checkbox($"##ShowInactive{i}", BuffList[i].Settings.ShowInactive);
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
-                BuffList[i].Settings.BuffName = ImGuiExtension.InputText($"##BuffName{i}", BuffList[i].Settings.BuffName, 1000, InputTextFlags.EnterReturnsTrue);
+                BuffList[i].Settings.BuffName = PoeHUD.Hud.UI.ImGuiExtension.InputText($"##BuffName{i}", BuffList[i].Settings.BuffName, 1000, InputTextFlags.EnterReturnsTrue);
                 ImGui.PopItemWidth();
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
-                BuffList[i].Settings.Image = ImGuiExtension.InputText($"##Image{i}", BuffList[i].Settings.Image, 1000, InputTextFlags.EnterReturnsTrue);
+                BuffList[i].Settings.Image = PoeHUD.Hud.UI.ImGuiExtension.InputText($"##Image{i}", BuffList[i].Settings.Image, 1000, InputTextFlags.EnterReturnsTrue);
                 ImGui.PopItemWidth();
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
-                BuffList[i].Settings.Type = (Buff.BuffType)ImGuiExtension.ComboBox($"##Type{i}", (int)BuffList[i].Settings.Type, typeSelector, ComboFlags.HeightLargest);
+                BuffList[i].Settings.Type = (Buff.BuffType)PoeHUD.Hud.UI.ImGuiExtension.ComboBox($"##Type{i}", (int)BuffList[i].Settings.Type, typeSelector, ComboFlags.HeightLargest);
                 ImGui.PopItemWidth();
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
-                BuffList[i].Settings.Size = ImGuiExtension.IntSlider($"##Size{i}", BuffList[i].Settings.Size, 1, 300);
+                BuffList[i].Settings.Size = ImGuiExtension.IntDrag($"##Size{i}", BuffList[i].Settings.Size, 1, 300);
                 ImGui.PopItemWidth();
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
-                BuffList[i].Settings.Location.X = ImGuiExtension.IntSlider($"##X{i}", BuffList[i].Settings.Location.X, 0, (int)GameController.Window.GetWindowRectangle().Width);
+                BuffList[i].Settings.Location.X = ImGuiExtension.IntDrag($"##X{i}", BuffList[i].Settings.Location.X, 0, (int)GameController.Window.GetWindowRectangle().Width);
                 ImGui.PopItemWidth();
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
-                BuffList[i].Settings.Location.Y = ImGuiExtension.IntSlider($"##Y{i}", BuffList[i].Settings.Location.Y, 0, (int)GameController.Window.GetWindowRectangle().Height);
+                BuffList[i].Settings.Location.Y = ImGuiExtension.IntDrag($"##Y{i}", BuffList[i].Settings.Location.Y, 0, (int)GameController.Window.GetWindowRectangle().Height);
                 ImGui.PopItemWidth();
                 ImGui.NextColumn();
             }
