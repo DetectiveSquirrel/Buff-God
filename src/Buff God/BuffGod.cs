@@ -58,13 +58,9 @@ namespace Buff_God
         {
             var buffsToRemove = new List<int>();
             ImGui.Separator();
-            ImGui.Columns(9, "EditColums", true);
-            ImGui.SetColumnWidth(0, 30f);
-            ImGui.Text("");
-            ImGui.NextColumn();
-            ImGui.Text("Enabled");
-            ImGui.NextColumn();
-            ImGui.Text("Show Inactive");
+            ImGui.Columns(7, "EditColums", true);
+            ImGui.Text("X / On / Inactive");
+            ImGuiExtension.ToolTip("Remove / Enabled / Show Inactive", true);
             ImGui.NextColumn();
             ImGui.Text("Buff Name");
             ImGui.NextColumn();
@@ -95,10 +91,13 @@ namespace Buff_God
             for (var i = 0; i < BuffList.Count; i++)
             {
                 if (ImGui.Button($"X##Delete{i}")) buffsToRemove.Add(i);
-                ImGui.NextColumn();
+                ImGuiExtension.ToolTip("Remove This Buff", false, true);
+                ImGui.SameLine();
                 BuffList[i].Settings.Enabled = PoeHUD.Hud.UI.ImGuiExtension.Checkbox($"##Enabled{i}", BuffList[i].Settings.Enabled);
-                ImGui.NextColumn();
+                ImGuiExtension.ToolTip("Enable This Buff", false, true);
+                ImGui.SameLine();
                 BuffList[i].Settings.ShowInactive = PoeHUD.Hud.UI.ImGuiExtension.Checkbox($"##ShowInactive{i}", BuffList[i].Settings.ShowInactive);
+                ImGuiExtension.ToolTip("Show a dimmed verison if the buff is inactive", false, true);
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
                 BuffList[i].Settings.BuffName = PoeHUD.Hud.UI.ImGuiExtension.InputText($"##BuffName{i}", BuffList[i].Settings.BuffName, 1000, InputTextFlags.EnterReturnsTrue);

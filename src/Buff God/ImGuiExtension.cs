@@ -168,5 +168,31 @@ namespace Buff_God
             }
             return inputColor;
         }
+
+        // Tooltip Hover
+        public static void ToolTip(string desc, bool sameLine)
+        {
+            if (sameLine)
+                ImGui.SameLine();
+
+            ImGui.TextDisabled("(?)");
+            if (ImGui.IsItemHovered(HoveredFlags.Default))
+            {
+                ImGui.SetTooltip(desc);
+            }
+        }
+        public static void ToolTip(string desc, bool sameLine, bool lastItemHover)
+        {
+            if (sameLine)
+                ImGui.SameLine();
+
+            if (!lastItemHover)
+                ImGui.TextDisabled("(?)");
+
+            if (ImGui.IsItemHovered(HoveredFlags.Default))
+            {
+                ImGui.SetTooltip(desc);
+            }
+        }
     }
 }
