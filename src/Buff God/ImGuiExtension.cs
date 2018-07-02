@@ -194,5 +194,12 @@ namespace Buff_God
                 ImGui.SetTooltip(desc);
             }
         }
+
+        // Combo Box
+        public static int ComboBox(string sideLabel, int currentSelectedItem, List<string> objectList)
+        {
+            ImGui.Combo(sideLabel, ref currentSelectedItem, objectList.ToArray(), objectList.Count);
+            return currentSelectedItem;
+        }
     }
 }

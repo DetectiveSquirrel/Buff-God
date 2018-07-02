@@ -108,7 +108,7 @@ namespace Buff_God
                 ImGui.PopItemWidth();
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
-                BuffList[i].Settings.Type = (Buff.BuffType)PoeHUD.Hud.UI.ImGuiExtension.ComboBox($"##Type{i}", (int)BuffList[i].Settings.Type, typeSelector, ComboFlags.HeightLargest);
+                BuffList[i].Settings.Type = (Buff.BuffType)ImGuiExtension.ComboBox($"##Type{i}", (int)BuffList[i].Settings.Type, typeSelector);
                 ImGui.PopItemWidth();
                 ImGui.NextColumn();
                 ImGui.PushItemWidth(ImGui.GetContentRegionAvailableWidth());
