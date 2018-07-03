@@ -285,19 +285,23 @@ namespace Buff_God
 
         public void DrawBuffIcon(Profile profile, Buff.Base buffToDraw)
         {
-            // If the image file doesnt exist, we need to stop this function and produce an error message
-            if (!File.Exists($"{profile.ImageFolder}{buffToDraw.Settings.Image}.png"))
-            {
-                MethodLog($"File: {profile.ImageFolder}{buffToDraw.Settings.Image}.png Not Found!", Color.Red);
-                return;
-            }
+            var profilePath = $"{profile.ImageFolder}{buffToDraw.Settings.Image}.png";
+            var backUpPath = $@"{PluginDirectory}\images\{buffToDraw.Settings.Image}.png";
+            var imageFile = string.Empty;
+
+            if (File.Exists(profilePath))
+                imageFile = profilePath;
+            if (imageFile == string.Empty && File.Exists(backUpPath))
+                imageFile = backUpPath;
+
+            if (imageFile == string.Empty) return;
 
             var readyImage = new RectangleF(buffToDraw.Settings.Location.X, buffToDraw.Settings.Location.Y, buffToDraw.Settings.Size, buffToDraw.Settings.Size);
 
             switch (buffToDraw.DisposableData.WasFound)
             {
                 case true:
-                    Graphics.DrawPluginImage($"{profile.ImageFolder}{buffToDraw.Settings.Image}.png", readyImage);
+                    Graphics.DrawPluginImage(imageFile, readyImage);
 
                     // Start the text drawing process
                     switch (buffToDraw.Settings.Type) // have seperate draw logic per type, more types can easily be added this way
@@ -336,6 +340,11 @@ namespace Buff_God
 
         public void DrawAboveImage(Buff.Base baseInfo, string displayText, RectangleF imageRec)
         {
+            // TODO: Fix this issue
+            // Bandaid fix for int.MaxValue problem from permanent duration buffs
+            if (displayText == "-2147483648" || displayText == "2147483648")
+                displayText = "∞";
+
             var textSize = UpperBuffSize(baseInfo.Settings.Size);
             var measureText = Graphics.MeasureText(displayText, textSize);
             var newBox = new RectangleF(imageRec.X, imageRec.Y, imageRec.Width, -measureText.Height);
@@ -346,6 +355,11 @@ namespace Buff_God
 
         public void DrawInsideImage(Buff.Base baseInfo, string displayText, RectangleF imageRec)
         {
+            // TODO: Fix this issue
+            // Bandaid fix for int.MaxValue problem from permanent duration buffs
+            if (displayText == "-2147483648" || displayText == "2147483648")
+                displayText = "∞";
+
             var textSize = InnerToBuffSize(baseInfo.Settings.Size);
             var measureText = Graphics.MeasureText(displayText, textSize);
             var minimumTextWidth = Graphics.MeasureText("00", textSize).Width;
@@ -525,9 +539,8 @@ namespace Buff_God
                 {
                     buffList.OrderBy(buff => buff.Timer); // order by time left
                     buffList.Reverse(); // reverse ordering to highest -> lowest
-
-                    Duration = Convert.ToInt32(Math.Ceiling(buffList.FirstOrDefault().Timer));
-                    MaxDuration = Convert.ToInt32(Math.Ceiling(buffList.FirstOrDefault().MaxTime));
+                    Duration = (int)Math.Ceiling(buffList.FirstOrDefault().Timer);
+                    MaxDuration = (int)Math.Ceiling(buffList.FirstOrDefault().MaxTime);
                     Name = buffList.FirstOrDefault().Name;
                     DisplayText = Duration.ToString();
                 }
