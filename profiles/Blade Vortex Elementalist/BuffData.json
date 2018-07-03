@@ -1,0 +1,52 @@
+{
+  "BuffList": [
+    {
+      "Settings": {
+        "BuffName": "new_new_blade_vortex",
+        "Image": "Blade Vortex Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 66,
+        "Location": {
+          "X": 683,
+          "Y": 889
+        },
+        "ShowInactive": true,
+        "Type": 4
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "Fortify",
+        "Image": "Fortify Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 23,
+        "Location": {
+          "X": 906,
+          "Y": 318
+        },
+        "ShowInactive": false,
+        "Type": 5
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "arcane_surge",
+        "Image": "Arcane Surge Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 23,
+        "Location": {
+          "X": 933,
+          "Y": 318
+        },
+        "ShowInactive": false,
+        "Type": 5
+      },
+      "DisposableData": null
+    }
+  ]
+}

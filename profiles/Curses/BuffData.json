@@ -2,14 +2,14 @@
   "BuffList": [
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_assassins_mark",
         "Image": "Assassin's Mark Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 752,
-          "Y": 1315
+          "Y": 865
         },
         "ShowInactive": true,
         "Type": 0
@@ -18,14 +18,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_lightning_weakness",
         "Image": "Conductivity Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 792,
-          "Y": 1315
+          "Y": 865
         },
         "ShowInactive": true,
         "Type": 0
@@ -34,14 +34,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_elemental_weakness",
         "Image": "Elemental Weakness Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 832,
-          "Y": 1315
+          "Y": 865
         },
         "ShowInactive": true,
         "Type": 0
@@ -50,14 +50,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_enfeeble",
         "Image": "Enfeeble Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 872,
-          "Y": 1315
+          "Y": 865
         },
         "ShowInactive": true,
         "Type": 0
@@ -66,14 +66,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_fire_weakness",
         "Image": "Flammability Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 912,
-          "Y": 1315
+          "Y": 865
         },
         "ShowInactive": true,
         "Type": 0
@@ -82,14 +82,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_cold_weakness",
         "Image": "Frostbite Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 952,
-          "Y": 1315
+          "Y": 865
         },
         "ShowInactive": true,
         "Type": 0
@@ -98,14 +98,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_poachers_mark",
         "Image": "Poacher's Mark Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
-          "X": 992,
-          "Y": 1315
+          "X": 952,
+          "Y": 917
         },
         "ShowInactive": true,
         "Type": 0
@@ -114,14 +114,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_projectile_weakness",
         "Image": "Projectile Weakness Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 752,
-          "Y": 1355
+          "Y": 917
         },
         "ShowInactive": true,
         "Type": 0
@@ -130,14 +130,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_newpunishment",
         "Image": "Punishment Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 792,
-          "Y": 1355
+          "Y": 917
         },
         "ShowInactive": true,
         "Type": 0
@@ -146,14 +146,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_temporal_chains",
         "Image": "Temporal Chains Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 832,
-          "Y": 1355
+          "Y": 917
         },
         "ShowInactive": true,
         "Type": 0
@@ -162,14 +162,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_vulnerability",
         "Image": "Vulnerability Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 872,
-          "Y": 1355
+          "Y": 917
         },
         "ShowInactive": true,
         "Type": 0
@@ -178,14 +178,14 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_warlords_mark",
         "Image": "Warlord's Mark Active",
         "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 912,
-          "Y": 1355
+          "Y": 917
         },
         "ShowInactive": true,
         "Type": 0
@@ -196,14 +196,14 @@
       "Settings": {
         "BuffName": "",
         "Image": "Despair Active",
-        "Enabled": true,
+        "Enabled": false,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 952,
-          "Y": 1355
+          "Y": 915
         },
-        "ShowInactive": true,
+        "ShowInactive": false,
         "Type": 0
       },
       "DisposableData": null
@@ -217,9 +217,9 @@
         "Size": 38,
         "Location": {
           "X": 992,
-          "Y": 1355
+          "Y": 917
         },
-        "ShowInactive": true,
+        "ShowInactive": false,
         "Type": 0
       },
       "DisposableData": null
