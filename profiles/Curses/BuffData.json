@@ -1,0 +1,228 @@
+{
+  "BuffList": [
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Assassin's Mark Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 752,
+          "Y": 1315
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Conductivity Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 792,
+          "Y": 1315
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Elemental Weakness Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 832,
+          "Y": 1315
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Enfeeble Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 872,
+          "Y": 1315
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Flammability Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 912,
+          "Y": 1315
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Frostbite Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 952,
+          "Y": 1315
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Poacher's Mark Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 992,
+          "Y": 1315
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Projectile Weakness Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 752,
+          "Y": 1355
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Punishment Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 792,
+          "Y": 1355
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Temporal Chains Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 832,
+          "Y": 1355
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Vulnerability Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 872,
+          "Y": 1355
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Warlord's Mark Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 912,
+          "Y": 1355
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Despair Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 952,
+          "Y": 1355
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "",
+        "Image": "Warding Active",
+        "Enabled": false,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 992,
+          "Y": 1355
+        },
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    }
+  ]
+}
