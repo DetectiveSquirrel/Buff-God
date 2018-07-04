@@ -194,32 +194,32 @@
     },
     {
       "Settings": {
-        "BuffName": "",
+        "BuffName": "curse_chaos_weakness",
         "Image": "Despair Active",
-        "Enabled": false,
-        "Show": false,
-        "Size": 38,
-        "Location": {
-          "X": 952,
-          "Y": 915
-        },
-        "ShowInactive": false,
-        "Type": 0
-      },
-      "DisposableData": null
-    },
-    {
-      "Settings": {
-        "BuffName": "",
-        "Image": "Warding Active",
-        "Enabled": false,
+        "Enabled": true,
         "Show": false,
         "Size": 38,
         "Location": {
           "X": 992,
           "Y": 917
         },
-        "ShowInactive": false,
+        "ShowInactive": true,
+        "Type": 0
+      },
+      "DisposableData": null
+    },
+    {
+      "Settings": {
+        "BuffName": "flask_bonus_curse_immunity",
+        "Image": "Warding Flask Active",
+        "Enabled": true,
+        "Show": false,
+        "Size": 38,
+        "Location": {
+          "X": 992,
+          "Y": 865
+        },
+        "ShowInactive": true,
         "Type": 0
       },
       "DisposableData": null
