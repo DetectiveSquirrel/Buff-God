@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using ImGuiNET;
-using PoeHUD.Framework;
 using PoeHUD.Hud.Settings;
 using PoeHUD.Plugins;
 using SharpDX;
 using ImGuiVector2 = System.Numerics.Vector2;
 using ImGuiVector4 = System.Numerics.Vector4;
 
-namespace Buff_God
+namespace Buff_God.Helpers
 {
     public class ImGuiExtension
     {
